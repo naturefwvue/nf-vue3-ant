@@ -2,9 +2,6 @@
   <div class="components-input-demo-presuffix">
     <a-input v-model:value="value1" placeholder="Basic usage">
     </a-input>
-    <br />{{value1}}
-    <br />{{value2}}
-    <a-input v-model:value="value2" prefix="￥" suffix="RMB" />
   </div>
 </template>
 
