@@ -1,5 +1,11 @@
 <template>
-  <a-input v-model:value="value" placeholder="Basic usage" />
+  <div class="components-input-demo-presuffix">
+    <a-input v-model:value="value1" placeholder="Basic usage">
+    </a-input>
+    <br />{{value1}}
+    <br />{{value2}}
+    <a-input v-model:value="value2" prefix="￥" suffix="RMB" />
+  </div>
 </template>
 
 <script>
@@ -60,7 +66,8 @@ export default {
   },
   data: () => {
     return {
-      value: '',
+      value1: '',
+      value2: '',
       type: {
         100: 'textarea', // 多行文本框
         101: 'text', // 单行文本框
@@ -92,15 +99,23 @@ export default {
     }
   },
   watch: {
-    value: function (val) {
+    value1: function (val) {
+      var colName = this.meta.colName // event.target.getAttribute('colname')
+      this.$emit('update:modelValue', val) // 返回给调用者
+      this.$emit('getvalue', val, colName) // 返回给中间组件
+    },
+    value2: function (val) {
       var colName = this.meta.colName // event.target.getAttribute('colname')
       this.$emit('update:modelValue', val) // 返回给调用者
       this.$emit('getvalue', val, colName) // 返回给中间组件
     }
   },
+  created: function () {
+    this.value1 = this.modelValue
+  },
   methods: {
     myInput: function (e) {
-      var returnValue = this.value
+      var returnValue = this.value1
       var colName = this.meta.colName // event.target.getAttribute('colname')
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
