@@ -1,14 +1,14 @@
 <template>
   <div class="components-input-demo-presuffix" style="width:400px">
-    <h1>表单测试</h1>
-    <nfInput v-model="modelValue.companyName" :meta="metaInfo[1000]" />{{modelValue}}
+    <h1>form meta Help</h1>
+    <nfInput v-model="modelValue.companyName"/>{{modelValue}}
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import { ref } from 'vue'
-import nfInput from '@/components/nf-form-input.vue'
+import nfInput from '@/components/help-meta-form.vue'
 
 export default {
   name: 'formMetaHelp',

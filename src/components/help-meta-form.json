@@ -1,0 +1,465 @@
+{
+    "dic": {
+        "ControlTypeList": [{
+            "value": 100, "title": "多行文本框"
+      }, {
+        "value": 101, "title": "单行文本框"
+      }, {
+        "value": 102, "title": "密码框"
+      }, {
+        "value": 103, "title": "电话"
+      }, {
+        "value": 104, "title": "电子邮件"
+      }, {
+        "value": 105, "title": "url"
+      }, {
+        "value": 106, "title": "搜索"
+      }, {
+        "value": 107, "title": "当前登录人"
+      }, {
+        "value": 120, "title": "富文本编辑器"
+      }, {
+        "value": 131, "title": "数字"
+      }, {
+        "value": 132, "title": "滑块"
+      }, {
+        "value": 140, "title": "日期"
+      }, {
+        "value": 141, "title": "日期时间"
+      }, {
+        "value": 142, "title": "时间"
+      }, {
+        "value": 143, "title": "年月"
+      }, {
+        "value": 144, "title": "年周"
+      }, {
+        "value": 150, "title": "上传文件"
+      }, {
+        "value": 151, "title": "上传图片"
+      }, {
+        "value": 160, "title": "颜色"
+      }, {
+        "value": 170, "title": "弹窗选择记录"
+      }, {
+        "value": 180, "title": "勾选"
+      }, {
+        "value": 182, "title": "多选组"
+      }, {
+        "value": 183, "title": "单选组"
+      }, {
+        "value": 190, "title": "下拉列表框"
+      }, {
+        "value": 191, "title": "列表框"
+      }, {
+        "value": 192, "title": "联动下拉列表框"
+      }]
+    },
+    "helpMeta": {
+        "101": {  
+          "controlId": 101,
+          "colName": "controlId",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "组件编号",
+          "autocomplete": "on",
+          "min": "0",
+          "max": "9999",
+          "step": "1"
+        },
+        "102": {  
+          "controlId": 102,
+          "colName": "colName",
+          "controlType": 101,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "字段名称",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        },
+        "103": {  
+          "controlId": 103,
+          "colName": "controlType",
+          "controlType": 190,
+          "optionList":[],
+          "isClear": false,
+          "disabled": false,
+          "required": true,
+          "pattern": "",
+          "class": "",
+          "title": "组件类型",
+          "placeholder": "请输入",
+          "readonly": false
+        },
+        "104": {  
+          "controlId": 104,
+          "colName": "isClear",
+          "controlType": 180,
+          "isClear": false,
+          "class": "",
+          "title": "",
+          "autocomplete": "on",
+          "optionList": [{
+            "value": 1,
+            "title": "添加新纪录是否清空？"
+          }]
+        },
+        "105": {  
+          "controlId": 105,
+          "colName": "defaultValue",
+          "controlType": 101,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "默认值",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        },
+        "106": {  
+          "controlId": 106,
+          "colName": "autofocus",
+          "controlType": 180,
+          "isClear": false,
+          "class": "",
+          "title": "",
+          "optionList": [{
+            "value": 1,
+            "title": "是否自动获得焦点"
+          }]
+        },
+        "107": {  
+          "controlId": 107,
+          "colName": "disabled",
+          "controlType": 180,
+          "isClear": false,
+          "class": "",
+          "title": "",
+          "optionList": [{
+            "value": 1,
+            "title": "是否可用"
+          }]
+        },
+        "108": {  
+          "controlId": 108,
+          "colName": "required",
+          "controlType": 180,
+          "isClear": false,
+          "class": "",
+          "title": "",
+          "optionList": [{
+            "value": 1,
+            "title": "是否必填"
+          }]
+        },
+        "109": {  
+          "controlId": 109,
+          "colName": "readonly",
+          "controlType": 180,
+          "isClear": false,
+          "class": "",
+          "title": "",
+          "autocomplete": "on",
+          "optionList": [{
+            "value": 1,
+            "title": "是否只读"
+          }]
+        },
+        "110": {  
+          "controlId": 110,
+          "colName": "pattern",
+          "controlType": 101,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "正则验证",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        },
+        "111": {  
+          "controlId": 111,
+          "colName": "class",
+          "controlType": 101,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        },
+        "112": {  
+          "controlId": 112,
+          "colName": "placeholder",
+          "controlType": 101,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "内部提示",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        },
+        "113": {  
+          "controlId": 113,
+          "colName": "title",
+          "controlType": 101,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "浮动提示",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        },
+        "114": {  
+          "controlId": 114,
+          "colName": "autocomplete",
+          "controlType": 183,
+          "isClear": false,
+          "class": "",
+          "title": "",
+          "autocomplete": "on",
+          "optionList": [{
+            "value": "on",
+            "title": "打开"
+            },
+            {
+              "value": "off",
+              "title": "关闭"
+            }]
+        },
+        "115": {  
+          "controlId": 111,
+          "colName": "size",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "class": "",
+          "min": "1",
+          "max": "100",
+          "step": "1",
+          "placeholder": "请输入",
+          "title": "字符宽度",
+          "autocomplete": "on"
+        },
+        "116": {  
+          "controlId": 116,
+          "colName": "maxlength",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "class": "",
+          "min": "1",
+          "max": "100",
+          "step": "1",
+          "placeholder": "请输入",
+          "title": "最大字符数",
+          "autocomplete": "on"
+        },
+        "117": {  
+          "controlId": 117,
+          "colName": "min",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "class": "",
+          "min": "1",
+          "max": "100",
+          "step": "1",
+          "placeholder": "请输入",
+          "title": "最小值",
+          "autocomplete": "on"
+        },
+        "118": {  
+          "controlId": 118,
+          "colName": "max",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "class": "",
+          "min": "1",
+          "max": "999999",
+          "step": "1",
+          "placeholder": "请输入",
+          "title": "最大值",
+          "autocomplete": "on"
+        },
+        "119": {  
+          "controlId": 119,
+          "colName": "step",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "class": "",
+          "min": "1",
+          "max": "100",
+          "step": "1",
+          "placeholder": "请输入",
+          "title": "步长",
+          "autocomplete": "on"
+        },
+        "120": {  
+          "controlId": 120,
+          "colName": "rows",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "class": "",
+          "min": "1",
+          "max": "50",
+          "step": "1",
+          "placeholder": "请输入",
+          "title": "行数",
+          "autocomplete": "on"
+        },
+        "121": {  
+          "controlId": 121,
+          "colName": "cols",
+          "controlType": 131,
+          "isClear": false,
+          "defaultValue": "",
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "class": "",
+          "min": "1",
+          "max": "500",
+          "step": "1",
+          "placeholder": "请输入",
+          "title": "列数",
+          "autocomplete": "on"
+        },
+        "122": {  
+          "controlId": 122,
+          "colName": "optionKey",
+          "controlType": 101,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "备选标识",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        },
+        "123": {  
+          "controlId": 123,
+          "colName": "optionList",
+          "controlType": 200,
+          "isClear": false,
+          "defaultValue": "",
+          "autofocus": false,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "请输入",
+          "title": "备选项",
+          "autocomplete": "on",
+          "size": 20,
+          "maxlength": 100
+        } 
+    },
+    "trList": [101],
+    "type": {
+      "100":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 116, 120, 121],
+      "101":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "102":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "103":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "104":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "105":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "106":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "107":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "120":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 122, 123],
+      "131":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 117, 118, 119],
+      "132":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 117, 118, 119],
+      "140":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 113, 117, 118, 119],
+      "141":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 113, 117, 118, 119],
+      "142":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 113, 117, 118, 119],
+      "143":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 113, 117, 118, 119],
+      "144":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 113, 117, 118, 119],
+      "150":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 116],
+      "151":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 116],
+      "160":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111],
+      "170":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112],
+      "180":[101, 102, 103, 104, 105, 106, 107, 108, 110, 111, 123],
+      "182":[101, 102, 103, 104, 105, 106, 107, 108, 110, 111, 118, 123],
+      "183":[101, 102, 103, 104, 105, 106, 107, 108, 110, 111, 123],
+      "190":[101, 102, 103, 104, 105, 106, 107, 108, 110, 111, 123],
+      "191":[101, 102, 103, 104, 105, 106, 107, 108, 110, 111, 118, 123],
+      "192":[101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111]
+    },
+    "numberList": [101]
+}
+
