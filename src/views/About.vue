@@ -2,16 +2,16 @@
   <div class="about">
     <h1 @click="myClick">This is an about page</h1>
     <a-input v-model:value="modelValue.name" placeholder="companyCode" /> <br>
-    {{value}}<br>{{modelValue.name}}
-
-    <nfInput  @pressenter="myPressEnter" v-model="modelValue.companyName" :meta="metaInfo" />{{modelValue}}
+    {{value}}<br>{{modelValue.name}}<br>
+    <nfInput  @pressenter="myPressEnter" v-model="modelValue.name" :meta="metaInfo" /><br>
+    外面：{{modelValue}}
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import { ref, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-textarea.vue'
+import nfInput from '@/components/nf-form-check.vue'
 
 export default {
   name: 'About',
@@ -19,9 +19,9 @@ export default {
     nfInput
   },
   setup () {
-    const value = ref('11')
+    const value = ref(true)
     const modelValue = ref({
-      name: '2222'
+      name: true
     })
     const metaInfo = ref({
       controlId: 1000,
@@ -39,11 +39,15 @@ export default {
       size: 30,
       cols: 100,
       maxlength: 100,
-      optionList: []
+      optionList: [{
+        value: 1,
+        title: '选项一'
+      }]
     })
     const isLoding = ref(false)
     const myClick = () => {
       isLoding.value = !isLoding.value
+      modelValue.value.name = !modelValue.value.name
     }
     const myPressEnter = (e, colName) => {
       alert('外部')
