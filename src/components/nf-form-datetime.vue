@@ -1,20 +1,43 @@
 /** 日期、时间、年月、周的选择 */
 <template>
-  <span>
-    <input :id="'c' + meta.controlId"
-    :type="type[meta.controlType]"
-    :name="'c' + meta.controlId"
-    :value="modelValue"
-    :disabled="meta.disabled"
-    :readonly="meta.readonly"
-    :class="meta.class"
-    :placeholder="meta.placeholder"
-    :title="meta.title"
-    :min="meta.min"
-    :max="meta.max"
-    :step="meta.step"
-    @input="myInput"
-    :key="'ckey_' + meta.controlId">
+  <span :title="meta.title">
+    <a-date-picker v-if="meta.controlType === 140"
+      :id="'c' + meta.controlId"
+      :name="'c' + meta.controlId"
+      :value="modelValue"
+      :disabled="meta.disabled"
+      :placeholder="meta.placeholder"
+      @change="myInput"
+    :key="'ckey_' + meta.controlId" />
+    <a-date-picker v-else-if="meta.controlType === 141"
+      show-time
+      :id="'c' + meta.controlId"
+      :name="'c' + meta.controlId"
+      :disabled="meta.disabled"
+      :placeholder="meta.placeholder"
+      @change="myInput"
+    :key="'ckey_' + meta.controlId" />
+    <a-time-picker v-else-if="meta.controlType === 142"
+      :id="'c' + meta.controlId"
+      :name="'c' + meta.controlId"
+      :disabled="meta.disabled"
+      :placeholder="meta.placeholder"
+      @change="myInput"
+    :key="'ckey_' + meta.controlId" />
+    <a-month-picker v-else-if="meta.controlType === 143"
+      :id="'c' + meta.controlId"
+      :name="'c' + meta.controlId"
+      :disabled="meta.disabled"
+      :placeholder="meta.placeholder"
+      @change="myInput"
+    :key="'ckey_' + meta.controlId" />
+    <a-week-picker v-else-if="meta.controlType === 144"
+      :id="'c' + meta.controlId"
+      :name="'c' + meta.controlId"
+      :disabled="meta.disabled"
+      :placeholder="meta.placeholder"
+      @change="myInput"
+    :key="'ckey_' + meta.controlId" />
   </span>
 </template>
 
@@ -67,6 +90,7 @@ export default {
   },
   data: () => {
     return {
+      value: '',
       type: {
         140: 'date', // 日期
         141: 'datetime-local', // 日期时间
@@ -77,9 +101,11 @@ export default {
     }
   },
   methods: {
-    myInput: function (e) {
-      var returnValue = event.target.value
-      var colName = this.meta.colName // event.target.getAttribute('colname')
+    myInput: function (date, dateString) {
+      var returnValue = dateString
+      // alert(date)
+      // alert(dateString)
+      var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }

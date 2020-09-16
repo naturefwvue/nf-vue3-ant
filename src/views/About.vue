@@ -1,8 +1,8 @@
 <template>
   <div class="about">
     <h1 @click="myClick">This is an about page</h1>
-    <a-input v-model:value="modelValue.name" placeholder="companyCode" /> <br>
-    {{value}}<br>{{modelValue.name}}<br>
+    <a-input v-model:value="value" placeholder="companyCode" /> <br>
+    {{value}}<br>
     <nfInput  @pressenter="myPressEnter" v-model="modelValue.name" :meta="metaInfo" /><br>
     外面：{{modelValue}}
   </div>
@@ -10,8 +10,8 @@
 
 <script>
 // @ is an alias to /src
-import { ref, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-checks.vue'
+import { ref, watch, registerRuntimeCompiler } from 'vue'
+import nfInput from '@/components/nf-form-datetime.vue'
 
 export default {
   name: 'About',
@@ -19,14 +19,14 @@ export default {
     nfInput
   },
   setup () {
-    const value = ref(true)
+    const value = ref(140)
     const modelValue = ref({
-      name: '1,2'
+      name: '1980-01-01'
     })
     const metaInfo = ref({
       controlId: 1000,
       colName: 'companyName',
-      controlType: 101,
+      controlType: 140,
       isClear: true,
       disabled: false,
       required: true,
@@ -48,6 +48,10 @@ export default {
         title: '选项二'
       }
       ]
+    })
+    watch(() => value.value, val => {
+      console.log(`count is ${val}`)
+      metaInfo.value.controlType = parseInt(val)
     })
     const isLoding = ref(false)
     const myClick = () => {
