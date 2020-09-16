@@ -1,21 +1,20 @@
 /** 下拉列表框，多选的那个再考虑考虑 */
 <template>
-  <select :id="'c'+meta.controlId"
+  <a-select :id="'c'+meta.controlId"
     :name="'c'+meta.controlId"
     :class="meta.class"
     :multiple="meta.controlType === 191"
     :disabled="meta.disabled"
     @change="myInput"
     >
-      <option :key="-2" value="-2" >请选择</option>
-      <option
+      <a-select-option
         v-for="(item,index) in meta.optionList"
         :key="index"
         :value="item.value"
         :selected="modelValue==item.value">
           {{item.title}}
-      </option>
-    </select>
+      </a-select-option>
+    </a-select>
 </template>
 
 <script>
@@ -58,8 +57,8 @@ export default {
     }
   },
   methods: {
-    myInput: function (e) {
-      var returnValue = event.target.value
+    myInput: function (value) {
+      var returnValue = value
       var colName = this.meta.colName
       if (this.meta.controlType === 190) {
         // 单选
