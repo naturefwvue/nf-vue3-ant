@@ -1,22 +1,17 @@
 /**勾选框，返回 true 或 false */
 <template>
-  <span>
-    <label role="checkbox" v-for="item in meta.optionList"
-      :key="'lblchks'+item.value">
-        <a-checkbox
-          :id="'c'+meta.controlId"
-          :name="'c'+meta.controlId"
-          :class="meta.class"
-          :value="item.value"
-          :disabled="meta.disabled"
-          :autoFocus="meta.autofocus"
-          :key="'chks'+item.value"
-          :checked="value === 'true'||modelValue"
-          @change="myInput">
-            <span>{{item.title}}</span>
-        </a-checkbox>
-    </label>
-  </span>
+  <a-checkbox v-for="item in meta.optionList"
+    :id="'c'+meta.controlId"
+    :name="'c'+meta.controlId"
+    :key="'chks'+item.value"
+    :class="meta.class"
+    :value="item.value"
+    :disabled="meta.disabled"
+    :autoFocus="meta.autofocus"
+    :checked="value === 'true'||modelValue"
+    @change="myInput">
+      {{item.title}}
+  </a-checkbox>
 </template>
 
 <script>

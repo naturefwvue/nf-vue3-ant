@@ -11,7 +11,7 @@
 <script>
 // @ is an alias to /src
 import { ref, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-check.vue'
+import nfInput from '@/components/nf-form-checks.vue'
 
 export default {
   name: 'About',
@@ -21,7 +21,7 @@ export default {
   setup () {
     const value = ref(true)
     const modelValue = ref({
-      name: true
+      name: '1,2'
     })
     const metaInfo = ref({
       controlId: 1000,
@@ -42,7 +42,12 @@ export default {
       optionList: [{
         value: 1,
         title: '选项一'
-      }]
+      },
+      {
+        value: 2,
+        title: '选项二'
+      }
+      ]
     })
     const isLoding = ref(false)
     const myClick = () => {

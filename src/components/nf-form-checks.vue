@@ -2,19 +2,19 @@
 <template>
 <div>
   <div style="float:left;width:90px;" v-for="item in meta.optionList" :key="'lblchks'+item.value">
-    <label role="checkbox" :class="meta.class" >
-        <input  :id="'c'+meta.controlId"
-          type="checkbox"
-          :name="'c'+meta.controlId"
-          :class="meta.class"
-          :value="item.value"
-          :checked="(','+modelValue+',').indexOf(','+item.value+',') != -1"
-          :disabled="meta.disabled"
-          :key="'chks'+item.value"
-          @input="myCheck"
-        >
-        <span>{{item.title}}</span>
-    </label>
+    <a-checkbox :id="'c'+meta.controlId"
+      type="checkbox"
+      :name="'c'+meta.controlId"
+      :class="meta.class"
+      :value="item.value"
+      :checked="(','+modelValue+',').indexOf(','+item.value+',') != -1"
+      :disabled="meta.disabled"
+      :autoFocus="meta.autofocus"
+      :key="'chks'+item.value"
+      @change="myCheck"
+    >
+      {{item.title}}
+    </a-checkbox>
   </div>
 </div>
 </template>
