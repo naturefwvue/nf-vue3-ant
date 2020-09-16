@@ -11,7 +11,7 @@
 <script>
 // @ is an alias to /src
 import { ref, watch, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-datetime.vue'
+import nfInput from '@/components/nf-form-number.vue'
 
 export default {
   name: 'About',

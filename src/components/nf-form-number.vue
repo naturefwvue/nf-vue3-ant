@@ -1,21 +1,21 @@
 /** 数字和滑块 */
 <template>
   <span>
-    <input :id="'c' + meta.controlId"
-    :type="type[meta.controlType]"
-    :name="'c' + meta.controlId"
-    :value="modelValue"
-    :disabled="meta.disabled"
-    :readonly="meta.readonly"
-    :class="meta.class"
-    :placeholder="meta.placeholder"
-    :title="meta.title"
-    :min="meta.min"
-    :max="meta.max"
-    :step="meta.step"
-    :autocomplete="meta.autocomplete"
-    @input="myInput"
-    :key="'ckey_'+meta.controlId">
+    <a-input-number :id="'c' + meta.controlId"
+      :name="'c' + meta.controlId"
+      :value="modelValue"
+      :autoFocus="meta.autoFocus"
+      :disabled="meta.disabled"
+      :readonly="meta.readonly"
+      :class="meta.class"
+      :placeholder="meta.placeholder"
+      :title="meta.title"
+      :min="meta.min"
+      :max="meta.max"
+      :step="meta.step"
+      :autocomplete="meta.autocomplete"
+      @change="myInput"
+    :key="'ckey_'+meta.controlId"/>
   </span>
 </template>
 
@@ -84,8 +84,8 @@ export default {
     }
   },
   methods: {
-    myInput: function (e) {
-      var returnValue = event.target.value
+    myInput: function (value) {
+      var returnValue = value
       if (returnValue.length > 0) {
         returnValue = parseFloat(returnValue)
       }
