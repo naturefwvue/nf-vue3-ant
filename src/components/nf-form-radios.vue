@@ -1,18 +1,13 @@
 /** 多选组，返回选择的value */
 <template>
-  <span>
-    <label role="radio" v-for="item in meta.optionList" :key="item.id">
-      <input type="radio"
-        :class="meta.class"
-        :checked="item.check"
-        :name="'c'+meta.controlId"
-        :value="item.value"
-        :disabled="meta.disabled"
-        @input="myInput"
-      >
-      <span>{{item.title}}</span>
-    </label>
-  </span>
+  <a-radio-group name="radioGroup" :value="modelValue" :default-value="-1">
+    <a-radio v-for="item in meta.optionList" :key="item.value"
+      :checked="item.value == modelValue"
+      @change="myInput"
+      :value="item.value">
+        {{item.title}}
+    </a-radio>
+  </a-radio-group>
 </template>
 
 <script>

@@ -11,7 +11,7 @@
 <script>
 // @ is an alias to /src
 import { ref, watch, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-number.vue'
+import nfInput from '@/components/nf-form-radios.vue'
 
 export default {
   name: 'About',
@@ -21,7 +21,7 @@ export default {
   setup () {
     const value = ref(140)
     const modelValue = ref({
-      name: '1980-01-01'
+      name: '2'
     })
     const metaInfo = ref({
       controlId: 1000,
@@ -40,11 +40,11 @@ export default {
       cols: 100,
       maxlength: 100,
       optionList: [{
-        value: 1,
+        value: '1',
         title: '选项一'
       },
       {
-        value: 2,
+        value: '2',
         title: '选项二'
       }
       ]
