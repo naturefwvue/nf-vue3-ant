@@ -11,7 +11,7 @@
 <script>
 // @ is an alias to /src
 import { ref, watch, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-radios.vue'
+import nfInput from '@/components/nf-form-select.vue'
 
 export default {
   name: 'About',

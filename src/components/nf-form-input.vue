@@ -1,6 +1,9 @@
 <template>
   <div class="components-input-demo-presuffix">
-    <a-input v-model:value="value1" placeholder="Basic usage">
+    <a-input
+      v-model:value="value1"
+      size="small"
+      placeholder="Basic usage">
     </a-input>
   </div>
 </template>

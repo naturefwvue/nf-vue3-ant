@@ -6,6 +6,7 @@
       :value="modelValue"
       :autoFocus="meta.autoFocus"
       :disabled="meta.disabled"
+      size="small"
       :readonly="meta.readonly"
       :class="meta.class"
       :placeholder="meta.placeholder"

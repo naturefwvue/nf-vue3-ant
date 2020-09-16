@@ -1,17 +1,13 @@
 /** 下拉列表框，多选的那个再考虑考虑 */
 <template>
-  <a-select :id="'c'+meta.controlId"
+  <a-select :id="'c'+meta.controlId"  style="width: 120px"
+    :default-value="modelValue"
     :name="'c'+meta.controlId"
-    :class="meta.class"
-    :multiple="meta.controlType === 191"
     :disabled="meta.disabled"
-    @change="myInput"
-    >
-      <a-select-option
-        v-for="(item,index) in meta.optionList"
-        :key="index"
-        :value="item.value"
-        :selected="modelValue==item.value">
+    size="small"
+    @change="myInput">
+      <a-select-option v-for="(item,index) in meta.optionList" :key="index"
+        :value="item.value">
           {{item.title}}
       </a-select-option>
     </a-select>
@@ -23,7 +19,7 @@ export default {
   name: 'nf-form-select',
   model: {
     prop: 'modelValue',
-    event: 'input'
+    event: 'change'
   },
   props: {
     modelValue: String,
@@ -58,10 +54,12 @@ export default {
   },
   methods: {
     myInput: function (value) {
+      // alert(value)
       var returnValue = value
       var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.$emit('change', returnValue) // 返回给中间组件
     }
   }
 }

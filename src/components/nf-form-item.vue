@@ -10,7 +10,7 @@
     <nfCheck v-else-if="meta.controlType === 180" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfChecks v-else-if="meta.controlType === 182" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfRadios v-else-if="meta.controlType === 183" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfSelect v-else-if="meta.controlType <= 191" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfSelect v-else-if="meta.controlType <= 191" :modelValue="modelValue" @change="myChange" @getvalue="sendValue" :meta="meta"/>
     <nfInputMore v-else-if="meta.controlType === 200" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
   </span>
 </template>
@@ -57,6 +57,10 @@ export default {
       // alert(typeof e.target.value)
       var check = e.target.checked
       this.$emit('update:modelValue', check)
+    },
+    myChange: function (value) {
+      this.$emit('change', value)
+      this.$emit('update:modelValue', value)
     },
     sendValue: function (value, colName) {
       // alert(colName)
