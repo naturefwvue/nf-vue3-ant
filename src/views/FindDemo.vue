@@ -7,22 +7,30 @@
     </div>
     <div style="background-color:#eee;height:400px;width:900px;float:left;">
       <!--多列表单-->
-      {{rowCount}}
-      <table >
-        <template v-for="tr in rowCount" :key="tr"><!--循环行-tr-->
-          <tr>
-            <template v-for="td in findInfo.colCount"  :key="td"><!--循环列-td-->
-              <td align="right">
-                {{getMeta(tr,td).title}}：
-              </td>
-              <td align="left">
-                <nfInput v-model="modelValue[getMeta(tr,td).colName]"
-                :meta="getMeta(tr,td)" />
-              </td>
+      <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+        <table role="all">
+          <tbody class="ant-table-tbody">
+            <template v-for="tr in rowCount" :key="tr"><!--循环行-tr-->
+              <tr>
+                <template v-for="td in findInfo.colCount" :key="td"><!--循环列-td-->
+                  <template  v-if="!isEnd(tr, td)"><!--判断meta是否循环完毕-->
+                    <td align="right" style="padding:3px 3px;height:20px">
+                      {{getMeta(tr,td).title}}：
+                    </td>
+                    <td align="left" style="padding:3px 3px;height:20px" v-if="!isEnd(tr, td)">
+                      <nfInput v-model="modelValue[getMeta(tr,td).colName]"
+                      :meta="getMeta(tr,td)" />
+                    </td>
+                  </template>
+                  <template v-else><!--如果一行没满，补充缺失的 td-->
+                    <td> </td><td> </td>
+                  </template>
+                </template>
+              </tr>
             </template>
-          </tr>
-        </template>
-      </table>
+          </tbody>
+        </table>
+      </div>
       <!--生成查询语句-->
       <div align="left" style="padding:15px">
         <span v-for="(item,key,index) in metaInfo" :key="index">
@@ -109,6 +117,12 @@ export default {
       var key = findInfo.value.allFind[(tr - 1) * findInfo.value.colCount + (td - 1)]
       return findItem.value[key]
     }
+    // 通过行、列计算是否结束
+    const isEnd = (tr, td) => {
+      var count = (tr - 1) * findInfo.value.colCount + (td - 1)
+      // alert(tdCount.value)
+      return count >= findInfo.value.allFind.length
+    }
     return {
       modelValue,
       findItem,
@@ -116,7 +130,8 @@ export default {
       rowCount,
       tdCount,
       myClick,
-      getMeta
+      getMeta,
+      isEnd
     }
   }
 }

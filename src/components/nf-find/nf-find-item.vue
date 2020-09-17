@@ -20,7 +20,7 @@ import nfInput from './nf-find-input.vue' // 100-107
 // import nfUrl from './nf-form-input-url.vue' // 105
 import nfNumber from './nf-find-number.vue' // 131
 // import nfSlider from './nf-form-numslider.vue' // 132
-import nfDatetime from './nf-form-datetime.vue' // 140-144
+import nfDatetime from './nf-find-datetime.vue' // 140-144
 // import nfUpload from './nf-form-upload.vue' // 150-151
 // import nfColor from './nf-form-color.vue' // 160
 // import nfCheck from './nf-form-check.vue' // 180

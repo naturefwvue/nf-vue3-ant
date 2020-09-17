@@ -39,7 +39,7 @@
 <script>
 
 export default {
-  name: 'nf-form-datetime',
+  name: 'nf-find-datetime',
   props: {
     modelValue: String,
     meta: {
