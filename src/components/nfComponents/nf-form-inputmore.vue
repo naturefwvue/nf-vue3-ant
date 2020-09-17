@@ -15,11 +15,11 @@
 </template>
 
 <script>
-import nfInput from '@/components/nf-form-input.vue' // 100-107
-import nfNumber from '@/components/nf-form-number.vue' // 131,132
-// import nfCheck from '@/components/nf-form-check.vue' // 180
-// import nfChecks from '@/components/nf-form-checks.vue' // 182
-// import nfRadios from '@/components/nf-form-radios.vue' // 183
+import nfInput from '@/components/nfComponents/nf-form-input.vue' // 100-107
+import nfNumber from '@/components/nfComponents/nf-form-number.vue' // 131,132
+// import nfCheck from '@/components/nfComponents/nf-form-check.vue' // 180
+// import nfChecks from '@/components/nfComponents/nf-form-checks.vue' // 182
+// import nfRadios from '@/components/nfComponents/nf-form-radios.vue' // 183
 
 export default {
   name: 'nf-form-inputmore',

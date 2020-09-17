@@ -1,6 +1,6 @@
 /** 下拉列表框，多选的那个再考虑考虑 */
 <template>
-  <a-select :id="'c'+meta.controlId"  style="width: 120px"
+  <a-select :id="'c'+meta.controlId"  style="width:98%"
     :default-value="modelValue"
     :name="'c'+meta.controlId"
     :disabled="meta.disabled"
