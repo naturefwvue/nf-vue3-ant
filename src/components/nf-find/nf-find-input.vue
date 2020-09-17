@@ -3,7 +3,7 @@
     <a-input
       :id="'id' + meta.controlId"
       :name="'c' + meta.controlId"
-      :value="modelValue"
+      :value="value"
       :placeholder="meta.placeholder"
       :title="meta.title"
       :maxlength="meta.maxlength"
@@ -60,6 +60,7 @@ export default {
     return {
       value: '',
       kind: '包含',
+      kindkey: '403',
       findKind: {
         401: '=', // 字符串
         402: '≠',
@@ -87,7 +88,10 @@ export default {
   },
   methods: {
     myInput: function (e) {
-      var returnValue = e.target.value
+      this.value = e.target.value
+      var returnValue = []
+      returnValue.push(this.kindkey)
+      returnValue.push(this.value)
       var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
@@ -96,6 +100,7 @@ export default {
       console.log('click left button', e)
     },
     handleMenuClick (e) {
+      this.kindkey = e.key
       this.kind = this.findKind[e.key]
       console.log('click', e)
     }

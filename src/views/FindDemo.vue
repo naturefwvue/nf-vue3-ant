@@ -33,25 +33,20 @@
       </div>
       <!--生成查询语句-->
       <div align="left" style="padding:15px">
-        <span v-for="(item,key,index) in metaInfo" :key="index">
-          <span v-if="modelValue[item.colName] !== ''">
-            {{item.findKind}}
-            <span v-if="item.findKind === '401'">
-              {{item.colName}} = "{{modelValue[item.colName]}}"  and<br>
-            </span>
-            <span v-else-if="item.findKind === '402'">
-              {{item.colName}} like "%{{modelValue[item.colName]}}%"  and<br>
-            </span>
-            <span v-else-if="item.findKind === '403'">
-              {{item.colName}} like "{{modelValue[item.colName]}}%"  and<br>
-            </span>
-            <span v-else-if="item.findKind === '404'">
-              {{item.colName}} like "%{{modelValue[item.colName]}}"  and<br>
-            </span>
-            <span v-else-if="item.findKind === '423'">
-              {{item.colName}} between "{{modelValue[item.colName]}}" and "{{modelValue[item.colName]}}"<br>
-            </span>
-          </span>
+        <span v-for="(item,key,index) in modelValue" :key="index"><!--遍历model-->
+          <template v-if="typeof item === 'object'"><!--判断是不是数组-->
+            <template v-if="item.length == 2"> <!--判断数组长度-->
+              <template v-if="item[0] == 401"> <!--判断查询方式-->
+                {{key}} = "{{item[1]}}" and <br>
+              </template>
+              <template v-else-if="item[0] == 402"> <!--判断查询方式-->
+                {{key}} &lt;&gt; "{{item[1]}}" and <br>
+              </template>
+              <template v-else-if="item[0] == 403"> <!--判断查询方式-->
+                {{key}} like "%{{item[1]}}%" and <br>
+              </template>
+            </template>
+          </template>
         </span>
       </div>
     </div>
