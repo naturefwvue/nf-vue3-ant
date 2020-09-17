@@ -204,7 +204,7 @@
 <script>
 // @ is an alias to /src
 import { ref, watch, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form/nf-form-input-url.vue'
+import nfInput from '@/components/nf-find/nf-find-input.vue'
 import antForm from '@/components/ant-form.vue'
 
 export default {

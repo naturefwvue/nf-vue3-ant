@@ -70,10 +70,10 @@
 <script>
 import { ref } from 'vue'
 // import nfHelp from '@/components/nf-meta-help.vue'
-import nfInput from '@/components/nf-form/nf-form-item.vue'
+import nfInput from '@/components/nf-find/nf-find-item.vue'
 
 export default {
-  name: 'FormDemo',
+  name: 'FindDemo',
   components: {
     // nfHelp,
     nfInput
