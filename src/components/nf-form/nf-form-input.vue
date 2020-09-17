@@ -32,12 +32,10 @@ export default {
       type: Object,
       default: () => {
         return {
-          // 通用
           controlId: Number, // 编号，区别同一个表单里的其他控件
           colName: String, // 字段名称
           controlType: Number, // 用类型编号表示type
-          isClear: {
-            // isClear  连续添加时是否恢复默认值
+          isClear: { // 连续添加时是否恢复默认值
             type: Boolean,
             default: false
           },

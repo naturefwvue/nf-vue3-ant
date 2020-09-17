@@ -1,10 +1,11 @@
 /** 表单元素的综合组件，根据类型自动加载相应的组件 */
 <template>
   <span class="hello">
-    <nfArea v-if="meta.controlType == 100" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfUrl v-else-if="meta.controlType == 105" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfArea v-if="meta.controlType === 100" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfUrl v-else-if="meta.controlType === 105" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfInput v-else-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfNumber v-else-if="meta.controlType <= 139" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfNumber v-else-if="meta.controlType === 131" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfSlider v-else-if="meta.controlType === 132" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfDatetime v-else-if="meta.controlType <= 149" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfUpload v-else-if="meta.controlType <= 159" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfColor v-else-if="meta.controlType === 160" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
@@ -17,10 +18,11 @@
 </template>
 
 <script>
-import nfArea from './nf-form-textarea.vue' // 100-107
+import nfArea from './nf-form-textarea.vue' // 100
 import nfInput from './nf-form-input.vue' // 100-107
-import nfUrl from './nf-form-input-url.vue' // 100-107
-import nfNumber from './nf-form-number.vue' // 131,132
+import nfUrl from './nf-form-input-url.vue' // 105
+import nfNumber from './nf-form-number.vue' // 131
+import nfSlider from './nf-form-numslider.vue' // 132
 import nfDatetime from './nf-form-datetime.vue' // 140-144
 import nfUpload from './nf-form-upload.vue' // 150-151
 import nfColor from './nf-form-color.vue' // 160
@@ -37,6 +39,7 @@ export default {
     nfUrl,
     nfArea,
     nfNumber,
+    nfSlider,
     nfDatetime,
     nfUpload,
     nfColor,
@@ -51,16 +54,6 @@ export default {
     meta: Object
   },
   methods: {
-    myInput: function (e) {
-      var returnValue = event.target.value
-      this.$emit('update:modelValue', returnValue)
-      this.$emit('getvalue', returnValue) // 返回给中间组件
-    },
-    myRadioCheck: function (e) {
-      // alert(typeof e.target.value)
-      var check = e.target.checked
-      this.$emit('update:modelValue', check)
-    },
     myChange: function (value) {
       this.$emit('change', value)
       this.$emit('update:modelValue', value)

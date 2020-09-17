@@ -6,21 +6,21 @@
       <a href="#" @click="myClick('personForm')">员工信息</a>
     </div>
     <div style="background-color:#eee;height:600px;width:400px;float:left;">
-        <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
-            <table>
-                <colgroup><col style="width: 30%; min-width: 30%;"><col>
-                </colgroup>
-                <tbody class="ant-table-tbody">
-                <tr v-for="(item,index) in metaInfo" :key="index">
-                <td align="right" style="padding:10px 10px;height:20px">
-                    {{item.title}}：
-                </td>
-                <td align="left" style="padding:10px 10px;height:20px">
-                    <nfInput v-model="modelValue[item.colName]" :meta="item" />
-                </td>
-                </tr>
-                </tbody>
-            </table>
+      <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+        <table>
+          <colgroup><col style="width: 30%; min-width: 30%;"><col>
+          </colgroup>
+          <tbody class="ant-table-tbody">
+            <tr v-for="(item,index) in metaInfo" :key="index">
+              <td align="right" style="padding:10px 10px;height:20px">
+                {{item.title}}：
+              </td>
+              <td align="left" style="padding:10px 10px;height:20px">
+                <nfInput v-model="modelValue[item.colName]" :meta="item" />
+              </td>
+            </tr>
+          </tbody>
+        </table>
         </div>
     </div>
     <div align="left" style="background-color:#EEEEFF;height:600px;width:300px;float:left;">
