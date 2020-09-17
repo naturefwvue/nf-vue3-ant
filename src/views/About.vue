@@ -11,7 +11,7 @@
 <script>
 // @ is an alias to /src
 import { ref, watch, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-upload.vue'
+import nfInput from '@/components/nf-form-numslider.vue'
 import antForm from '@/components/ant-form.vue'
 
 export default {
@@ -22,7 +22,7 @@ export default {
   setup () {
     const value = ref(140)
     const modelValue = ref({
-      name: '2'
+      name: '5'
     })
     const metaInfo = ref({
       controlId: 1000,
@@ -39,6 +39,9 @@ export default {
       autocomplete: 'on',
       size: 30,
       cols: 100,
+      mix: 1,
+      max: 100,
+      step: 1,
       maxlength: 100,
       optionList: [{
         value: '1',

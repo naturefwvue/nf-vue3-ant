@@ -1,29 +1,19 @@
-/** 数字 */
+/** 滑块 */
 <template>
-  <span>
-    <a-input-number :id="'c' + meta.controlId"
-      :name="'c' + meta.controlId"
-      :value="modelValue"
-      :autoFocus="meta.autoFocus"
-      :disabled="meta.disabled"
-      size="small"
-      :readonly="meta.readonly"
-      :class="meta.class"
-      :placeholder="meta.placeholder"
-      :title="meta.title"
-      :min="meta.min"
-      :max="meta.max"
-      :step="meta.step"
-      :autocomplete="meta.autocomplete"
-      @change="myInput"
-    :key="'ckey_'+meta.controlId"/>
-  </span>
+  <a-slider :id="'c' + meta.controlId"
+    :value="modelValue"
+    default-value="30"
+    :autoFocus="meta.autoFocus"
+    :min="meta.min"
+    :max="meta.max"
+    :step="meta.step"
+    :disabled="meta.disabled" />
 </template>
 
 <script>
 
 export default {
-  name: 'nf-form-number',
+  name: 'nf-form-numslider',
   model: {
     prop: 'modelValue',
     event: 'input'
