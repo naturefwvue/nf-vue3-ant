@@ -9,7 +9,7 @@
 // @ is an alias to /src
 import { ref } from 'vue'
 import nfHelp from '@/components/help-meta-form.vue'
-import nfInput from '@/components/nfComponents/nf-form-item.vue'
+import nfInput from '@/components/nf-form/nf-form-item.vue'
 
 export default {
   name: 'FormHelp',

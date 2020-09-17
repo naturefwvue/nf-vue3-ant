@@ -1,8 +1,9 @@
 /** 表单元素的综合组件，根据类型自动加载相应的组件 */
 <template>
   <span class="hello">
-    <nfInput v-if="meta.controlType == 100" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfArea v-else-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfArea v-if="meta.controlType == 100" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfUrl v-else-if="meta.controlType == 105" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfInput v-else-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfNumber v-else-if="meta.controlType <= 139" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfDatetime v-else-if="meta.controlType <= 149" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfUpload v-else-if="meta.controlType <= 159" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
@@ -16,22 +17,24 @@
 </template>
 
 <script>
-import nfInput from '@/components/nfComponents/nf-form-textarea.vue' // 100-107
-import nfArea from '@/components/nfComponents/nf-form-input.vue' // 100-107
-import nfNumber from '@/components/nfComponents/nf-form-number.vue' // 131,132
-import nfDatetime from '@/components/nfComponents/nf-form-datetime.vue' // 140-144
-import nfUpload from '@/components/nfComponents/nf-form-upload.vue' // 150-151
-import nfColor from '@/components/nfComponents/nf-form-color.vue' // 160
-import nfCheck from '@/components/nfComponents/nf-form-check.vue' // 180
-import nfChecks from '@/components/nfComponents/nf-form-checks.vue' // 182
-import nfRadios from '@/components/nfComponents/nf-form-radios.vue' // 183
-import nfSelect from '@/components/nfComponents/nf-form-select.vue' // 190
-import nfInputMore from '@/components/nfComponents/nf-form-inputmore.vue' // 200
+import nfArea from './nf-form-textarea.vue' // 100-107
+import nfInput from './nf-form-input.vue' // 100-107
+import nfUrl from './nf-form-input-url.vue' // 100-107
+import nfNumber from './nf-form-number.vue' // 131,132
+import nfDatetime from './nf-form-datetime.vue' // 140-144
+import nfUpload from './nf-form-upload.vue' // 150-151
+import nfColor from './nf-form-color.vue' // 160
+import nfCheck from './nf-form-check.vue' // 180
+import nfChecks from './nf-form-checks.vue' // 182
+import nfRadios from './nf-form-radios.vue' // 183
+import nfSelect from './nf-form-select.vue' // 190
+import nfInputMore from './nf-form-inputmore.vue' // 200
 
 export default {
   name: 'nf-form-item',
   components: {
     nfInput,
+    nfUrl,
     nfArea,
     nfNumber,
     nfDatetime,

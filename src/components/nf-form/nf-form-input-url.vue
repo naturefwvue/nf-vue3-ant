@@ -1,13 +1,13 @@
 <template>
-    <div style="margin-bottom: 16px">
+    <div>
       <a-input v-model:value="value">
         <template v-slot:addonBefore>
           <a-select v-model:value="http" style="width: 90px">
-            <a-select-option value="Http://">
-              Http://
+            <a-select-option value="http://">
+              http://
             </a-select-option>
-            <a-select-option value="Https://">
-              Https://
+            <a-select-option value="https://">
+              https://
             </a-select-option>
           </a-select>
         </template>
@@ -70,24 +70,32 @@ export default {
   },
   data () {
     return {
-      value: 'mysite',
-      http: 'Http://',
+      value: 'mysite2',
+      http: 'http://',
       com: '.com'
     }
   },
   watch: {
     value: function (val) {
+      var returnValue = this.http + this.value
       var colName = this.meta.colName
-      this.$emit('update:modelValue', val) // 返回给调用者
-      this.$emit('getvalue', val, colName) // 返回给中间组件
+      this.$emit('update:modelValue', returnValue) // 返回给调用者
+      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+    },
+    http: function (val) {
+      var returnValue = this.http + this.value
+      var colName = this.meta.colName
+      this.$emit('update:modelValue', returnValue) // 返回给调用者
+      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }
   },
   created: function () {
     this.value = this.modelValue
+    this.value = this.value.replace('http://', '').replace('https://', '')
   },
   methods: {
     myInput: function (e) {
-      var returnValue = this.value
+      var returnValue = this.http + this.value
       var colName = this.meta.colName // event.target.getAttribute('colname')
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件

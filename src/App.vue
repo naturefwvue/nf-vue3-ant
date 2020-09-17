@@ -4,7 +4,8 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>|
       <router-link to="/formMetaHelp">表单metaHelp</router-link>|
-      <router-link to="/formDemo">表单demo</router-link>
+      <router-link to="/formDemo">表单demo</router-link>|
+      <router-link to="/findDemo">查询组件</router-link>
     </div>
     <router-view/>
   </div>
