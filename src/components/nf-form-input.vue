@@ -1,9 +1,25 @@
 <template>
   <div class="components-input-demo-presuffix">
     <a-input
-      v-model:value="value1"
+      v-model:value="value"
       size="small"
-      placeholder="Basic usage">
+      :type="type[meta.controlType]"
+      :name="'c' + meta.controlId"
+      :value="modelValue"
+      :disabled="meta.disabled"
+      :readonly="meta.readonly"
+      :class="meta.class"
+      :placeholder="meta.placeholder"
+      :title="meta.title"
+      :maxlength="meta.maxlength"
+      :autocomplete="meta.autocomplete"
+      :list="meta.optionKey"
+      :key="'ckey_'+meta.controlId"
+      >
+        <!--文本框的备选项-->
+        <datalist v-if="typeof(meta.optionKey)!=='undefined'" :id="meta.optionKey">
+          <option :key="item.value" v-for="item in meta.optionList" :label="item.value" :value="item.title" />
+        </datalist>
     </a-input>
   </div>
 </template>
@@ -66,8 +82,7 @@ export default {
   },
   data: () => {
     return {
-      value1: '',
-      value2: '',
+      value: '',
       type: {
         100: 'textarea', // 多行文本框
         101: 'text', // 单行文本框
@@ -99,19 +114,14 @@ export default {
     }
   },
   watch: {
-    value1: function (val) {
-      var colName = this.meta.colName // event.target.getAttribute('colname')
-      this.$emit('update:modelValue', val) // 返回给调用者
-      this.$emit('getvalue', val, colName) // 返回给中间组件
-    },
-    value2: function (val) {
-      var colName = this.meta.colName // event.target.getAttribute('colname')
+    value: function (val) {
+      var colName = this.meta.colName
       this.$emit('update:modelValue', val) // 返回给调用者
       this.$emit('getvalue', val, colName) // 返回给中间组件
     }
   },
   created: function () {
-    this.value1 = this.modelValue
+    this.value = this.modelValue
   },
   methods: {
     myInput: function (e) {

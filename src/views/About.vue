@@ -6,23 +6,18 @@
     <nfInput  @pressenter="myPressEnter" v-model="modelValue.name" :meta="metaInfo" /><br>
     外面：{{modelValue}}
   </div>
-  <div>
-    <antForm />
-  </div>
-
 </template>
 
 <script>
 // @ is an alias to /src
 import { ref, watch, registerRuntimeCompiler } from 'vue'
-import nfInput from '@/components/nf-form-select.vue'
+import nfInput from '@/components/nf-form-upload.vue'
 import antForm from '@/components/ant-form.vue'
 
 export default {
   name: 'About',
   components: {
-    nfInput,
-    antForm
+    nfInput
   },
   setup () {
     const value = ref(140)
@@ -69,6 +64,7 @@ export default {
       alert(e)
       alert(colName)
     }
+
     return {
       value,
       modelValue,

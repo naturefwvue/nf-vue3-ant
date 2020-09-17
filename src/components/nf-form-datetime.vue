@@ -6,7 +6,6 @@
       :name="'c' + meta.controlId"
       :value="modelValue"
       :disabled="meta.disabled"
-      :placeholder="meta.placeholder"
       @change="myInput"
     :key="'ckey_' + meta.controlId" />
     <a-date-picker v-else-if="meta.controlType === 141"
@@ -14,28 +13,24 @@
       :id="'c' + meta.controlId"
       :name="'c' + meta.controlId"
       :disabled="meta.disabled"
-      :placeholder="meta.placeholder"
       @change="myInput"
     :key="'ckey_' + meta.controlId" />
     <a-time-picker v-else-if="meta.controlType === 142"
       :id="'c' + meta.controlId"
       :name="'c' + meta.controlId"
       :disabled="meta.disabled"
-      :placeholder="meta.placeholder"
       @change="myInput"
     :key="'ckey_' + meta.controlId" />
     <a-month-picker v-else-if="meta.controlType === 143"
       :id="'c' + meta.controlId"
       :name="'c' + meta.controlId"
       :disabled="meta.disabled"
-      :placeholder="meta.placeholder"
       @change="myInput"
     :key="'ckey_' + meta.controlId" />
     <a-week-picker v-else-if="meta.controlType === 144"
       :id="'c' + meta.controlId"
       :name="'c' + meta.controlId"
       :disabled="meta.disabled"
-      :placeholder="meta.placeholder"
       @change="myInput"
     :key="'ckey_' + meta.controlId" />
   </span>

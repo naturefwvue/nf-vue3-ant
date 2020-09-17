@@ -1,21 +1,14 @@
 /** 上传图片和文件，具体功能未实现，等待第三方UI */
 <template>
-  <span>
-    <span v-if="meta.controlType <= 219">
-       <input :id="'c' + meta.controlId"
-        type="file"
-        :name="'c' + meta.controlId"
-        :value="modelValue"
-        :disabled="meta.disabled"
-        :class="meta.class"
-        :title="meta.title"
-        :placeholder="meta.placeholder"
-        :readonly="meta.readonly"
-        :autocomplete="meta.autocomplete"
-        @input="myInput"
-        :key="'ckey_'+meta.controlId">
-    </span>
-  </span>
+  <a-upload
+    name="file"
+    :multiple="true"
+    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+    :headers="headers"
+    @change="handleChange"
+  >
+    <a-button> <a-icon type="upload" /> Click to Upload </a-button>
+  </a-upload>
 </template>
 
 <script>
