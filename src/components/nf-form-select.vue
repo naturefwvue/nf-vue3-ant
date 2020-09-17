@@ -52,7 +52,13 @@ export default {
       }
     }
   },
+  data () {
+    window.test = this
+  },
   methods: {
+    focus () {
+      console.log('focus')
+    },
     myInput: function (value) {
       // alert(value)
       var returnValue = value

@@ -42,7 +42,7 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
+          "placeholder": "请输入组件编号",
           "title": "组件编号",
           "autocomplete": "on",
           "min": "0",
@@ -61,8 +61,8 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
-          "title": "字段名称",
+          "placeholder": "请输入字段名称",
+          "title": "",
           "autocomplete": "on",
           "size": 20,
           "maxlength": 100
@@ -78,7 +78,7 @@
           "pattern": "",
           "class": "",
           "title": "组件类型",
-          "placeholder": "请输入",
+          "placeholder": "请输入组件类型",
           "readonly": false
         },
         "104": {  
@@ -106,8 +106,8 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
-          "title": "默认值",
+          "placeholder": "请输入默认值",
+          "title": "",
           "autocomplete": "on",
           "size": 20,
           "maxlength": 100
@@ -173,8 +173,8 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
-          "title": "正则验证",
+          "placeholder": "请输入正则验证",
+          "title": "",
           "autocomplete": "on",
           "size": 20,
           "maxlength": 100
@@ -191,7 +191,7 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
+          "placeholder": "请输入class",
           "title": "",
           "autocomplete": "on",
           "size": 20,
@@ -209,8 +209,8 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
-          "title": "内部提示",
+          "placeholder": "请输入替换文字",
+          "title": "",
           "autocomplete": "on",
           "size": 20,
           "maxlength": 100
@@ -227,8 +227,8 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
-          "title": "浮动提示",
+          "placeholder": "请输入标题",
+          "title": "",
           "autocomplete": "on",
           "size": 20,
           "maxlength": 100
@@ -263,7 +263,7 @@
           "min": "1",
           "max": "100",
           "step": "1",
-          "placeholder": "请输入",
+          "placeholder": "请输入字符宽度",
           "title": "字符宽度",
           "autocomplete": "on"
         },
@@ -280,7 +280,7 @@
           "min": "1",
           "max": "100",
           "step": "1",
-          "placeholder": "请输入",
+          "placeholder": "请输入最大字符数",
           "title": "最大字符数",
           "autocomplete": "on"
         },
@@ -297,7 +297,7 @@
           "min": "1",
           "max": "100",
           "step": "1",
-          "placeholder": "请输入",
+          "placeholder": "请输入最小值",
           "title": "最小值",
           "autocomplete": "on"
         },
@@ -314,7 +314,7 @@
           "min": "1",
           "max": "999999",
           "step": "1",
-          "placeholder": "请输入",
+          "placeholder": "请输入最大值",
           "title": "最大值",
           "autocomplete": "on"
         },
@@ -331,7 +331,7 @@
           "min": "1",
           "max": "100",
           "step": "1",
-          "placeholder": "请输入",
+          "placeholder": "请输入步长",
           "title": "步长",
           "autocomplete": "on"
         },
@@ -348,7 +348,7 @@
           "min": "1",
           "max": "50",
           "step": "1",
-          "placeholder": "请输入",
+          "placeholder": "请输入行数",
           "title": "行数",
           "autocomplete": "on"
         },
@@ -365,7 +365,7 @@
           "min": "1",
           "max": "500",
           "step": "1",
-          "placeholder": "请输入",
+          "placeholder": "请输入列数",
           "title": "列数",
           "autocomplete": "on"
         },
@@ -381,8 +381,8 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
-          "title": "备选标识",
+          "placeholder": "请输入备选标识",
+          "title": "",
           "autocomplete": "on",
           "size": 20,
           "maxlength": 100
@@ -399,8 +399,8 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入",
-          "title": "备选项",
+          "placeholder": "请输入备选项",
+          "title": "",
           "autocomplete": "on",
           "size": 20,
           "maxlength": 100

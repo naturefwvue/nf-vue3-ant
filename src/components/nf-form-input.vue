@@ -13,13 +13,8 @@
       :title="meta.title"
       :maxlength="meta.maxlength"
       :autocomplete="meta.autocomplete"
-      :list="meta.optionKey"
       :key="'ckey_'+meta.controlId"
       >
-        <!--文本框的备选项-->
-        <datalist v-if="typeof(meta.optionKey)!=='undefined'" :id="meta.optionKey">
-          <option :key="item.value" v-for="item in meta.optionList" :label="item.value" :value="item.title" />
-        </datalist>
     </a-input>
   </div>
 </template>
