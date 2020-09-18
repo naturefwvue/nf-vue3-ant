@@ -31,26 +31,6 @@
           </tbody>
         </table>
       </div>
-      <!--多列表单 新-->
-      <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
-        <table role="all">
-          <tbody class="ant-table-tbody">
-            <template v-for="(tr, index) in findTable" :key="index"><!--循环行-tr-->
-              <tr>
-                <template v-for="(td, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
-                  <td align="right" style="padding:3px 3px;height:20px">
-                    {{findItem[td].title}}：
-                  </td>
-                  <td :colspan="findItem[td].tdCount" align="left" style="padding:3px 3px;height:20px">
-                    <nfInput v-model="modelValue[getMeta2(td).colName]"
-                    :meta="findItem[td]" />
-                  </td>
-                </template>
-              </tr><!--循环行-tr 结束 -->
-            </template>
-          </tbody>
-        </table>
-      </div>
       <!--生成查询语句-->
       <div align="left" style="padding:15px">
         <span v-for="(item,key,index) in modelValue" :key="index"><!--遍历model-->
@@ -81,7 +61,6 @@
     </div>
     <div style="clear:both">
       {{modelValue}}
-      {{findTable}}
     </div>
   </div>
 </template>
@@ -129,43 +108,21 @@ export default {
       var key = findMeta.value.allFind[(tr - 1) * findMeta.value.colCount + (td - 1)]
       return findItem.value[key]
     }
-    const getMeta2 = (td) => {
-      return findItem.value[td]
-    }
     // 通过行、列计算是否结束
     const isEnd = (tr, td) => {
       var count = (tr - 1) * findMeta.value.colCount + (td - 1)
       // alert(tdCount.value)
       return count >= findMeta.value.allFind.length
     }
-    // 新的计算方式
-    const findTable = ref([]) // 二维数组存放meta的ID
-    var tdCount1 = 0
-    var td = []
-    for (var key in findItem.value) {
-      var meta = findItem.value[key]
-      td.push(key)
-      tdCount1 += 1 + meta.tdCount
-      if (tdCount1 >= findMeta.value.colCount * 2) {
-        findTable.value.push(td)
-        td = []
-        tdCount1 = 0
-      }
-    }
-    if (td.length > 0) {
-      findTable.value.push(td)
-    }
     return {
       modelValue,
       findItem,
       findMeta,
       findWhere,
-      findTable,
       rowCount,
       tdCount,
       myClick,
       getMeta,
-      getMeta2,
       isEnd
     }
   }

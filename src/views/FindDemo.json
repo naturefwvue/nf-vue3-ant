@@ -15,8 +15,7 @@
     "421":" =\"{k}\"",
     "431":" between {k1} and {k2}",
     "432":" between \"{k1}\" and \"{k2}\" ",
-    "433":" in (\"{k}\")"
-      
+    "433":" in ({k})"
   },
   "companyFind":{
     "findMeta":{
@@ -54,7 +53,8 @@
           "step": 1,
           "maxlength": 6,
           "optionList": [] ,
-          "findKind":"401"
+          "findKind":"401",
+          "tdCount":3
       },
       "1002":{
           "controlId": 1002,
@@ -67,7 +67,8 @@
           "size": 10,
           "maxlength": 50,
           "optionList": [] ,
-          "findKind":"403"
+          "findKind":"403",
+          "tdCount":1
       },
       "1003":{
           "controlId": 1003,
@@ -79,7 +80,8 @@
           "size": 10,
           "maxlength": 50,
           "optionList": [],
-          "findKind":"404"
+          "findKind":"404",
+          "tdCount":1
       },
       "1004": {
         "controlId": "1004",
@@ -92,7 +94,8 @@
         "maxlength": 50,
         "optionKey": "",
         "optionList": [],
-        "findKind":"405"
+        "findKind":"405",
+        "tdCount":3
       },
       "1005": {
         "controlId": "1005",
@@ -104,7 +107,8 @@
         "maxlength": 50,
         "optionKey": "",
         "optionList": [],
-        "findKind":"401,402"
+        "findKind":"401,402",
+        "tdCount":1
       },
       "1006": {
         "controlId": "1006",
@@ -118,7 +122,8 @@
         "maxlength": 50,
         "optionKey": "",
         "optionList": [],
-        "findKind":"401,402"
+        "findKind":"401,402",
+        "tdCount":1
       },
       "1007": {
         "controlId": "1007",
@@ -131,7 +136,8 @@
         "maxlength": 50,
         "optionKey": "",
         "optionList": [],
-        "findKind":"402"
+        "findKind":"402",
+        "tdCount":1
       },
       "1008": {
         "controlId": 1008,
@@ -146,7 +152,8 @@
           { "value": 4, "title": "合伙企业" },
           { "value": 5, "title": "个体工商户" }
         ],
-        "findKind":"401"
+        "findKind":"401",
+        "tdCount":3
       },
       "1009": {
         "controlId": 1009,
@@ -157,7 +164,8 @@
         "min": "1950-01-01",
         "max": "2999-12-31",
         "step": 1,
-        "findKind":"423"
+        "findKind":"423",
+        "tdCount":3
       }
     }
   },
