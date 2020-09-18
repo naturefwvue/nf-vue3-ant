@@ -89,12 +89,7 @@ export default {
   methods: {
     myInput: function (e) {
       this.value = e.target.value
-      var returnValue = []
-      returnValue.push(this.kindkey)
-      returnValue.push(this.value)
-      var colName = this.meta.colName
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.send()
     },
     handleButtonClick (e) {
       console.log('click left button', e)
@@ -103,6 +98,15 @@ export default {
       this.kindkey = e.key
       this.kind = this.findKind[e.key]
       console.log('click', e)
+      this.send()
+    },
+    send: function () {
+      var returnValue = []
+      returnValue.push(this.kindkey)
+      returnValue.push(this.value)
+      var colName = this.meta.colName
+      this.$emit('update:modelValue', returnValue) // 返回给调用者
+      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }
   }
 }

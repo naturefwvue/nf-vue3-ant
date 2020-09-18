@@ -1,38 +1,57 @@
 /** 日期、时间、年月、周的选择 */
 <template>
+  <!--查询方式-->
+  <a-dropdown>
+    <a class="ant-dropdown-link">{{kind}}</a>
+    <template v-slot:overlay>
+      <a-menu @click="handleMenuClick">
+        <a-menu-item key="401">=</a-menu-item>
+        <a-menu-item key="402">≠</a-menu-item>
+        <a-menu-item key="403">在</a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
+  <!--日期部分-->
   <span :title="meta.title">
-    <a-date-picker v-if="meta.controlType === 140"
-      :id="'c' + meta.controlId"
-      :name="'c' + meta.controlId"
-      :value="modelValue"
-      :disabled="meta.disabled"
-      @change="myInput"
-    :key="'ckey_' + meta.controlId" />
-    <a-date-picker v-else-if="meta.controlType === 141"
-      show-time
-      :id="'c' + meta.controlId"
-      :name="'c' + meta.controlId"
-      :disabled="meta.disabled"
-      @change="myInput"
-    :key="'ckey_' + meta.controlId" />
-    <a-time-picker v-else-if="meta.controlType === 142"
-      :id="'c' + meta.controlId"
-      :name="'c' + meta.controlId"
-      :disabled="meta.disabled"
-      @change="myInput"
-    :key="'ckey_' + meta.controlId" />
-    <a-month-picker v-else-if="meta.controlType === 143"
-      :id="'c' + meta.controlId"
-      :name="'c' + meta.controlId"
-      :disabled="meta.disabled"
-      @change="myInput"
-    :key="'ckey_' + meta.controlId" />
-    <a-week-picker v-else-if="meta.controlType === 144"
-      :id="'c' + meta.controlId"
-      :name="'c' + meta.controlId"
-      :disabled="meta.disabled"
-      @change="myInput"
-    :key="'ckey_' + meta.controlId" />
+    <template v-if="isRange">
+      <a-range-picker
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        :value="value"
+        :mode="['decade', 'decade']"
+        format="YYYY-MM-01"
+        :disabled="meta.disabled"
+        @panelChange="handlePanelChange2"
+        @change="myInput"
+      :key="'ckey_' + meta.controlId" />
+    </template>
+    <template v-else>
+      <a-date-picker v-if="meta.controlType === 141"
+        show-time
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        :disabled="meta.disabled"
+        @change="myInput"
+        :key="'ckey_' + meta.controlId" />
+      <a-time-picker v-else-if="meta.controlType === 142"
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        :disabled="meta.disabled"
+        @change="myInput"
+       :key="'ckey_' + meta.controlId" />
+      <a-month-picker v-else-if="meta.controlType === 143"
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        :disabled="meta.disabled"
+        @change="myInput"
+       :key="'ckey_' + meta.controlId" />
+      <a-week-picker v-else-if="meta.controlType === 144"
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        :disabled="meta.disabled"
+        @change="myInput"
+        :key="'ckey_' + meta.controlId" />
+    </template>
   </span>
 </template>
 
@@ -85,7 +104,18 @@ export default {
   },
   data: () => {
     return {
+      kind: '=',
       value: '',
+      isRange: true,
+      findKind: {
+        421: '=', // 日期
+        432: '在',
+        422: '≠',
+        423: '>',
+        424: '≥',
+        425: '<',
+        426: '≤'
+      },
       type: {
         140: 'date', // 日期
         141: 'datetime-local', // 日期时间
@@ -103,6 +133,14 @@ export default {
       var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+    },
+    handleMenuClick (e) {
+      this.kind = this.findKind[e.key]
+      console.log('click', e)
+    },
+    handlePanelChange2 (value, mode) {
+      this.value = value
+      this.mode2 = [mode[0] === 'date' ? 'month' : mode[0], mode[1] === 'date' ? 'month' : mode[1]]
     }
   }
 }

@@ -1,19 +1,25 @@
 /** 数字 */
 <template>
   <span>
+    <!--查询方式-->
     <a-dropdown>
       <a class="ant-dropdown-link">{{kind}}</a>
       <template v-slot:overlay>
         <a-menu @click="handleMenuClick">
-          <a-menu-item key="401">=</a-menu-item>
-          <a-menu-item key="402">≠</a-menu-item>
-          <a-menu-item key="403">含</a-menu-item>
+          <a-menu-item key="411">=</a-menu-item>
+          <a-menu-item key="431">在</a-menu-item>
+          <a-menu-item key="412">≠</a-menu-item>
+          <a-menu-item key="413">></a-menu-item>
+          <a-menu-item key="414">≥</a-menu-item>
+          <a-menu-item key="415">&lt;</a-menu-item>
+          <a-menu-item key="416">≤</a-menu-item>
         </a-menu>
       </template>
     </a-dropdown>
+    <!--查询条件-->
     <a-input-number :id="'c' + meta.controlId"
       :name="'c' + meta.controlId"
-      :value="modelValue"
+      :value="value"
       size="small"
       :placeholder="meta.placeholder"
       :title="meta.title"
@@ -22,6 +28,17 @@
       :step="meta.step"
       @change="myInput"
       :key="'ckey_'+meta.controlId"/>
+    <a-input-number :id="'c2' + meta.controlId" v-show="kindkey === '431'"
+        :name="'c2' + meta.controlId"
+        :value="value2"
+        size="small"
+        :placeholder="meta.placeholder"
+        :title="meta.title"
+        :min="meta.min"
+        :max="meta.max"
+        :step="meta.step"
+        @change="myInput2"
+        :key="'ckey_'+meta.controlId"/>
   </span>
 </template>
 
@@ -84,49 +101,50 @@ export default {
   data: () => {
     return {
       value: '',
-      kind: '包含',
+      value2: '',
+      kind: '=',
+      kindkey: '411',
       findKind: {
-        401: '=', // 字符串
-        402: '≠',
-        403: '包含',
-        404: '不包含',
-        405: '起始',
-        406: '结束',
         411: '=', // 数字
         412: '≠',
         413: '>',
         414: '≥',
         415: '<',
         416: '≤',
-        421: '=', // 日期
-        422: '≠',
-        423: '>',
-        424: '≥',
-        425: '<',
-        426: '≤',
-        431: '在',
-        432: '在',
-        433: '在'
-      },
-      type: {
-        131: 'number', // 数字
-        132: 'range' // 滑块
+        431: '在'
       }
     }
   },
   methods: {
     myInput: function (value) {
-      var returnValue = value
-      if (returnValue.length > 0) {
-        returnValue = parseFloat(returnValue)
+      this.value = value
+      if (this.value.length > 0) {
+        this.value = parseFloat(this.value)
       }
-      var colName = this.meta.colName // event.target.getAttribute('colname')
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.send()
+    },
+    myInput2: function (value) {
+      this.value2 = value
+      if (this.value2.length > 0) {
+        this.value2 = parseFloat(this.value2)
+      }
+      this.send()
     },
     handleMenuClick (e) {
+      this.kindkey = e.key
       this.kind = this.findKind[e.key]
-      console.log('click', e)
+      this.send()
+    },
+    send: function () {
+      var returnValue = []
+      returnValue.push(this.kindkey)
+      returnValue.push(this.value)
+      if (this.kindkey === '431') {
+        returnValue.push(this.value2)
+      }
+      var colName = this.meta.colName
+      this.$emit('update:modelValue', returnValue) // 返回给调用者
+      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }
   }
 }

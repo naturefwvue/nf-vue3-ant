@@ -5,14 +5,14 @@
       <a href="#" @click="myClick('companyFind')">公司信息</a> <br>
       <a href="#" @click="myClick('personFind')">员工信息</a>
     </div>
-    <div style="background-color:#eee;height:400px;width:900px;float:left;">
+    <div style="background-color:#eee;height:400px;width:1100px;float:left;">
       <!--多列表单-->
       <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
         <table role="all">
           <tbody class="ant-table-tbody">
             <template v-for="tr in rowCount" :key="tr"><!--循环行-tr-->
               <tr>
-                <template v-for="td in findInfo.colCount" :key="td"><!--循环列-td-->
+                <template v-for="td in findMeta.colCount" :key="td"><!--循环列-td-->
                   <template  v-if="!isEnd(tr, td)"><!--判断meta是否循环完毕-->
                     <td align="right" style="padding:3px 3px;height:20px">
                       {{getMeta(tr,td).title}}：
@@ -36,15 +36,10 @@
         <span v-for="(item,key,index) in modelValue" :key="index"><!--遍历model-->
           <template v-if="typeof item === 'object'"><!--判断是不是数组-->
             <template v-if="item.length == 2"> <!--判断数组长度-->
-              <template v-if="item[0] == 401"> <!--判断查询方式-->
-                {{key}} = "{{item[1]}}" and <br>
-              </template>
-              <template v-else-if="item[0] == 402"> <!--判断查询方式-->
-                {{key}} &lt;&gt; "{{item[1]}}" and <br>
-              </template>
-              <template v-else-if="item[0] == 403"> <!--判断查询方式-->
-                {{key}} like "%{{item[1]}}%" and <br>
-              </template>
+              {{key}} {{findWhere[item[0]].replace('{k}',item[1])}} and <br>
+            </template>
+            <template v-if="item.length == 3"> <!--判断数组长度-->
+              {{key}} {{findWhere[item[0]].replace('{k1}',item[1]).replace('{k2}',item[2])}} and <br>
             </template>
           </template>
         </span>
@@ -84,14 +79,15 @@ export default {
   setup () {
     const json = require('./FindDemo.json') // 加载meta信息，json格式
     const modelValue = ref({}) // 放数据的model
-    const findInfo = ref(json.companyFind.findMeta) // 查询表单的meta信息
+    const findMeta = ref(json.companyFind.findMeta) // 查询表单的meta信息
     const findItem = ref(json.companyFind.findItem) // 表单需要的meta信息
+    const findWhere = ref(json.findWhere) // 表单需要的meta信息
     const rowCount = ref(1) // 行数
     const tdCount = ref(1) // 控件数，遍历用
     const myClick = (key) => {
       // 更换表单的meta
       findItem.value = json[key].findItem
-      findInfo.value = json[key].findMeta
+      findMeta.value = json[key].findMeta
       // 初始化
       tdCount.value = 1
       modelValue.value = {}
@@ -103,25 +99,26 @@ export default {
         tdCount.value += 1
       }
       // 计算行数
-      rowCount.value = Math.ceil(findInfo.value.allFind.length / findInfo.value.colCount)
+      rowCount.value = Math.ceil(findMeta.value.allFind.length / findMeta.value.colCount)
       // alert(rowCount.value)
     }
     myClick('companyFind')
     // 通过行、列计算meta的key
     const getMeta = (tr, td) => {
-      var key = findInfo.value.allFind[(tr - 1) * findInfo.value.colCount + (td - 1)]
+      var key = findMeta.value.allFind[(tr - 1) * findMeta.value.colCount + (td - 1)]
       return findItem.value[key]
     }
     // 通过行、列计算是否结束
     const isEnd = (tr, td) => {
-      var count = (tr - 1) * findInfo.value.colCount + (td - 1)
+      var count = (tr - 1) * findMeta.value.colCount + (td - 1)
       // alert(tdCount.value)
-      return count >= findInfo.value.allFind.length
+      return count >= findMeta.value.allFind.length
     }
     return {
       modelValue,
       findItem,
-      findInfo,
+      findMeta,
+      findWhere,
       rowCount,
       tdCount,
       myClick,

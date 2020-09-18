@@ -3,41 +3,40 @@
   <div class="home">
     <div><h1>表单元素组件meta生成工具</h1></div>
     <div style="background-color:#dddddd;height:800px;width:400px;float:left;">
-        <!--表单-->
-        <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
-            <table>
-                <colgroup><col style="width: 25%; min-width: 25%;"><col>
-                </colgroup>
-                <tbody class="ant-table-tbody">
-                    <tr v-for="(item,index) in trList" :key="index"><!--遍历需要的meta-->
-                        <td align="right" style="padding:5px 5px;height:20px">{{helpMeta[item].colName}}：<!--名称-->
-                        </td>
-                        <td align="left" style="padding:5px 5px;height:20px"><!--控件-->
-                            <nfInput :modelValue="modelValue[helpMeta[item].colName]" :meta="helpMeta[item]" @getvalue="sendValue"/>
-                            {{helpMeta[item].title}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+      <!--表单-->
+      <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+        <table>
+          <colgroup><col style="width: 25%; min-width: 25%;"><col>
+          </colgroup>
+          <tbody class="ant-table-tbody">
+            <tr v-for="(item,index) in trList" :key="index"><!--遍历需要的meta-->
+              <td align="right" style="padding:5px 5px;height:20px">{{helpMeta[item].colName}}：<!--名称--></td>
+              <td align="left" style="padding:5px 5px;height:20px"><!--控件-->
+                <nfInput :modelValue="modelValue[helpMeta[item].colName]" :meta="helpMeta[item]" @getvalue="sendValue"/>
+                {{helpMeta[item].title}}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
     <div align="left" style="padding:5px;background-color:#FFFFEE;height:600px;width:400px;float:left;">
-        <!--效果和json-->
-        效果：<nfInput v-model="testValue" :meta="baseMeta"  /> ——> {{testValue}}
-        <div align="left" style="padding:15px;background-color:#FFEEEE;height:500px;width:400px;clear:both">
-            "{{tmpMeta.controlId}}": {<br>
-            <span v-for="(item, key, index) in tmpMeta" :key="index">
-                <span v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></span>
-                <span v-if="typeof item === 'string'">&nbsp;&nbsp;"{{key}}": "{{item}}", <br></span>
-                <span v-if="typeof(item) ==='boolean'">&nbsp;&nbsp;"{{key}}": {{item}}, <br></span>
-                <span v-if="typeof(item) ==='object'">
-                &nbsp;&nbsp;"{{key}}": [<br>
-                <span v-for="(opt, index) in item" :key="'opt'+index">&nbsp;&nbsp;&nbsp;&nbsp;{{opt}}, <br></span>
-                &nbsp;&nbsp;]<br>
-                </span>
-            </span>
-            }
-        </div>
+      <!--效果和json-->
+      效果：<nfInput v-model="testValue" :meta="baseMeta"  /> ——> {{testValue}}
+      <div align="left" style="padding:15px;background-color:#FFEEEE;height:500px;width:400px;clear:both">
+        "{{tmpMeta.controlId}}": {<br>
+        <span v-for="(item, key, index) in tmpMeta" :key="index">
+          <span v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></span>
+          <span v-if="typeof item === 'string'">&nbsp;&nbsp;"{{key}}": "{{item}}", <br></span>
+          <span v-if="typeof(item) ==='boolean'">&nbsp;&nbsp;"{{key}}": {{item}}, <br></span>
+          <span v-if="typeof(item) ==='object'">
+          &nbsp;&nbsp;"{{key}}": [<br>
+          <span v-for="(opt, index) in item" :key="'opt'+index">&nbsp;&nbsp;&nbsp;&nbsp;{{opt}}, <br></span>
+            &nbsp;&nbsp;]<br>
+          </span>
+        </span>
+        }
+      </div>
     </div>
     <div align="left" style="clear:both;background-color:#EEEEFF;height:600px;width:400px;clear:both">
     <!--标准属性-->
