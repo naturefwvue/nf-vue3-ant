@@ -6,53 +6,79 @@
       <a href="#" @click="myClick('personFind')">员工信息</a>
     </div>
     <div style="background-color:#eee;height:600px;width:1100px;float:left;">
-      <!--多列表单-->
-      <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
-        <table role="all">
-          <tbody class="ant-table-tbody">
-            <template v-for="tr in rowCount" :key="tr"><!--循环行-tr-->
+      <!--快捷查询，一行-->
+      <div
+        :style="{
+          height: '70px',
+          overflow: 'hidden',
+          position: 'relative',
+          border: '1px solid #ebedf0',
+          borderRadius: '2px',
+          padding: '2px',
+          textAlign: 'left',
+          background: '#fafafa',
+        }"
+      >
+        <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+          <table role="all">
+            <tbody class="ant-table-tbody">
               <tr>
-                <template v-for="td in findMeta.colCount" :key="td"><!--循环列-td-->
-                  <template  v-if="!isEnd(tr, td)"><!--判断meta是否循环完毕-->
-                    <td align="right" style="padding:3px 3px;height:20px">
-                      {{getMeta(tr,td).title}}：
-                    </td>
-                    <td align="left" style="padding:3px 3px;height:20px" v-if="!isEnd(tr, td)">
-                      <nfInput v-model="modelValue[getMeta(tr,td).colName]"
-                      :meta="getMeta(tr,td)" />
-                    </td>
-                  </template>
-                  <template v-else><!--如果一行没满，补充缺失的 td-->
-                    <td> </td><td> </td>
-                  </template>
-                </template>
-              </tr><!--循环行-tr 结束 -->
-            </template>
-          </tbody>
-        </table>
-      </div>
-      <!--多列表单 新-->
-      <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
-        <table role="all">
-          <tbody class="ant-table-tbody">
-            <template v-for="(tr, index) in findTable" :key="index"><!--循环行-tr-->
-              <tr>
-                <template v-for="(td, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
+                <td><!--个性化查询方案-->
+                  <a-dropdown size="small">
+                    <template v-slot:overlay>
+                      <a-menu @click="handleMenuClick">
+                        <a-menu-item v-for="(item,key) in findMeta.customer" :key="key">
+                          <UserOutlined />{{item.name}}</a-menu-item>
+                      </a-menu>
+                    </template>
+                    <a-button style="margin-left: 8px"> 快捷 <DownOutlined /> </a-button>
+                  </a-dropdown>
+                </td>
+                <template v-for="key in findMeta.quickFind" :key="key"><!--循环列-td
                   <td align="right" style="padding:3px 3px;height:20px">
-                    {{findItem[td].title}}：
-                  </td>
-                  <td :colspan="findItem[td].tdCount" align="left" style="padding:3px 3px;height:20px">
-                    <nfInput v-model="modelValue[getMeta2(td).colName]"
-                    :meta="findItem[td]" />
+                    {{findItem[key].title}}：
+                  </td>-->
+                  <td align="left" style="padding:3px 3px;height:20px" v-if="!isEnd(tr, td)">
+                    <nfInput v-model="modelValue[getMeta2(key).colName]"
+                    :meta="findItem[key]" />
                   </td>
                 </template>
-              </tr><!--循环行-tr 结束 -->
-            </template>
-          </tbody>
-        </table>
+                <td><a-button type="primary" @click="showDrawer">更多</a-button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
+      <!--更多查询条件，用抽屉打开-->
+      <a-drawer
+        title="更多查询条件"
+        placement="top"
+        :closable="false"
+        :visible="findVisible"
+        @close="onClose"
+      >
+        <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+          <table role="all">
+            <tbody class="ant-table-tbody">
+              <template v-for="(tr, index) in findTable" :key="index"><!--循环行-tr-->
+                <tr>
+                  <template v-for="(td, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
+                    <td align="right" style="padding:3px 3px;height:20px">
+                      {{findItem[td].title}}：
+                    </td>
+                    <td :colspan="findItem[td].tdCount" align="left" style="padding:3px 3px;height:20px">
+                      <nfInput v-model="modelValue[getMeta2(td).colName]"
+                      :meta="findItem[td]" />
+                    </td>
+                  </template>
+                </tr><!--循环行-tr 结束 -->
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </a-drawer>
       <!--生成查询语句-->
-      <div align="left" style="padding:15px">
+      <div align="left" style="padding:100px 15px">
         <span v-for="(item,key,index) in modelValue" :key="index"><!--遍历model-->
           <template v-if="typeof item === 'object'"><!--判断是不是数组-->
             <template v-if="item.length == 2"> <!--判断数组长度-->
@@ -65,6 +91,7 @@
         </span>
       </div>
     </div>
+    <!--model值-->
     <div align="left" style="background-color:#EEEEFF;height:600px;width:300px;clear:both">
       {<br>
         <span v-for="(item, key, index) in modelValue" :key="index">
@@ -89,14 +116,19 @@
 <script>
 import { ref } from 'vue'
 import nfInput from '@/components/nf-find/nf-find-item.vue'
+import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
 export default {
   name: 'FindDemo',
   components: {
     // nfHelp,
-    nfInput
+    nfInput,
+    UserOutlined,
+    DownOutlined
   },
   setup () {
+    // 抽屉
+    const findVisible = ref(false)
     const json = require('./FindDemo.json') // 加载meta信息，json格式
     const modelValue = ref({}) // 放数据的model
     const findMeta = ref(json.companyFind.findMeta) // 查询表单的meta信息
@@ -141,7 +173,8 @@ export default {
     const findTable = ref([]) // 二维数组存放meta的ID
     var tdCount1 = 0
     var td = []
-    for (var key in findItem.value) {
+    for (var index in findMeta.value.allFind) { // 遍历设定的meta的key的数组
+      var key = findMeta.value.allFind[index]
       var meta = findItem.value[key]
       td.push(key)
       tdCount1 += 1 + meta.tdCount
@@ -154,7 +187,27 @@ export default {
     if (td.length > 0) {
       findTable.value.push(td)
     }
+    // 抽屉的事件
+    const afterVisibleChange = (val) => {
+      console.log('visible', val)
+    }
+    const showDrawer = () => {
+      findVisible.value = true
+    }
+    const onClose = () => {
+      findVisible.value = false
+    }
+    // 个性化方案
+    const handleMenuClick = (e) => {
+      alert(e.key)
+      console.log('click', e)
+    }
     return {
+      findVisible,
+      afterVisibleChange,
+      showDrawer,
+      onClose,
+      handleMenuClick,
       modelValue,
       findItem,
       findMeta,

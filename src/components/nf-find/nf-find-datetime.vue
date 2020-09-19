@@ -1,7 +1,8 @@
 /** 日期、时间、年月、周的选择 */
 <template>
+<span>
   <!--查询方式-->
-  <span class="ant-input-group-addon">
+  <span class1="ant-input-group-addon">
     <a-dropdown>
       <a class="ant-dropdown-link">{{kind}}</a>
       <template v-slot:overlay>
@@ -27,6 +28,7 @@
         :mode="['date', 'date']"
         format="YYYY-MM-DD"
         :disabled="meta.disabled"
+        size="small"
         @panelChange="handlePanelChange2"
         @change="myInput2"
       :key="'ckey_' + meta.controlId" />
@@ -59,6 +61,7 @@
         :key="'ckey_' + meta.controlId" />
     </template>
   </span>
+</span>
 </template>
 
 <script>
