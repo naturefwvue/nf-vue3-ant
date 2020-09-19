@@ -7,7 +7,6 @@
       :name="'c'+meta.controlId"
       :class="meta.class"
       :value="item.value"
-      :checked="(','+modelValue+',').indexOf(','+item.value+',') != -1"
       :disabled="meta.disabled"
       :autoFocus="meta.autofocus"
       :key="'chks'+item.value"
