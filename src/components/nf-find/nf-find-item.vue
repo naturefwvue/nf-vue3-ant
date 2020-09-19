@@ -9,7 +9,7 @@
     <nfSelect v-else-if="meta.controlType === 180" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfChecks v-else-if="meta.controlType === 182" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfRadios v-else-if="meta.controlType === 183" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfSelect v-else-if="meta.controlType <= 191" :modelValue="modelValue" @change="myChange" @getvalue="sendValue" :meta="meta"/>
+    <nfSelect v-else-if="meta.controlType <= 191" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfInput v-else-if="meta.controlType === 200" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
   </span>
 </template>
@@ -26,7 +26,7 @@ import nfDatetime from './nf-find-datetime.vue' // 140-144
 // import nfCheck from './nf-form-check.vue' // 180
 import nfChecks from './nf-form-checks.vue' // 182
 import nfRadios from './nf-form-radios.vue' // 183
-import nfSelect from './nf-form-select.vue' // 190
+import nfSelect from './nf-find-select.vue' // 190
 // import nfInputMore from './nf-form-inputmore.vue' // 200
 
 export default {

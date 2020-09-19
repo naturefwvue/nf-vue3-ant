@@ -54,7 +54,7 @@
           "maxlength": 6,
           "optionList": [] ,
           "findKind":"401",
-          "tdCount":3
+          "tdCount":1
       },
       "1002":{
           "controlId": 1002,
@@ -95,7 +95,7 @@
         "optionKey": "",
         "optionList": [],
         "findKind":"405",
-        "tdCount":3
+        "tdCount":1
       },
       "1005": {
         "controlId": "1005",
@@ -153,12 +153,12 @@
           { "value": 5, "title": "个体工商户" }
         ],
         "findKind":"401",
-        "tdCount":3
+        "tdCount":1
       },
       "1009": {
         "controlId": 1009,
         "colName": "createDate",
-        "controlType": 140,
+        "controlType": 141,
         "class": "",
         "title": "成立日期",
         "min": "1950-01-01",

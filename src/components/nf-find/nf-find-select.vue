@@ -16,7 +16,7 @@
 <script>
 
 export default {
-  name: 'nf-form-select',
+  name: 'nf-find-select',
   model: {
     prop: 'modelValue',
     event: 'change'
@@ -60,8 +60,15 @@ export default {
       console.log('focus')
     },
     myInput: function (value) {
-      // alert(value)
-      var returnValue = value
+      var returnValue = []
+      // 判断value是否为数字
+      if (typeof value === 'number') {
+        returnValue.push(411)
+        returnValue.push(parseInt(value))
+      } else {
+        returnValue.push(401)
+        returnValue.push(value)
+      }
       var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件

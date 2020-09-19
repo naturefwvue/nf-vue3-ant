@@ -1,16 +1,22 @@
 /** 日期、时间、年月、周的选择 */
 <template>
   <!--查询方式-->
-  <a-dropdown>
-    <a class="ant-dropdown-link">{{kind}}</a>
-    <template v-slot:overlay>
-      <a-menu @click="handleMenuClick">
-        <a-menu-item key="401">=</a-menu-item>
-        <a-menu-item key="402">≠</a-menu-item>
-        <a-menu-item key="403">在</a-menu-item>
-      </a-menu>
-    </template>
-  </a-dropdown>
+  <span class="ant-input-group-addon">
+    <a-dropdown>
+      <a class="ant-dropdown-link">{{kind}}</a>
+      <template v-slot:overlay>
+        <a-menu @click="handleMenuClick">
+          <a-menu-item key="421">=</a-menu-item>
+          <a-menu-item key="422">≠</a-menu-item>
+          <a-menu-item key="432">在</a-menu-item>
+          <a-menu-item key="423">></a-menu-item>
+          <a-menu-item key="424">≥</a-menu-item>
+          <a-menu-item key="425">&lt;</a-menu-item>
+          <a-menu-item key="426">≤</a-menu-item>
+        </a-menu>
+      </template>
+    </a-dropdown>
+  </span>
   <!--日期部分-->
   <span :title="meta.title">
     <template v-if="isRange">
@@ -18,11 +24,11 @@
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :value="value"
-        :mode="['decade', 'decade']"
-        format="YYYY-MM-01"
+        :mode="['date', 'date']"
+        format="YYYY-MM-DD"
         :disabled="meta.disabled"
         @panelChange="handlePanelChange2"
-        @change="myInput"
+        @change="myInput2"
       :key="'ckey_' + meta.controlId" />
     </template>
     <template v-else>
@@ -104,8 +110,11 @@ export default {
   },
   data: () => {
     return {
-      kind: '=',
       value: '',
+      value1: '',
+      value2: '',
+      kind: '=',
+      kindkey: '432',
       isRange: true,
       findKind: {
         421: '=', // 日期
@@ -126,21 +135,40 @@ export default {
     }
   },
   methods: {
-    myInput: function (date, dateString) {
-      var returnValue = dateString
-      // alert(date)
-      // alert(dateString)
-      var colName = this.meta.colName
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+    myInput: function (date, dateString) { // 非范围事件
+      this.value = date
+      this.send()
+    },
+    myInput2: function (date, dateString) { // 范围事件
+      this.value = date
+      this.value1 = dateString[0]
+      this.value2 = dateString[1]
+      this.send()
     },
     handleMenuClick (e) {
+      // 切换查询条件
       this.kind = this.findKind[e.key]
+      this.isRange = e.key === '432'
       console.log('click', e)
+      // this.send()
     },
     handlePanelChange2 (value, mode) {
       this.value = value
       this.mode2 = [mode[0] === 'date' ? 'month' : mode[0], mode[1] === 'date' ? 'month' : mode[1]]
+    },
+    send: function () {
+      // 向上级提交
+      var returnValue = []
+      returnValue.push(this.kindkey) // 压入查询方式
+      if (this.kindkey === '432') {
+        returnValue.push(this.value1) // 范围查询，依次压入两个值
+        returnValue.push(this.value2)
+      } else {
+        returnValue.push(this.value) // 非范围，压入一个
+      }
+      var colName = this.meta.colName
+      this.$emit('update:modelValue', returnValue) // 返回给调用者
+      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }
   }
 }
