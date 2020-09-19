@@ -214,7 +214,23 @@
       }
     }
   },
-  "personForm":{
+  "personFind":{
+    "findMeta":{
+      "quickFind":[2000,2001,2002,2003],
+      "allFind":[2000,2001,2002,2003,2004,2005],
+      "colCount":4,
+      "customer":{
+        "200": {
+          "name":"方案一2",
+          "keys":[2000,2004,2005]
+        },
+        "201":{
+          "name":"方案二2",
+          "keys":[2002,2004,2005]
+        }
+      }
+    },
+    "findItem":{
       "2000":{
           "controlId": 100,
           "colName": "personId",
@@ -279,7 +295,7 @@
               { "value": 5, "title": "朝鲜" }
           ]
       },
-      "2012":{
+      "2004":{
           "controlId": "2012",
           "colName": "education",
           "controlType": 190,
@@ -299,7 +315,7 @@
               { "value": 5, "title": "博士" }
           ]
       },
-      "2030":{
+      "2005":{
           "controlId": 100,
           "colName": "hobby",
           "controlType": 182,
@@ -316,5 +332,6 @@
             { "value": 3, "title": "排球" }
           ] 
       }
+    }
   }
 }

@@ -28,11 +28,17 @@ export default {
     // 记录用户输入的查询条件
     const modelFindQuery = ref({})
     // 查询表单的meta信息
-    const findMeta = ref(jsonFind.companyFind)
+    const findMeta = ref(jsonFind.personFind)
+    // 菜单切换模块
+    const myClick = (name) => {
+      modelFindQuery.value = {}
+      findMeta.value = jsonFind[name]
+    }
     // 返回
     return {
       modelFindQuery,
-      findMeta
+      findMeta,
+      myClick
     }
   }
 }

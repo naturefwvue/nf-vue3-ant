@@ -173,32 +173,37 @@ export default {
       }
     }
   },
-  created: function () {
+  created: function () { // 初始化
     // 把表单子控件转换为多行多列的形式
-    var tdCount = 0
-    var td = []
-    for (var index in this.meta.findMeta.allFind) { // 遍历子控件的meta的key的数组，便于排序
-      var key = this.meta.findMeta.allFind[index] // 数组里面的meta的key
-      var meta = this.meta.findItem[key] // 子控件的meta
-      td.push(key)
-      tdCount += 1 + meta.tdCount
-      if (tdCount >= this.meta.findMeta.colCount * 2) { // 一行放满了，存到tr里面
-        this.findTable.push(td)
-        td = []
-        tdCount = 0
-      }
-    }
-    if (td.length > 0) { // 把不满行的td放入tr
-      this.findTable.push(td)
-    }
-
-    // 把快捷key放进去
-    this.quickFindKey = this.meta.findMeta.quickFind
+    this.getFindTable()
   },
-  updated: function () {
-    console.log('Child', 'Updated')
+  beforeUpdate: function () { // 外部修改属性值，需要重新计算
+    // 把表单子控件转换为多行多列的形式
+    this.getFindTable()
   },
   methods: {
+    // 把表单子控件转换为多行多列的形式
+    getFindTable: function () {
+      var tdCount = 0
+      var td = []
+      for (var index in this.meta.findMeta.allFind) { // 遍历子控件的meta的key的数组，便于排序
+        var key = this.meta.findMeta.allFind[index] // 数组里面的meta的key
+        var meta = this.meta.findItem[key] // 子控件的meta
+        td.push(key)
+        tdCount += 1 + meta.tdCount
+        if (tdCount >= this.meta.findMeta.colCount * 2) { // 一行放满了，存到tr里面
+          this.findTable.push(td)
+          td = []
+          tdCount = 0
+        }
+      }
+      if (td.length > 0) { // 把不满行的td放入tr
+        this.findTable.push(td)
+      }
+
+      // 把快捷key放进去
+      this.quickFindKey = this.meta.findMeta.quickFind
+    },
     // 获取控件值，向上返回
     getvalue: function (value, colName) {
       this.returnValue[colName] = value
