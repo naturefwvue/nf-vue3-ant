@@ -1,11 +1,11 @@
 <template>
   <div class="home">
     <h1>查询演示</h1>
-    <div style="background-color:#dddddd;height:400px;width:100px;float:left;">
+    <div style="background-color:#dddddd;height:600px;width:100px;float:left;">
       <a href="#" @click="myClick('companyFind')">公司信息</a> <br>
       <a href="#" @click="myClick('personFind')">员工信息</a>
     </div>
-    <div style="background-color:#eee;height:400px;width:1100px;float:left;">
+    <div style="background-color:#eee;height:600px;width:1100px;float:left;">
       <!--多列表单-->
       <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
         <table role="all">
@@ -88,7 +88,6 @@
 
 <script>
 import { ref } from 'vue'
-// import nfHelp from '@/components/nf-meta-help.vue'
 import nfInput from '@/components/nf-find/nf-find-item.vue'
 
 export default {

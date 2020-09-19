@@ -61,6 +61,7 @@ export default {
     },
     myInput: function (value) {
       var returnValue = []
+      var colName = this.meta.colName
       // 判断value是否为数字
       if (typeof value === 'number') {
         returnValue.push(411)
@@ -69,7 +70,6 @@ export default {
         returnValue.push(401)
         returnValue.push(value)
       }
-      var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
       this.$emit('change', returnValue) // 返回给中间组件
