@@ -22,7 +22,7 @@
 <script>
 
 export default {
-  name: 'nf-form-checks',
+  name: 'nf-find-checks',
   model: {
     prop: 'modelValue',
     event: 'input'
@@ -40,19 +40,10 @@ export default {
             type: Boolean,
             default: false
           },
-          disabled: { // 是否禁用
-            type: Boolean,
-            default: false
-          },
-          required: { // 必填
-            type: Boolean,
-            default: true
-          },
           max: { // 最多选择数量，0表示不限制
             type: Number,
             default: 0
           },
-          class: String, // 'cssTxt input_t1'
           title: String // 中文名称
         }
       }
@@ -65,20 +56,12 @@ export default {
   },
   methods: {
     myCheck: function (e) {
-      var returnValue = e.target.value
-      var colName = this.meta.colName // event.target.getAttribute('colname')
-      if (e.target.checked) {
-        // 检查是否超过最大限制。
-        if (this.meta.max > 0) {
-          if (this.modelValue.split(',').length >= this.meta.max) {
-            alert('超过了最大选择数量')
-            e.target.checked = false
-            return
-          }
-        }
-        this.optionsChecks[returnValue] = 1
-      } else {
-        delete this.optionsChecks[returnValue]
+      var value = e.target.value
+      var colName = this.meta.colName
+      if (e.target.checked) { // 选中，记录
+        this.optionsChecks[value] = 1
+      } else { // 没选，删除
+        delete this.optionsChecks[value]
       }
       console.log(this.optionsChecks)
 
@@ -86,7 +69,10 @@ export default {
       for (var key in this.optionsChecks) {
         arr.push(key)
       }
-      returnValue = arr.join(',')
+      var returnValue = []
+      // in 的查询方式
+      returnValue.push(433)
+      returnValue.push(arr.join(','))
       this.$emit('update:modelValue', returnValue)
       this.$emit('getvalue', returnValue, colName)
     }

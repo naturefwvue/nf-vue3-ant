@@ -84,6 +84,18 @@
           "tdCount":1
       },
       "1004": {
+        "controlId": 1009,
+        "colName": "createDate",
+        "controlType": 141,
+        "class": "",
+        "title": "成立日期",
+        "min": "1950-01-01",
+        "max": "2999-12-31",
+        "step": 1,
+        "findKind":"423",
+        "tdCount":3
+      },
+      "1009": {
         "controlId": "1004",
         "colName": "address",
         "controlType": 101,
@@ -125,7 +137,28 @@
         "findKind":"401,402",
         "tdCount":1
       },
-      "1007": {
+      "1007":{
+        "controlId": "2012",
+        "colName": "education",
+        "controlType": 183,
+        "isClear": true,
+        "disabled": false,
+        "required": true,
+        "readonly": false,
+        "pattern": "",
+        "class": "",
+        "placeholder": "",
+        "title": "学历",
+        "optionList": [
+          { "value": 1, "title": "高中" },
+          { "value": 2, "title": "大专" },
+          { "value": 3, "title": "本科" },
+          { "value": 4, "title": "硕士" },
+          { "value": 5, "title": "博士" }
+        ],
+        "tdCount":3
+      },
+      "1008": {
         "controlId": "1007",
         "colName": "Email",
         "controlType": 104,
@@ -139,7 +172,7 @@
         "findKind":"402",
         "tdCount":1
       },
-      "1008": {
+      "1011": {
         "controlId": 1008,
         "colName": "type",
         "title": "公司类型",
@@ -155,16 +188,22 @@
         "findKind":"401",
         "tdCount":1
       },
-      "1009": {
-        "controlId": 1009,
-        "colName": "createDate",
-        "controlType": 141,
+      "1010":{
+        "controlId": 100,
+        "colName": "hobby",
+        "controlType": 182,
+        "isClear": true,
+        "disabled": false,
+        "required": true,
+        "readonly": false,
+        "pattern": "",
         "class": "",
-        "title": "成立日期",
-        "min": "1950-01-01",
-        "max": "2999-12-31",
-        "step": 1,
-        "findKind":"423",
+        "title": "爱好",
+        "optionList": [
+          { "value": 1, "title": "篮球" },
+          { "value": 2, "title": "足球" },
+          { "value": 3, "title": "排球" }
+        ],
         "tdCount":3
       }
     }

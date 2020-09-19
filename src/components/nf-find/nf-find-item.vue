@@ -24,8 +24,8 @@ import nfDatetime from './nf-find-datetime.vue' // 140-144
 // import nfUpload from './nf-form-upload.vue' // 150-151
 // import nfColor from './nf-form-color.vue' // 160
 // import nfCheck from './nf-form-check.vue' // 180
-import nfChecks from './nf-form-checks.vue' // 182
-import nfRadios from './nf-form-radios.vue' // 183
+import nfChecks from './nf-find-checks.vue' // 182
+import nfRadios from './nf-find-radios.vue' // 183
 import nfSelect from './nf-find-select.vue' // 190
 // import nfInputMore from './nf-form-inputmore.vue' // 200
 
