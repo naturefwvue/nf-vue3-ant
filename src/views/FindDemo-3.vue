@@ -28,16 +28,18 @@
                     <template v-slot:overlay>
                       <a-menu @click="handleMenuClick">
                         <a-menu-item v-for="(item,key) in findMeta.customer" :key="key">
-                          <UserOutlined />{{item.name}}
-                        </a-menu-item>
+                          <UserOutlined />{{item.name}}</a-menu-item>
                       </a-menu>
                     </template>
                     <a-button style="margin-left: 8px"> 快捷 <DownOutlined /> </a-button>
                   </a-dropdown>
                 </td>
-                <template v-for="key in findMeta.quickFind" :key="key">
-                  <td align="left" style="padding:3px 3px;height:20px">
-                    <nfInput v-model="modelValue[getMeta(key).colName]"
+                <template v-for="key in findMeta.quickFind" :key="key"><!--循环列-td
+                  <td align="right" style="padding:3px 3px;height:20px">
+                    {{findItem[key].title}}：
+                  </td>-->
+                  <td align="left" style="padding:3px 3px;height:20px" v-if="!isEnd(tr, td)">
+                    <nfInput v-model="modelValue[getMeta2(key).colName]"
                     :meta="findItem[key]" />
                   </td>
                 </template>
@@ -65,7 +67,7 @@
                       {{findItem[td].title}}：
                     </td>
                     <td :colspan="findItem[td].tdCount" align="left" style="padding:3px 3px;height:20px">
-                      <nfInput v-model="modelValue[getMeta(td).colName]"
+                      <nfInput v-model="modelValue[getMeta2(td).colName]"
                       :meta="findItem[td]" />
                     </td>
                   </template>
@@ -142,51 +144,55 @@ const findManage = () => {
   const findMeta = ref({}) // 查询表单的meta信息
   const modelValue = ref({}) // 放数据的model
   const findItem = ref({}) // 表单需要的meta信息
-  const findTable = ref([]) // 二维数组存放meta的ID
-  // 把查询里的字段，变成多行多列的分布，二维数组
-  const metaToTable = () => {
-    var tdCount = 0
-    var td = []
-    findTable.value = []
-    for (var index in findMeta.value.allFind) { // 遍历设定的meta的key的数组
-      var key = findMeta.value.allFind[index]
-      var meta = findItem.value[key]
-      td.push(key)
-      tdCount += 1 + meta.tdCount
-      if (tdCount >= findMeta.value.colCount * 2) {
-        findTable.value.push(td)
-        td = []
-        tdCount = 0
-      }
-    }
-    if (td.length > 0) {
-      findTable.value.push(td)
-    }
-  }
-  // 切换其他查询模块
+  const rowCount = ref(1) // 行数
+  const tdCount = ref(1) // 控件数，遍历用
   const myClick = (key) => {
     // 更换表单的meta
     findMeta.value = json[key].findMeta
     findItem.value = json[key].findItem
     // 初始化
+    tdCount.value = 1
     modelValue.value = {}
     // 创建model
     modelValue.value = {}
     for (var k in findItem.value) {
       var item = findItem.value[k]
       modelValue.value[item.colName] = ''
+      tdCount.value += 1
     }
-
-    metaToTable()
+    // 计算行数
+    rowCount.value = Math.ceil(findMeta.value.allFind.length / findMeta.value.colCount)
+    // alert(rowCount.value)
   }
+  myClick('companyFind')
 
+  // 把查询里的字段，变成多行多列的分布，二维数组
+  const getTable = () => {
+    const findTable = ref([]) // 二维数组存放meta的ID
+    var tdCount1 = 0
+    var td = []
+    for (var index in findMeta.value.allFind) { // 遍历设定的meta的key的数组
+      var key = findMeta.value.allFind[index]
+      var meta = findItem.value[key]
+      td.push(key)
+      tdCount1 += 1 + meta.tdCount
+      if (tdCount1 >= findMeta.value.colCount * 2) {
+        findTable.value.push(td)
+        td = []
+        tdCount1 = 0
+      }
+    }
+    if (td.length > 0) {
+      findTable.value.push(td)
+    }
+  }
   return {
-    modelValue,
     findMeta,
+    modelValue,
     findItem,
     findWhere,
-    findTable,
-    myClick
+    myClick,
+    getTable
   }
 }
 
@@ -199,15 +205,67 @@ export default {
     DownOutlined
   },
   setup () {
-    // 引入查询管理
-    const { modelValue, findMeta, findItem, findWhere, myClick, findTable } = findManage()
+    // 抽屉
+    const findVisible = ref(false)
+    const json = require('./FindDemo.json') // 加载meta信息，json格式
+    const modelValue = ref({}) // 放数据的model
+    const findMeta = ref(json.companyFind.findMeta) // 查询表单的meta信息
+    const findItem = ref(json.companyFind.findItem) // 表单需要的meta信息
+    const findWhere = ref(json.findWhere) // 表单需要的meta信息
+    const rowCount = ref(1) // 行数
+    const tdCount = ref(1) // 控件数，遍历用
+    const myClick = (key) => {
+      // 更换表单的meta
+      findItem.value = json[key].findItem
+      findMeta.value = json[key].findMeta
+      // 初始化
+      tdCount.value = 1
+      modelValue.value = {}
+      // 创建model
+      modelValue.value = {}
+      for (var k in findItem.value) {
+        var item = findItem.value[k]
+        modelValue.value[item.colName] = ''
+        tdCount.value += 1
+      }
+      // 计算行数
+      rowCount.value = Math.ceil(findMeta.value.allFind.length / findMeta.value.colCount)
+      // alert(rowCount.value)
+    }
     myClick('companyFind')
-    // 通过key获取meta
-    const getMeta = (td) => {
+    // 通过行、列计算meta的key
+    const getMeta = (tr, td) => {
+      var key = findMeta.value.allFind[(tr - 1) * findMeta.value.colCount + (td - 1)]
+      return findItem.value[key]
+    }
+    const getMeta2 = (td) => {
       return findItem.value[td]
     }
+    // 通过行、列计算是否结束
+    const isEnd = (tr, td) => {
+      var count = (tr - 1) * findMeta.value.colCount + (td - 1)
+      // alert(tdCount.value)
+      return count >= findMeta.value.allFind.length
+    }
+    // 新的计算方式
+    const findTable = ref([]) // 二维数组存放meta的ID
+    var tdCount1 = 0
+    var td = []
+    for (var index in findMeta.value.allFind) { // 遍历设定的meta的key的数组
+      var key = findMeta.value.allFind[index]
+      var meta = findItem.value[key]
+      td.push(key)
+      tdCount1 += 1 + meta.tdCount
+      if (tdCount1 >= findMeta.value.colCount * 2) {
+        findTable.value.push(td)
+        td = []
+        tdCount1 = 0
+      }
+    }
+    if (td.length > 0) {
+      findTable.value.push(td)
+    }
     // 抽屉的事件
-    const findVisible = ref(false)
     const afterVisibleChange = (val) => {
       console.log('visible', val)
     }
@@ -233,8 +291,12 @@ export default {
       findMeta,
       findWhere,
       findTable,
+      rowCount,
+      tdCount,
       myClick,
-      getMeta
+      getMeta,
+      getMeta2,
+      isEnd
     }
   }
 }
