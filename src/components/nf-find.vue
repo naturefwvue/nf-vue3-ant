@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-     <div style="background-color:#eee;height:600px;width:900px;float:left;">
+     <div style="background-color:#eee;height:600px;">
       <!--快捷查询，一行-->
       <div
         :style="{
@@ -180,6 +180,10 @@ export default {
   beforeUpdate: function () { // 外部修改属性值，需要重新计算
     // 把表单子控件转换为多行多列的形式
     this.getFindTable()
+  },
+  setup (props) {
+    // alert(props.modelValue)
+    console.log(props.modelValue)
   },
   methods: {
     // 把表单子控件转换为多行多列的形式

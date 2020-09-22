@@ -2,8 +2,8 @@
   <div class="home">
     <h1>查询演示</h1>
     <div style="background-color:#dddddd;height:600px;width:100px;float:left;">
-      <a href="#" @click="naviClick('companyFind')">公司信息</a> <br>
-      <a href="#" @click="naviClick('personFind')">员工信息</a>
+      <a href="#" @click="myClick('companyFind')">公司信息</a> <br>
+      <a href="#" @click="myClick('personFind')">员工信息</a>
     </div>
     <div style="background-color:#eee;height:600px;width:1100px;float:left;">
       <!--快捷查询，一行-->
@@ -26,13 +26,13 @@
                 <td><!--个性化查询方案-->
                   <a-dropdown size="small">
                     <template v-slot:overlay>
-                      <a-menu @click="quickFindChange">
+                      <a-menu @click="changeQuickFind">
                         <a-menu-item v-for="(item,key) in findMeta.customer" :key="key">
-                          <UserOutlined />{{item.name}}
+                          <UserOutlined />{{item.name}}1
                         </a-menu-item>
                       </a-menu>
                     </template>
-                    <a-button style="margin-left: 8px" @click="quickFindClick"> 快捷 <DownOutlined /> </a-button>
+                    <a-button style="margin-left: 8px"> 快捷 <DownOutlined /> </a-button>
                   </a-dropdown>
                 </td>
                 <template v-for="key in quickFindKey" :key="key">
@@ -138,6 +138,7 @@ const findManage = () => {
     433: ' in ({k})'
   }
   // 加载meta信息，json格式
+  const json = require('./FindDemo.json')
   const findMeta = ref({}) // 查询表单的meta信息
   const findItem = ref({}) // 表单需要的meta信息
   const modelValue = ref({}) // 放数据的model
@@ -145,15 +146,6 @@ const findManage = () => {
   const findTable = ref([]) // 二维数组存放meta的ID
   // 把查询里的字段，变成多行多列的分布，二维数组
   const metaToTable = () => {
-    // 初始化
-    modelValue.value = {}
-    // 创建model
-    modelValue.value = {}
-    for (var k in findItem.value) {
-      var item = findItem.value[k]
-      modelValue.value[item.colName] = ''
-    }
-    // 行列转换
     var tdCount = 0
     var td = []
     findTable.value = []
@@ -172,12 +164,34 @@ const findManage = () => {
       findTable.value.push(td)
     }
   }
+  // 更换个性化查询方案
+  const changeQuickFind = (e) => {
+    alert(e.key)
+    quickFindKey.value = findMeta.value.customer[e.key].keys
+  }
+  // 切换其他查询模块
+  const myClick = (key) => {
+    // 更换表单的meta
+    findMeta.value = json[key].findMeta
+    findItem.value = json[key].findItem
+    // 加载快捷查询
+    quickFindKey.value = json[key].findMeta.quickFind
+    // 初始化
+    modelValue.value = {}
+    // 创建model
+    modelValue.value = {}
+    for (var k in findItem.value) {
+      var item = findItem.value[k]
+      modelValue.value[item.colName] = ''
+    }
+
+    metaToTable()
+  }
+
   // 抽屉的事件
   const findVisible = ref(false)
   const moreFindShow = (isShow) => {
     findVisible.value = isShow
-    // 清空查询条件
-    modelValue.value = {}
   }
   return {
     modelValue,
@@ -186,7 +200,7 @@ const findManage = () => {
     quickFindKey,
     findWhere,
     findTable,
-    metaToTable,
+    myClick,
     findVisible,
     moreFindShow
   }
@@ -202,38 +216,11 @@ export default {
   },
   setup () {
     // 引入查询管理
-    const { modelValue, findMeta, findItem, findWhere, quickFindKey, metaToTable, changeQuickFind, findTable, findVisible, moreFindShow } = findManage()
-    // 加载查询用的meta
-    const json = require('./FindDemo.json')
-    // 切换其他查询模块 menu
-    const naviClick = (key) => {
-      // 清空查询条件
-      modelValue.value = {}
-      // 更换表单的meta
-      findMeta.value = json[key].findMeta
-      findItem.value = json[key].findItem
-      // 加载快捷查询
-      quickFindKey.value = json[key].findMeta.quickFind
-      // 转换成行列的形式
-      metaToTable()
-    }
-    // 设置默认模块
-    naviClick('companyFind')
+    const { modelValue, findMeta, findItem, findWhere, quickFindKey, myClick, changeQuickFind, findTable, findVisible, moreFindShow } = findManage()
+    myClick('companyFind')
     // 通过key获取meta
     const getMeta = (td) => {
       return findItem.value[td]
-    }
-    // 设置默认快捷
-    const quickFindClick = () => {
-      quickFindKey.value = findMeta.value.quickFind
-      // 清空查询条件
-      modelValue.value = {}
-    }
-    // 更换个性化查询方案
-    const quickFindChange = (e) => {
-      quickFindKey.value = findMeta.value.customer[e.key].keys
-      // 清空查询条件
-      modelValue.value = {}
     }
     return {
       findVisible,
@@ -245,9 +232,7 @@ export default {
       quickFindKey,
       findWhere,
       findTable,
-      naviClick,
-      quickFindClick,
-      quickFindChange,
+      myClick,
       getMeta
     }
   }

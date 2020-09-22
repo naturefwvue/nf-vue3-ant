@@ -65,12 +65,12 @@ export default {
     // 加载查询控件的meta信息，json格式
     const jsonFind = require('./FindDemo.json')
     // 记录用户输入的查询条件
-    const modelFindQuery = ref({})
+    const modelFindQuery = ref({ a: 2 })
     // 查询表单的meta信息
     const findMeta = ref(jsonFind.personFind)
     // 菜单切换模块
     const myClick = (name) => {
-      modelFindQuery.value = {}
+      modelFindQuery.value = { a: 1 }
       findMeta.value = jsonFind[name]
     }
     // 返回

@@ -1,35 +1,17 @@
 {
-  "findWhere":{
-    "401":" = \"{k}\"",
-    "402":" <> \"{k}\"",
-    "403":" like \"%{k}%\"",
-    "404":" not like \"%{k}%\"",
-    "405":" like \"{k}%\"",
-    "406":" like \"%{k}\"",
-    "411":" ={k}",
-    "412":" <>{k}",
-    "413":" >{k}",
-    "414":" >={k}",
-    "415":" <{k}",
-    "416":" <={k}",
-    "421":" =\"{k}\"",
-    "431":" between {k1} and {k2}",
-    "432":" between \"{k1}\" and \"{k2}\" ",
-    "433":" in ({k})"
-  },
   "companyFind":{
     "findMeta":{
-      "quickFind":[1009,1004,1005],
+      "quickFind":[1000,1004,1005,1002],
       "allFind":[1000,1001,1002,1003,1009,1004,1005,1010,1006,1007,1011,1008],
       "colCount":4,
       "customer":{
         "100": {
-          "name":"方案一",
-          "keys":[1009,1004,1005]
+          "name":"方案二",
+          "keys":[1002,1003,1006]
         },
         "101":{
-          "name":"方案二",
-          "keys":[1006,1004,1005]
+          "name":"方案三",
+          "keys":[1007,1004,1010]
         }
       }
     },
@@ -221,11 +203,11 @@
       "colCount":4,
       "customer":{
         "200": {
-          "name":"方案一2",
+          "name":"方案一",
           "keys":[2000,2004,2005]
         },
         "201":{
-          "name":"方案二2",
+          "name":"方案二",
           "keys":[2002,2004,2005]
         }
       }
@@ -236,11 +218,12 @@
           "colName": "personId",
           "controlType": 101,
           "class": "",
-          "placeholder": "请输入",
+          "placeholder": "工号",
           "title": "工号",
           "size": 10,
           "maxlength": 10,
-          "optionList": [] 
+          "optionList": [],
+          "tdCount":1
       },
       "2001":{
           "controlId": "2001",
@@ -252,11 +235,12 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入员工姓名",
+          "placeholder": "员工姓名",
           "title": "姓名",
           "autocomplete": "on",
           "size": 10,
-          "maxlength": "50" 
+          "maxlength": "50",
+          "tdCount":1
       },
       "2002": {
           "controlId": 2002,
@@ -272,7 +256,8 @@
           "optionList": [
             { "value": "男", "title": "男" },
             { "value": "女", "title": "女" }
-          ] 
+          ],
+          "tdCount":3
       },
       "2003":{
           "controlId": "2012",
@@ -284,7 +269,7 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "请输入员工姓名",
+          "placeholder": "员工姓名",
           "title": "民族",
           "optionKey": "minzu",
           "optionList": [
@@ -305,7 +290,7 @@
           "readonly": false,
           "pattern": "",
           "class": "",
-          "placeholder": "",
+          "placeholder": "学历",
           "title": "学历",
           "optionList": [
               { "value": 1, "title": "高中" },
@@ -313,7 +298,8 @@
               { "value": 3, "title": "本科" },
               { "value": 4, "title": "硕士" },
               { "value": 5, "title": "博士" }
-          ]
+          ],
+          "tdCount":1
       },
       "2005":{
           "controlId": 100,
@@ -330,7 +316,8 @@
             { "value": 1, "title": "篮球" },
             { "value": 2, "title": "足球" },
             { "value": 3, "title": "排球" }
-          ] 
+          ],
+          "tdCount":3
       }
     }
   }
