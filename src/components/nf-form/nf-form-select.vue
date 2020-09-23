@@ -1,13 +1,14 @@
 /** 下拉列表框，多选的那个再考虑考虑 */
 <template>
   <a-select :id="'c'+meta.controlId"  style="width:98%"
-    :default-value="modelValue"
     :name="'c'+meta.controlId"
     :disabled="meta.disabled"
     size="small"
     @change="myInput">
       <a-select-option v-for="(item,index) in meta.optionList" :key="index"
-        :value="item.value">
+        :value="item.value"
+        :checked="item.value == modelValue"
+        >
           {{item.title}}
       </a-select-option>
     </a-select>

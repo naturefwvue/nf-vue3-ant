@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import nfInput from '@/components/nf-form/nf-form-item.vue'
 
 export default {
@@ -55,8 +55,8 @@ export default {
   },
   setup () {
     const json = require('./FormDemo.json') // 加载meta信息，json格式
-    const modelValue = ref({}) // 放数据的model
-    const metaInfo = ref(json.companyForm.formItem) // 表单需要的meta信息
+    const modelValue = reactive({}) // 放数据的model
+    const metaInfo = reactive(json.companyForm.formItem) // 表单需要的meta信息
     const myClick = (key) => {
       // 更换表单的meta
       metaInfo.value = json[key].formItem
@@ -64,7 +64,7 @@ export default {
       modelValue.value = {}
       for (var k in metaInfo.value) {
         var item = metaInfo.value[k]
-        modelValue.value[item.colName] = 'https://mi.comss'
+        modelValue.value[item.colName] = '2'
       }
     }
     myClick('companyForm')
