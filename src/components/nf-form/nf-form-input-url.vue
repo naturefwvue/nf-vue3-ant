@@ -1,8 +1,8 @@
 <template>
     <div>
-      <a-input :value="value">
+      <a-input :value="value" @input="myInput">
         <template v-slot:addonBefore>
-          <a-select v-model:value="http" style="width: 90px">
+          <a-select :value="http" style="width: 90px"  @change="myChange">
             <a-select-option value="http://">
               http://
             </a-select-option>
@@ -75,31 +75,37 @@ export default {
       com: '.com'
     }
   },
-  watch: {
-    value: function (val) {
+  created: function () {
+    this.resetVaule()
+  },
+  beforeUpdate: function () { // 外部修改属性值，需要重新计算
+    this.resetVaule()
+  },
+  methods: {
+    myInput: function (e) {
+      this.value = e.target.value
+      this.send()
+    },
+    myChange: function (value) {
+      this.http = value
+      this.send()
+    },
+    send: function () {
       var returnValue = this.http + this.value
       var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     },
-    http: function (val) {
-      var returnValue = this.http + this.value
-      var colName = this.meta.colName
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
-    }
-  },
-  created: function () {
-    this.value = this.modelValue
-    this.value = this.value.replace('http://', '').replace('https://', '')
-  },
-  methods: {
-    myInput: function (e) {
-      this.value = e.target.value
-      var returnValue = this.http + this.value
-      var colName = this.meta.colName // event.target.getAttribute('colname')
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+    // 通过属性，设置内部变量值，用于绑定控件
+    resetVaule: function () {
+      var t = this.modelValue
+      if (t.indexOf('http://') > -1) {
+        this.http = 'http://'
+        this.value = t.replace('http://', '')
+      } else if (t.indexOf('https://') > -1) {
+        this.http = 'https://'
+        this.value = t.replace('https://', '')
+      }
     }
   }
 }

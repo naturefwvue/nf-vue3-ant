@@ -56,13 +56,10 @@ export default {
     }
   },
   created: function () {
-    this.value = this.modelValue
-    if (typeof this.meta.rows !== 'undefined') {
-      this.autosize.minRows = this.meta.rows
-    }
-    if (typeof this.meta.cols !== 'undefined') {
-      this.autosize.maxRows = this.meta.cols
-    }
+    this.resetVaule()
+  },
+  beforeUpdate: function () { // 外部修改属性值，需要重新计算
+    this.resetVaule()
   },
   methods: {
     myInput: function (e) {
@@ -71,6 +68,16 @@ export default {
       this.value = returnValue
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+    },
+    // 通过属性，设置内部变量值，用于绑定控件
+    resetVaule: function () {
+      this.value = this.modelValue
+      if (typeof this.meta.rows !== 'undefined') {
+        this.autosize.minRows = this.meta.min
+      }
+      if (typeof this.meta.cols !== 'undefined') {
+        this.autosize.maxRows = this.meta.max
+      }
     }
   }
 }

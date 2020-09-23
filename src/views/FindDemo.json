@@ -1,7 +1,7 @@
 {
   "companyFind":{
     "findMeta":{
-      "quickFind":[1000,1005,1002],
+      "quickFind":[1000,1003,1002],
       "allFind":[1000,1001,1002,1003,1009,1004,1005,1010,1006,1007,1011,1008],
       "colCount":4,
       "customer":{

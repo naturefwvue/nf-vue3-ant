@@ -56,15 +56,15 @@ export default {
   setup () {
     const json = require('./FormDemo.json') // 加载meta信息，json格式
     const modelValue = ref({}) // 放数据的model
-    const metaInfo = ref(json.companyForm) // 表单需要的meta信息
+    const metaInfo = ref(json.companyForm.formItem) // 表单需要的meta信息
     const myClick = (key) => {
       // 更换表单的meta
-      metaInfo.value = json[key]
+      metaInfo.value = json[key].formItem
       // 创建model
       modelValue.value = {}
       for (var k in metaInfo.value) {
         var item = metaInfo.value[k]
-        modelValue.value[item.colName] = ''
+        modelValue.value[item.colName] = 'https://mi.comss'
       }
     }
     myClick('companyForm')
