@@ -3,7 +3,7 @@
     <a-input
       :id="'id' + meta.controlId"
       :name="'c' + meta.controlId"
-      :value="modelValue"
+      :value="value"
       :autofocus="meta.autofocus"
       :disabled="meta.disabled"
       :readonly="meta.readonly"
@@ -69,10 +69,16 @@ export default {
       }
     }
   },
+  data () {
+    return {
+      value: ''
+    }
+  },
   methods: {
     myInput: function (e) {
       var returnValue = e.target.value
-      var colName = this.meta.colName // event.target.getAttribute('colname')
+      var colName = this.meta.colName
+      this.value = returnValue
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }

@@ -4,7 +4,7 @@
     <a-textarea
       :id="'c' + meta.controlId"
       :name="'c' + meta.controlId"
-      v-model:value="value"
+      :value="value"
       :placeholder="meta.placeholder"
       :disabled="meta.disabled"
       :readonly="meta.readonly"
@@ -91,10 +91,10 @@ export default {
   },
   methods: {
     myPressEnter: function (e) {
-      // alert('内部')
       var returnValue = event.target.value
       var colName = this.meta.colName
-      this.$emit('pressenter', e, colName) // 返回给中间组件
+      this.value = returnValue
+      this.$emit('pressenter', returnValue, colName) // 返回给中间组件
     }
   }
 }

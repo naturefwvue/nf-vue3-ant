@@ -101,6 +101,7 @@ export default {
       // alert(date)
       // alert(dateString)
       var colName = this.meta.colName
+      this.value = returnValue
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }

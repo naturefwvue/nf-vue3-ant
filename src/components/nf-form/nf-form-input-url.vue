@@ -1,6 +1,6 @@
 <template>
     <div>
-      <a-input v-model:value="value">
+      <a-input :value="value">
         <template v-slot:addonBefore>
           <a-select v-model:value="http" style="width: 90px">
             <a-select-option value="http://">
@@ -70,7 +70,7 @@ export default {
   },
   data () {
     return {
-      value: 'mysite2',
+      value: '',
       http: 'http://',
       com: '.com'
     }
@@ -95,6 +95,7 @@ export default {
   },
   methods: {
     myInput: function (e) {
+      this.value = e.target.value
       var returnValue = this.http + this.value
       var colName = this.meta.colName // event.target.getAttribute('colname')
       this.$emit('update:modelValue', returnValue) // 返回给调用者

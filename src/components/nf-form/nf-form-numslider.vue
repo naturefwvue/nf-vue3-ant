@@ -1,7 +1,7 @@
 /** 滑块 */
 <template>
   <a-slider :id="'c' + meta.controlId"
-    :value="modelValue"
+    :value="value"
     default-value="30"
     :autoFocus="meta.autoFocus"
     :min="meta.min"
@@ -68,6 +68,7 @@ export default {
   },
   data: () => {
     return {
+      value: '',
       type: {
         131: 'number', // 数字
         132: 'range' // 滑块
@@ -80,6 +81,7 @@ export default {
       if (returnValue.length > 0) {
         returnValue = parseFloat(returnValue)
       }
+      this.value = returnValue
       var colName = this.meta.colName // event.target.getAttribute('colname')
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件

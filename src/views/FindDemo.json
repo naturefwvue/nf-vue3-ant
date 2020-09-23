@@ -1,7 +1,7 @@
 {
   "companyFind":{
     "findMeta":{
-      "quickFind":[1000,1004,1005,1002],
+      "quickFind":[1000,1005,1002],
       "allFind":[1000,1001,1002,1003,1009,1004,1005,1010,1006,1007,1011,1008],
       "colCount":4,
       "customer":{
@@ -16,6 +16,21 @@
       }
     },
     "findItem":{
+      "1010":{
+        "controlId": "2012",
+        "colName": "education",
+        "controlType": 183,
+        "placeholder": "学历",
+        "title": "学历",
+        "optionList": [
+          { "value": 1, "title": "高中" },
+          { "value": 2, "title": "大专" },
+          { "value": 3, "title": "本科" },
+          { "value": 4, "title": "硕士" },
+          { "value": 5, "title": "博士" }
+        ],
+        "tdCount":3
+      },
       "1000":{
           "controlId": 1000,
           "colName": "companyName",
@@ -153,27 +168,6 @@
         "max": "2999-12-31",
         "step": 1,
         "findKind":"423",
-        "tdCount":3
-      },
-      "1010":{
-        "controlId": "2012",
-        "colName": "education",
-        "controlType": 183,
-        "isClear": true,
-        "disabled": false,
-        "required": true,
-        "readonly": false,
-        "pattern": "",
-        "class": "",
-        "placeholder": "",
-        "title": "学历",
-        "optionList": [
-          { "value": 1, "title": "高中" },
-          { "value": 2, "title": "大专" },
-          { "value": 3, "title": "本科" },
-          { "value": 4, "title": "硕士" },
-          { "value": 5, "title": "博士" }
-        ],
         "tdCount":3
       },
       "1011":{

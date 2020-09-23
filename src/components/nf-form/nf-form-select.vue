@@ -54,6 +54,9 @@ export default {
   },
   data () {
     window.test = this
+    return {
+      value: ''
+    }
   },
   methods: {
     focus () {
@@ -63,6 +66,7 @@ export default {
       // alert(value)
       var returnValue = value
       var colName = this.meta.colName
+      this.value = returnValue
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
       this.$emit('change', returnValue) // 返回给中间组件

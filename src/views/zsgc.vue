@@ -9,10 +9,10 @@
         </a-layout-sider>
         <a-layout-content>
           <nfFind v-model="modelFindQuery" :meta="findMeta"/>
-          <br>外部：{{modelFindQuery}}
+          <nfForm v-model="modelForm" :meta="formMeta" />
         </a-layout-content>
       </a-layout>
-      <a-layout-footer>Footer</a-layout-footer>
+      <a-layout-footer><br>外部：{{modelForm}}</a-layout-footer>
     </a-layout>
   </div>
 </template>
@@ -20,6 +20,7 @@
 <script>
 import { ref } from 'vue'
 import nfFind from '@/components/nf-find.vue'
+import nfForm from '@/components/nf-form.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
 // 倒计时逻辑的Composition Function
@@ -54,7 +55,8 @@ export default {
   name: 'zsgcDemo',
   components: {
     // nfHelp,
-    nfFind
+    nfFind,
+    nfForm
   },
   setup () {
     const { count, start, state } = useCountdown(10)
@@ -73,6 +75,11 @@ export default {
       modelFindQuery.value = { a: 1 }
       findMeta.value = jsonFind[name]
     }
+
+    // 表单
+    const jsonForm = require('./FormDemo.json')
+    const modelForm = ref({ aa: 1 })
+    const formMeta = ref(jsonForm.companyForm)
     // 返回
     return {
       count,
@@ -80,7 +87,9 @@ export default {
       state,
       modelFindQuery,
       findMeta,
-      myClick
+      formMeta,
+      myClick,
+      modelForm
     }
   }
 }
@@ -104,7 +113,7 @@ export default {
   line-height: 120px;
 }
 #components-layout-demo-basic .ant-layout-content {
-  background: rgba(16, 142, 233, 1);
+  background: rgb(222, 222, 222);
   color: #fff;
   min-height: 120px;
   line-height: 120px;

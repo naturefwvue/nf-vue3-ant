@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-     <div style="background-color:#eee;height:600px;">
+     <div style="background-color:#eee;height:100px;">
       <!--快捷查询，一行-->
       <div
         :style="{
@@ -70,8 +70,6 @@
       </a-drawer>
     </div>
   </div>
-  结果：{{value}}<br>
-  结果：{{returnValue}}
 </template>
 
 <script>

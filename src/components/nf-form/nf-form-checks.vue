@@ -60,6 +60,7 @@ export default {
   },
   data: function () {
     return {
+      value: '',
       optionsChecks: {}
     }
   },
