@@ -3,7 +3,7 @@
   <span class="hello">
     <nfArea v-if="meta.controlType === 100" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfUrl v-else-if="meta.controlType === 105" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfInput v-else-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfInput v-else-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" @blur="myBlur" :meta="meta"/>
     <nfNumber v-else-if="meta.controlType === 131" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfSlider v-else-if="meta.controlType === 132" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfDatetime v-else-if="meta.controlType <= 149" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
@@ -58,8 +58,14 @@ export default {
       this.$emit('change', value)
       this.$emit('update:modelValue', value)
     },
+    myBlur: function (value) {
+      // alert('item 的 blur')
+      this.$emit('blur', value) // 触发自动验证
+    },
     sendValue: function (value, colName) {
       // alert(colName)
+      this.$emit('blur', value)
+      this.$emit('input', value)
       this.$emit('update:modelValue', value)
       this.$emit('getvalue', value, colName) // 返回给中间组件
     }

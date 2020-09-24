@@ -202,6 +202,43 @@
           "max": "2999-12-31",
           "step": 1,
           "tdCount":1
+        },
+        "1010":{
+          "controlId": "2012",
+          "colName": "education",
+          "controlType": 183,
+          "isClear": true,
+          "disabled": false,
+          "required": true,
+          "readonly": false,
+          "pattern": "",
+          "class": "",
+          "placeholder": "",
+          "title": "学历",
+          "optionList": [
+              { "value": 1, "title": "高中" },
+              { "value": 2, "title": "大专" },
+              { "value": 3, "title": "本科" },
+              { "value": 4, "title": "硕士" },
+              { "value": 5, "title": "博士" }
+          ]
+        },
+        "1011":{
+            "controlId": 100,
+            "colName": "hobby",
+            "controlType": 182,
+            "isClear": true,
+            "disabled": false,
+            "required": true,
+            "readonly": false,
+            "pattern": "",
+            "class": "",
+            "title": "爱好",
+            "optionList": [
+              { "value": 1, "title": "篮球" },
+              { "value": 2, "title": "足球" },
+              { "value": 3, "title": "排球" }
+            ] 
         }
       }
     },
