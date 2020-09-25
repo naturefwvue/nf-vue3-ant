@@ -7,13 +7,26 @@
     :label-col="labelCol"
     :wrapper-col="wrapperCol"
   >
-    <a-form-item v-for="(meta, index) in metaInfo"
-        :key="'form'+index"
-        :ref="meta.colName"
-        :label="meta.title"
-        :name="meta.colName">
-      <nfInput v-model="modelValue[meta.colName]"
-        :meta="meta" @blur="myblur" />
+    <a-form-item ref="companyName" label="公司名称" name="companyName">
+      <nfInput v-model="modelValue.companyName" :meta="metaInfo[1000]" @blur="myblur" />
+    </a-form-item>
+    <a-form-item label="邮编" name="companyCode">
+      <nfInput v-model="modelValue.companyCode" :meta="metaInfo[1001]" />
+    </a-form-item>
+    <a-form-item label="成立日期" required name="createDate">
+     <nfInput v-model="modelValue.createDate" :meta="metaInfo[1009]" />
+    </a-form-item>
+    <a-form-item label="企业类型" name="type">
+      <nfInput v-model="modelValue.type" :meta="metaInfo[1008]" />
+    </a-form-item>
+    <a-form-item label="学历" name="education">
+      <nfInput v-model="modelValue.education" :meta="metaInfo[1010]" />
+    </a-form-item>
+    <a-form-item label="爱好" name="hobby">
+      <nfInput v-model="modelValue.hobby" :meta="metaInfo[1011]" />
+    </a-form-item>
+    <a-form-item label="Activity form" name="desc">
+      <a-textarea v-model:value="form.desc" />
     </a-form-item>
     <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
       <a-button type="primary" @click="onSubmit">
@@ -24,20 +37,7 @@
       </a-button>
     </a-form-item>
   </a-form>
-<div align="left" style="background-color:#EEEEFF;height:600px;width:300px;float:left;">
-    {<br>
-    <span v-for="(item, key, index) in modelValue" :key="index">
-        <span v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></span>
-        <span v-if="typeof item === 'string'">&nbsp;&nbsp;"{{key}}": "{{item}}", <br></span>
-        <span v-if="typeof(item) ==='boolean'">&nbsp;&nbsp;"{{key}}": {{item}}, <br></span>
-        <span v-if="typeof(item) ==='object'">
-        &nbsp;&nbsp;"{{key}}": [<br>
-        <span v-for="(opt, index) in item" :key="'opt'+index">&nbsp;&nbsp;&nbsp;&nbsp;{{opt}}, <br></span>
-        &nbsp;&nbsp;]
-        </span>
-    </span>
-    }
-</div>
+{{modelValue}}
 </div>
 
 <div style="width:500px;float: left;">
