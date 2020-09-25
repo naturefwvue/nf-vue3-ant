@@ -86,6 +86,11 @@ export default {
       }
     }
   },
+  watch: {
+    modelValue: function (newValue, oldValue) {
+      this.value = newValue[1]
+    }
+  },
   methods: {
     myInput: function (e) {
       this.value = e.target.value

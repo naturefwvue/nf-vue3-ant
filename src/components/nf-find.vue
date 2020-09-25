@@ -4,7 +4,7 @@
       <!--快捷查询，一行-->
       <div
         :style="{
-          height: '70px',
+          height: '270px',
           overflow: 'hidden',
           position: 'relative',
           border: '1px solid #ebedf0',
@@ -30,15 +30,16 @@
                     <a-button style="margin-left: 2px" @click="clickQuickFind">快捷<DownOutlined /> </a-button>
                   </a-dropdown>
                 </td>
-                <template v-for="key in quickFindKey" :key="key">
+                <template v-for="(meta,index) in quickFindTable" :key="'qf'+index">
                   <td align="left" style="padding:3px 3px;height:20px">
-                    <nfInput v-model="value" :meta="meta.findItem[key]" @getvalue="getvalue" />
+                    <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" />
                   </td>
                 </template>
                 <td><a-button type="primary" @click="findAllisShow(true)">更多</a-button></td>
               </tr>
             </tbody>
           </table>
+          <br><br><br><br>条件{{findValue}}
         </div>
       </div>
       <!--更多查询条件，用抽屉打开-->
@@ -54,12 +55,12 @@
             <tbody class="ant-table-tbody">
               <template v-for="(tr, index) in findTable" :key="index"><!--循环行-tr-->
                 <tr>
-                  <template v-for="(td, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
+                  <template v-for="(meta, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
                     <td align="right" style="padding:3px 3px;height:20px">
-                      {{meta.findItem[td].title}}：
+                      {{meta.title}}：
                     </td>
-                    <td :colspan="meta.findItem[td].tdCount" align="left" style="padding:3px 3px;height:20px">
-                      <nfInput v-model="value" :meta="meta.findItem[td]" @getvalue="getvalue"/>
+                    <td :colspan="meta.tdCount" align="left" style="padding:3px 3px;height:20px">
+                      <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue"/>
                     </td>
                   </template>
                 </tr><!--循环行-tr 结束 -->
@@ -110,9 +111,10 @@ export default {
       // 开关相关
       findAllVisible: false, // 更多查询条件
       quickFindKey: [], // 快速查询需要的key
-      value: '', // 绑定控件的值
+      findValue: {}, // 绑定控件的值
       returnValue: {}, // 返回给上层的实体类
-      findTable: [], // 二维数组存放meta的ID
+      findTable: [], // 二维数组存放meta，遍历全部查询
+      quickFindTable: [], // 二维数组存放meta，遍历快捷查询
       findWhere: { // 查询方式，其实前端不需要的
         401: ' = "{k}"',
         402: ' <> "{k}"',
@@ -175,12 +177,10 @@ export default {
   },
   created: function () { // 初始化
     // 把表单子控件转换为多行多列的形式
-    // alert('created11')
     this.getFindTable()
   },
   beforeUpdate: function () { // 外部修改属性值，需要重新计算
     // 把表单子控件转换为多行多列的形式
-    // alert('beforeUpdate11')
     // this.getFindTable()
   },
   watch: {
@@ -196,24 +196,32 @@ export default {
     // 把表单子控件转换为多行多列的形式
     getFindTable: function () {
       var tdCount = 0
-      var td = []
+      var tr = []
+      this.findTable = []
+      this.findValue = {}
       for (var index in this.meta.findMeta.allFind) { // 遍历子控件的meta的key的数组，便于排序
         var key = this.meta.findMeta.allFind[index] // 数组里面的meta的key
         var meta = this.meta.findItem[key] // 子控件的meta
-        td.push(key)
-        tdCount += 1 + meta.tdCount
-        if (tdCount >= this.meta.findMeta.colCount * 2) { // 一行放满了，存到tr里面
-          this.findTable.push(td)
-          td = []
+        this.findValue[meta.colName] = '' // 创建实体类
+        tr.push(meta) // 往一行里面放
+        tdCount += 1 + meta.tdCount // 计算一行是否放满
+        if (tdCount >= this.meta.findMeta.colCount * 2) { // 一行放满了，存入table
+          this.findTable.push(tr)
+          tr = []
           tdCount = 0
         }
       }
-      if (td.length > 0) { // 把不满行的td放入tr
-        this.findTable.push(td)
+      if (tr.length > 0) { // 把不满行的tr放入table
+        this.findTable.push(tr)
       }
 
       // 把快捷key放进去
       this.quickFindKey = this.meta.findMeta.quickFind
+      this.quickFindTable = []
+      for (var i in this.meta.findMeta.quickFind) {
+        var key1 = this.meta.findMeta.quickFind[i] // 数组里面的meta的key
+        this.quickFindTable.push(this.meta.findItem[key1])
+      }
     },
     // 获取控件值，向上返回
     getvalue: function (value, colName) {
@@ -228,14 +236,15 @@ export default {
     // 更换个性化查询方案
     changeQuickFind: function (e) {
       this.quickFindKey = this.meta.findMeta.customer[e.key].keys
+      this.quickFindTable = []
+      for (var i in this.meta.findMeta.customer[e.key].keys) {
+        var key1 = this.meta.findMeta.customer[e.key].keys[i] // 数组里面的meta的key
+        this.quickFindTable.push(this.meta.findItem[key1])
+      }
     },
-    // 显示默认
+    // 显示默认查询方案
     clickQuickFind: function (e) {
       this.quickFindKey = this.meta.findMeta.quickFind
-    },
-    // 返回查询子控件的meta
-    getMeta2: function (td) {
-      return ''
     },
     // 判断控件是否循环完毕
     isEnd: function (tr, td) {

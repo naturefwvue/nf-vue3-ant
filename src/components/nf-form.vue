@@ -11,8 +11,7 @@
           :ref="meta.colName"
           :label="meta.title"
           :name="meta.colName">
-        <nfInput v-model="formValue[meta.colName]"
-          :meta="meta" @blur="myblur" />
+        <nfInput v-model="formValue[meta.colName]" :meta="meta" @blur="myblur" />
       </a-form-item>
       <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">

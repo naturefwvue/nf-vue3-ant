@@ -37,6 +37,12 @@ export default {
       value: -2
     }
   },
+  watch: {
+    modelValue: function (newValue, oldValue) {
+      alert(newValue)
+      // this.value = newValue[1]
+    }
+  },
   methods: {
     myInput: function (e) {
       var value = event.target.value

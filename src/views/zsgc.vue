@@ -8,7 +8,8 @@
           <span @click="myClick('person')">员工信息</span>
         </a-layout-sider>
         <a-layout-content>
-          <nfForm :meta="formMeta" :isReload='isReload' v-model="modelForm" />
+          <nfFind :meta="findMeta" :isReload='isReload' v-model="modelFindQuery" />
+          <nfForm :meta="formMeta" :isReload='isReload' v-model="modelFind" />
         </a-layout-content>
       </a-layout>
       <a-layout-footer><br>外部：{{formMeta}}</a-layout-footer>
@@ -19,22 +20,22 @@
 <script>
 import { reactive, ref } from 'vue'
 import nfForm from '@/components/nf-form.vue'
+import nfFind from '@/components/nf-find.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
 export default {
   name: 'zsgcDemo',
   components: {
-    nfForm
+    nfForm,
+    nfFind
   },
   setup () {
     // 标示是否重新加载
     const isReload = ref(false)
     // 加载查询控件的meta信息，json格式
     const jsonFind = require('./FindDemo.json')
-    // 记录用户输入的查询条件
-    const modelFindQuery = ref({})
-    // 查询表单的meta信息
-    const findMeta = ref(jsonFind.company)
+    const modelFindQuery = ref({}) // 记录用户输入的查询条件
+    const findMeta = ref(jsonFind.company) // 查询表单的meta信息
 
     // 表单
     const jsonForm = require('./FormDemo.json')
