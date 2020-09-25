@@ -8,26 +8,62 @@
           <span @click="myClick('person')">员工信息</span>
         </a-layout-sider>
         <a-layout-content>
+          <nfFind :meta="findMeta" :isReload='isReload' v-model="modelFindQuery"/>
           <nfForm :meta="formMeta" :isReload='isReload' v-model="modelForm" />
         </a-layout-content>
       </a-layout>
-      <a-layout-footer><br>外部：{{formMeta}}</a-layout-footer>
+      <a-layout-footer><br>外部：{{findMeta.findMeta.quickFind}}</a-layout-footer>
     </a-layout>
   </div>
 </template>
 
 <script>
 import { reactive, ref } from 'vue'
+import nfFind from '@/components/nf-find.vue'
 import nfForm from '@/components/nf-form.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
+
+// 倒计时逻辑的Composition Function
+const useCountdown = (initialCount) => {
+  const count = ref(initialCount)
+  const state = ref(false)
+  const start = (initCount) => {
+    state.value = true
+    if (initCount > 0) {
+      count.value = initCount
+    }
+    if (!count.value) {
+      count.value = initialCount
+    }
+    const interval = setInterval(() => {
+      if (count.value === 0) {
+        clearInterval(interval)
+        state.value = false
+      } else {
+        count.value--
+      }
+    }, 1000)
+  }
+  return {
+    count,
+    start,
+    state
+  }
+}
 
 export default {
   name: 'zsgcDemo',
   components: {
+    // nfHelp,
+    nfFind,
     nfForm
   },
   setup () {
-    // 标示是否重新加载
+    const { count, start, state } = useCountdown(10)
+    const onClick = () => {
+      start()
+    }
+
     const isReload = ref(false)
     // 加载查询控件的meta信息，json格式
     const jsonFind = require('./FindDemo.json')
@@ -39,19 +75,22 @@ export default {
     // 表单
     const jsonForm = require('./FormDemo.json')
     const modelForm = ref({})
-    const formMeta = ref(jsonForm.company)
+    const formMeta = reactive(jsonForm.company)
 
     // 菜单切换模块
     const myClick = (name) => {
-      modelForm.value = {}
-      modelFindQuery.value = {}
-      formMeta.value = jsonForm[name]
-      findMeta.value = jsonFind[name]
       isReload.value = !isReload.value
+      modelFindQuery.value = {}
+      modelForm.value = {}
+      formMeta.value = {} // jsonForm[name]
+      findMeta.value = jsonFind[name]
     }
 
     // 返回
     return {
+      count,
+      onClick,
+      state,
       isReload,
       modelFindQuery,
       findMeta,

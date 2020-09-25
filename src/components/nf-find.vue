@@ -84,10 +84,12 @@ export default {
   },
   model: {
     prop: 'modelValue',
+    isReload: false,
     event: 'change'
   },
   props: {
     modelValue: Object,
+    isReload: Boolean,
     meta: {
       type: Object,
       default: () => {
@@ -182,9 +184,7 @@ export default {
     // this.getFindTable()
   },
   watch: {
-    modelValue: function (newValue, oldVale) {
-      alert(typeof newValue)
-      console.log(newValue)
+    isReload: function (newValue, oldVale) {
       this.getFindTable()
     }
   },
