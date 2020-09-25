@@ -12,7 +12,7 @@
           <nfForm v-model="modelForm" :meta="formMeta" />
         </a-layout-content>
       </a-layout>
-      <a-layout-footer><br>外部：{{modelForm}}</a-layout-footer>
+      <a-layout-footer><br>外部：{{formMeta}}</a-layout-footer>
     </a-layout>
   </div>
 </template>
@@ -67,17 +67,18 @@ export default {
     // 加载查询控件的meta信息，json格式
     const jsonFind = require('./FindDemo.json')
     // 记录用户输入的查询条件
-    const modelFindQuery = reactive({})
+    const modelFindQuery = ref({})
     // 查询表单的meta信息
-    const findMeta = reactive(jsonFind.company)
+    const findMeta = ref(jsonFind.company)
 
     // 表单
     const jsonForm = require('./FormDemo.json')
-    const modelForm = reactive({})
-    const formMeta = reactive(jsonForm.company)
+    const modelForm = ref({})
+    const formMeta = ref(jsonForm.person)
 
     // 菜单切换模块
     const myClick = (name) => {
+      alert(name)
       modelFindQuery.value = {}
       findMeta.value = jsonFind[name]
       formMeta.value = jsonForm[name]

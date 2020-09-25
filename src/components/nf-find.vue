@@ -173,11 +173,20 @@ export default {
   },
   created: function () { // 初始化
     // 把表单子控件转换为多行多列的形式
+    // alert('created11')
     this.getFindTable()
   },
   beforeUpdate: function () { // 外部修改属性值，需要重新计算
     // 把表单子控件转换为多行多列的形式
-    this.getFindTable()
+    // alert('beforeUpdate11')
+    // this.getFindTable()
+  },
+  watch: {
+    modelValue: function (newValue, oldVale) {
+      alert(typeof newValue)
+      console.log(newValue)
+      this.getFindTable()
+    }
   },
   setup (props) {
     // alert(props.modelValue)

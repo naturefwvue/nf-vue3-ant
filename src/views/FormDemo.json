@@ -250,7 +250,7 @@
       },
       "formItem":{
         "2000":{
-            "controlId": 100,
+            "controlId": 2000,
             "colName": "personId",
             "controlType": 101,
             "isClear": true,
@@ -267,7 +267,7 @@
             "optionList": [] 
         },
         "2001":{
-            "controlId": "2001",
+            "controlId": 2001,
             "colName": "personName",
             "controlType": 101,
             "isClear": true,
@@ -299,7 +299,7 @@
             ] 
         },
         "2003":{
-            "controlId": "2012",
+            "controlId": 2012,
             "colName": "nation",
             "controlType": 106,
             "isClear": true,
@@ -320,7 +320,7 @@
             ]
         },
         "2012":{
-            "controlId": "2012",
+            "controlId": 2012,
             "colName": "education",
             "controlType": 190,
             "isClear": true,
@@ -340,7 +340,7 @@
             ]
         },
         "2030":{
-            "controlId": 100,
+            "controlId": 2030,
             "colName": "hobby",
             "controlType": 182,
             "isClear": true,

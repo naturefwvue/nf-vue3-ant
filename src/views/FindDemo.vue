@@ -2,8 +2,8 @@
   <div class="home">
     <h1>查询演示</h1>
     <div style="background-color:#dddddd;height:600px;width:100px;float:left;">
-      <a href="#" @click="naviClick('companyFind')">公司信息</a> <br>
-      <a href="#" @click="naviClick('personFind')">员工信息</a>
+      <a href="#" @click="naviClick('company')">公司信息</a> <br>
+      <a href="#" @click="naviClick('person')">员工信息</a>
     </div>
     <div style="background-color:#eee;height:600px;width:1100px;float:left;">
       <!--快捷查询，一行-->
@@ -218,7 +218,7 @@ export default {
       metaToTable()
     }
     // 设置默认模块
-    naviClick('companyFind')
+    naviClick('company')
     // 通过key获取meta
     const getMeta = (td) => {
       return findItem.value[td]

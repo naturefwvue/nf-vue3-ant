@@ -1,6 +1,6 @@
 /** 多选组，返回选择的value */
 <template>
-  <a-radio-group name="radioGroup" :value="modelValue" :default-value="-1">
+  <a-radio-group name="radioGroup" v-model:value="value" :default-value="-1">
     <a-radio v-for="item in meta.optionList" :key="item.value"
       :checked="item.value == modelValue"
       @change="myInput"

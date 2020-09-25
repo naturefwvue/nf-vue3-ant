@@ -26,7 +26,7 @@
     </a-form>
 </div>
 <div align="left" style="line-height:30px;background-color:#343434;height:600px;width:400px;float:left;">
-    实体类：{<br>
+    实体类：{{arrMeta}} <br> {<br>
     <template style="line-height:20px;" v-for="(item, key, index) in formValue" :key="index">
       <template v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></template>
       <template v-if="typeof item === 'string'">&nbsp;&nbsp;"{{key}}": "{{item}}", <br></template>
@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { ref, reactive } from 'vue'
+import { ref } from 'vue'
 import nfInput from './nf-form/nf-form-item.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
@@ -76,9 +76,9 @@ export default {
   data () { // 内部属性
     return {
       value1: '',
-      formValue: reactive({}), // 绑定控件的值
-      returnValue: reactive({}), // 返回给上层的实体类，和modelValue对应
-      arrMeta: reactive([]), // 二维数组存放控件的meta，便于调整顺序
+      formValue: {}, // 绑定控件的值
+      returnValue: {}, // 返回给上层的实体类，和modelValue对应
+      arrMeta: [], // 二维数组存放控件的meta，便于调整顺序
       formMeta: { // 控件自己的属性
         state: 'add', // 表单状态，add、update、show
         allForm: [], // 需要的控件的ID
@@ -115,22 +115,25 @@ export default {
   },
   created: function () { // 初始化
     // 把表单子控件转换为多行多列的形式
+    alert('create')
     this.getFormTable()
   },
   beforeUpdate: function () { // 外部修改属性值，需要重新计算
     // 把表单子控件转换为多行多列的形式
+    alert('beforeUpdate')
     // this.getFormTable()
   },
   methods: {
     // 把字段meta变成数组的形式，便于v-for
     getFormTable: function () {
+      alert(this.meta.formMeta.allForm)
       this.formValue = {}
       this.arrMeta = []
       for (var index in this.meta.formMeta.allForm) { // 遍历子控件的meta的key的数组，便于排序
         var key = this.meta.formMeta.allForm[index] // 数组里面的meta的key
         var meta = this.meta.formItem[key] // 子控件的meta
         this.arrMeta.push(meta) // 把字段放入数组，便于循环
-        this.formValue[meta.colName] = '2' // 创建实体类
+        this.formValue[meta.colName] = '' // 创建实体类
       }
     },
     // 获取控件值，向上返回
