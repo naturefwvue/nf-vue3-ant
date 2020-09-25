@@ -4,8 +4,8 @@
       <a-layout-header>增删改查的演示</a-layout-header>
       <a-layout>
         <a-layout-sider>
-          <span @click="myClick('companyFind')">公司信息</span> <br>
-          <span @click="myClick('personFind')">员工信息</span>
+          <span @click="myClick('company')">公司信息</span> <br>
+          <span @click="myClick('person')">员工信息</span>
         </a-layout-sider>
         <a-layout-content>
           <nfFind v-model="modelFindQuery" :meta="findMeta"/>
@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import nfFind from '@/components/nf-find.vue'
 import nfForm from '@/components/nf-form.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
@@ -67,19 +67,22 @@ export default {
     // 加载查询控件的meta信息，json格式
     const jsonFind = require('./FindDemo.json')
     // 记录用户输入的查询条件
-    const modelFindQuery = ref({ a: 2 })
+    const modelFindQuery = reactive({})
     // 查询表单的meta信息
-    const findMeta = ref(jsonFind.personFind)
-    // 菜单切换模块
-    const myClick = (name) => {
-      modelFindQuery.value = { a: 1 }
-      findMeta.value = jsonFind[name]
-    }
+    const findMeta = reactive(jsonFind.company)
 
     // 表单
     const jsonForm = require('./FormDemo.json')
-    const modelForm = ref({ aa: 1 })
-    const formMeta = ref(jsonForm.companyForm)
+    const modelForm = reactive({})
+    const formMeta = reactive(jsonForm.company)
+
+    // 菜单切换模块
+    const myClick = (name) => {
+      modelFindQuery.value = {}
+      findMeta.value = jsonFind[name]
+      formMeta.value = jsonForm[name]
+    }
+
     // 返回
     return {
       count,

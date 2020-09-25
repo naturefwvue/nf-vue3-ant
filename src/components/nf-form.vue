@@ -1,36 +1,48 @@
 <template>
-  <div class="home">
-     <div style="background-color:#eee;height:500px;">
-       <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
-          <table role="all">
-            <colgroup><col style="width: 30%; min-width: 30%;"><col>
-            </colgroup>
-            <tbody class="ant-table-tbody">
-              <template v-for="(tr, index) in formTable" :key="index"><!--循环行-tr-->
-                <tr>
-                  <template v-for="(td, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
-                    <td align="right" style="padding:3px 3px;height:20px">
-                      {{meta.formItem[td].title}}：{{td}}
-                    </td>
-                    <td :colspan="meta.formItem[td].tdCount" align="left" style="padding:3px 3px;height:20px">
-                      {{getMetaColname(td)}}
-                      <nfInput
-                        :modelValue="value[getMetaColname(td)]"
-                        :meta="meta.formItem[td]"
-                        @getvalue="getvalue"/>
-                    </td>
-                  </template>
-                </tr><!--循环行-tr 结束 -->
-              </template>
-            </tbody>
-          </table>{{value}}<br>
-        </div>
-    </div>
+  <div style="width:500px;float: left;">
+    <a-form
+      ref="ruleForm"
+      :rules="rules"
+      :model="formItem"
+      :label-col="labelCol"
+      :wrapper-col="wrapperCol"
+    >
+      <a-form-item v-for="(meta, index) in arrMeta"
+          :key="'form'+index"
+          :ref="meta.colName"
+          :label="meta.title"
+          :name="meta.colName">
+        <nfInput v-model="formValue[meta.colName]"
+          :meta="meta" @blur="myblur" />
+      </a-form-item>
+      <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
+        <a-button type="primary" @click="onSubmit">
+          Create
+        </a-button>
+        <a-button style="margin-left: 10px;" @click="resetForm">
+          Reset
+        </a-button>
+      </a-form-item>
+    </a-form>
+</div>
+<div align="left" style="line-height:30px;background-color:#343434;height:600px;width:400px;float:left;">
+    实体类：{<br>
+    <template style="line-height:20px;" v-for="(item, key, index) in formValue" :key="index">
+      <template v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></template>
+      <template v-if="typeof item === 'string'">&nbsp;&nbsp;"{{key}}": "{{item}}", <br></template>
+      <template v-if="typeof(item) ==='boolean'">&nbsp;&nbsp;"{{key}}": {{item}}, <br></template>
+      <template v-if="typeof(item) ==='object'">
+        &nbsp;&nbsp;"{{key}}": [<br>
+        <template v-for="(opt, index) in item" :key="'opt'+index">&nbsp;&nbsp;&nbsp;&nbsp;{{opt}}, <br></template>
+          &nbsp;&nbsp;]
+        </template>
+    </template>
+    }
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 import nfInput from './nf-form/nf-form-item.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
@@ -40,7 +52,7 @@ export default {
     nfInput
   },
   model: {
-    prop: 'modelValue',
+    prop: 'modelValue', // 外部属性，返回表单实体类
     event: 'input'
   },
   props: {
@@ -51,10 +63,12 @@ export default {
         return {
           formMeta: { // 控件自己的属性
             state: 'add', // 表单状态，add、update、show
+            allForm: [], // 需要的控件的ID
             colCount: Number, // 一行几列
             customer: Object // 个性化方案
           },
-          formItem: Object // 成员控件的meta
+          formItem: Object, // 成员控件的meta
+          rules: {} // 表单验证规则
         }
       }
     }
@@ -62,15 +76,41 @@ export default {
   data () { // 内部属性
     return {
       value1: '',
-      value: ref({ _flag: false }), // 绑定控件的值
-      returnValue: {}, // 返回给上层的实体类
-      formTable: [], // 二维数组存放meta的ID
+      formValue: reactive({}), // 绑定控件的值
+      returnValue: reactive({}), // 返回给上层的实体类，和modelValue对应
+      arrMeta: reactive([]), // 二维数组存放控件的meta，便于调整顺序
       formMeta: { // 控件自己的属性
         state: 'add', // 表单状态，add、update、show
+        allForm: [], // 需要的控件的ID
         colCount: Number, // 一行几列
         customer: Object // 个性化方案
       },
-      formItem: Object // 成员控件的meta
+      formItem: Object, // 成员控件的meta
+      labelCol: { span: 4 }, // 标签宽度，需要调整
+      wrapperCol: { span: 18 }, // 字段宽度，需要调整
+      other: '',
+      rules: { // 表单验证规则
+        companyName: [
+          { required: true, message: '请输入公司名称', trigger: 'blur' },
+          { min: 3, max: 5, message: '字数在3-5之间', trigger: 'blur' }
+        ],
+        companyCode: [{ required: true, message: '请输入邮编', trigger: 'blur' }],
+        createDate: [
+          { required: true, message: '请选择日期', trigger: 'change', type: 'string' }
+        ],
+        type: [
+          {
+            type: 'array',
+            required: true,
+            message: 'Please select at least one activity type',
+            trigger: 'change'
+          }
+        ],
+        resource: [
+          { required: true, message: 'Please select activity resource', trigger: 'change' }
+        ],
+        desc: [{ required: true, message: 'Please input activity form', trigger: 'blur' }]
+      }
     }
   },
   created: function () { // 初始化
@@ -79,32 +119,19 @@ export default {
   },
   beforeUpdate: function () { // 外部修改属性值，需要重新计算
     // 把表单子控件转换为多行多列的形式
-    this.getFormTable()
+    // this.getFormTable()
   },
   methods: {
-    // 把表单子控件转换为多行多列的形式
+    // 把字段meta变成数组的形式，便于v-for
     getFormTable: function () {
-      var tdCount = 0
-      this.formTable = []
-      this.value = {}
-      var td = []
+      this.formValue = {}
+      this.arrMeta = []
       for (var index in this.meta.formMeta.allForm) { // 遍历子控件的meta的key的数组，便于排序
         var key = this.meta.formMeta.allForm[index] // 数组里面的meta的key
         var meta = this.meta.formItem[key] // 子控件的meta
-        td.push(key)
-        this.value[meta.colName] = ''
-        // Vue.set(this.value, meta.colName, '')
-        tdCount += 1 + meta.tdCount
-        if (tdCount >= this.meta.formMeta.colCount * 2) { // 一行放满了，存到tr里面
-          this.formTable.push(td)
-          td = []
-          tdCount = 0
-        }
+        this.arrMeta.push(meta) // 把字段放入数组，便于循环
+        this.formValue[meta.colName] = '2' // 创建实体类
       }
-      if (td.length > 0) { // 把不满行的td放入tr
-        this.formTable.push(td)
-      }
-      this.value._flag = !this.value._flag
     },
     // 获取控件值，向上返回
     getvalue: function (value, colName) {

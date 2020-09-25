@@ -186,7 +186,7 @@ export default {
   created: function () {
     const json = require('./FormDemo.json') // 加载meta信息，json格式
     this.modelValue = reactive({}) // 放数据的model
-    this.metaInfo = reactive(json.companyForm.formItem) // 表单需要的meta信息
+    this.metaInfo = reactive(json.company.formItem) // 表单需要的meta信息
     // 根据meta 设置model
     for (var key in this.metaInfo) {
       var meta = this.metaInfo[key]

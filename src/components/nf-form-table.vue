@@ -35,7 +35,7 @@ import nfInput from './nf-form/nf-form-item.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
 export default {
-  name: 'nf-form',
+  name: 'nf-form-table',
   components: {
     nfInput
   },
