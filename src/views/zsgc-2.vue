@@ -11,9 +11,36 @@
           <nfFind :meta="findMeta" :isReload='isReload' v-model="modelFindQuery" />
           <nfGrid :meta="formMeta" :isReload='isReload' v-model="modelForm" />
           <nfForm :meta="formMeta" :isReload='isReload' v-model="modelForm" />
+          <div v-show="false" align="left" style="line-height:30px;background-color:#343434;height:600px;width:300px;float:left;">
+            <!--生成查询语句-->
+            <div align="left" style="padding:100px 15px">
+              <span v-for="(item,key,index) in modelFindQuery" :key="index"><!--遍历model-->
+                <template v-if="typeof item === 'object'"><!--判断是不是数组-->
+                  <template v-if="item.length == 2"> <!--判断数组长度-->
+                    {{key}} {{findWhere[item[0]].replace('{k}',item[1])}} and <br>
+                  </template>
+                  <template v-if="item.length == 3"> <!--判断数组长度-->
+                    {{key}} {{findWhere[item[0]].replace('{k1}',item[1]).replace('{k2}',item[2])}} and <br>
+                  </template>
+                </template>
+              </span>
+            </div>
+            查询条件：{<br>
+            <template style="line-height:20px;" v-for="(item, key, index) in modelFindQuery" :key="index">
+              <template v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></template>
+              <template v-if="typeof item === 'string'">&nbsp;&nbsp;"{{key}}": "{{item}}", <br></template>
+              <template v-if="typeof(item) ==='boolean'">&nbsp;&nbsp;"{{key}}": {{item}}, <br></template>
+              <template v-if="typeof(item) ==='object'">
+                &nbsp;&nbsp;"{{key}}": [<br>
+                <template v-for="(opt, index) in item" :key="'opt'+index">&nbsp;&nbsp;&nbsp;&nbsp;{{opt}}, <br></template>
+                  &nbsp;&nbsp;]
+                </template>
+            </template>
+            }
+          </div>
         </a-layout-content>
       </a-layout>
-      <a-layout-footer>好像可以写版权</a-layout-footer>
+      <a-layout-footer><br></a-layout-footer>
     </a-layout>
   </div>
 </template>

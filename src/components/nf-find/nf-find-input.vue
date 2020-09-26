@@ -88,7 +88,13 @@ export default {
   },
   watch: {
     modelValue: function (newValue, oldValue) {
-      this.value = newValue[1]
+      // alert(newValue)
+      this.value = ''
+      if (typeof newValue === 'object') {
+        if (newValue.length === 2) {
+          this.value = newValue[1]
+        }
+      }
     }
   },
   methods: {

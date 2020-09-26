@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-     <div style="background-color:#eee;height:100px;">
+     <div style="background-color:#eee;height:60px;">
       <!--快捷查询，一行-->
       <div
         :style="{
-          height: '270px',
+          height: '60px',
           overflow: 'hidden',
           position: 'relative',
           border: '1px solid #ebedf0',
@@ -30,7 +30,7 @@
                     <a-button style="margin-left: 2px" @click="clickQuickFind">快捷<DownOutlined /> </a-button>
                   </a-dropdown>
                 </td>
-                <template v-for="(meta,index) in quickFindTable" :key="'qf'+index">
+                <template v-for="(meta,index) in quickFindMeta" :key="'qf'+index">
                   <td align="left" style="padding:3px 3px;height:20px">
                     <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" />
                   </td>
@@ -39,7 +39,6 @@
               </tr>
             </tbody>
           </table>
-          <br><br><br><br>条件{{findValue}}
         </div>
       </div>
       <!--更多查询条件，用抽屉打开-->
@@ -53,7 +52,7 @@
         <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
           <table role="all">
             <tbody class="ant-table-tbody">
-              <template v-for="(tr, index) in findTable" :key="index"><!--循环行-tr-->
+              <template v-for="(tr, index) in arrMeta" :key="index"><!--循环行-tr-->
                 <tr>
                   <template v-for="(meta, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
                     <td align="right" style="padding:3px 3px;height:20px">
@@ -75,7 +74,7 @@
 
 <script>
 import nfInput from './nf-find/nf-find-item.vue'
-// import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
 
 export default {
   name: 'nf-find',
@@ -85,7 +84,6 @@ export default {
   },
   model: {
     prop: 'modelValue',
-    isReload: false,
     event: 'change'
   },
   props: {
@@ -108,13 +106,12 @@ export default {
   },
   data () {
     return {
-      // 开关相关
-      findAllVisible: false, // 更多查询条件
+      findAllVisible: false, // 更多查询条件开关相关
       quickFindKey: [], // 快速查询需要的key
-      findValue: {}, // 绑定控件的值
-      returnValue: {}, // 返回给上层的实体类
-      findTable: [], // 二维数组存放meta，遍历全部查询
-      quickFindTable: [], // 二维数组存放meta，遍历快捷查询
+      findValue: {}, // 绑定控件的值，创立全部的字段，用于绑定控件
+      returnValue: {}, // 返回给上层的实体类，只返回有查询条件的字段
+      arrMeta: [], // 二维数组存放meta，遍历全部查询
+      quickFindMeta: [], // 二维数组存放meta，遍历快捷查询
       findWhere: { // 查询方式，其实前端不需要的
         401: ' = "{k}"',
         402: ' <> "{k}"',
@@ -155,23 +152,6 @@ export default {
         431: '在',
         432: '在',
         433: '在'
-      },
-      metaInfo1: {
-        controlId: 1000,
-        colName: 'companyName',
-        controlType: 101,
-        isClear: true,
-        disabled: false,
-        required: true,
-        readonly: false,
-        pattern: '',
-        class: '',
-        placeholder: '请输入公司名称',
-        title: '公司名称',
-        autocomplete: 'on',
-        size: 30,
-        maxlength: 100,
-        optionList: []
       }
     }
   },
@@ -179,26 +159,19 @@ export default {
     // 把表单子控件转换为多行多列的形式
     this.getFindTable()
   },
-  beforeUpdate: function () { // 外部修改属性值，需要重新计算
-    // 把表单子控件转换为多行多列的形式
-    // this.getFindTable()
-  },
   watch: {
     isReload: function (newValue, oldVale) {
       this.getFindTable()
     }
-  },
-  setup (props) {
-    // alert(props.modelValue)
-    console.log(props.modelValue)
   },
   methods: {
     // 把表单子控件转换为多行多列的形式
     getFindTable: function () {
       var tdCount = 0
       var tr = []
-      this.findTable = []
+      this.arrMeta = []
       this.findValue = {}
+      this.returnValue = {}
       for (var index in this.meta.findMeta.allFind) { // 遍历子控件的meta的key的数组，便于排序
         var key = this.meta.findMeta.allFind[index] // 数组里面的meta的key
         var meta = this.meta.findItem[key] // 子控件的meta
@@ -206,25 +179,21 @@ export default {
         tr.push(meta) // 往一行里面放
         tdCount += 1 + meta.tdCount // 计算一行是否放满
         if (tdCount >= this.meta.findMeta.colCount * 2) { // 一行放满了，存入table
-          this.findTable.push(tr)
+          this.arrMeta.push(tr)
           tr = []
           tdCount = 0
         }
       }
       if (tr.length > 0) { // 把不满行的tr放入table
-        this.findTable.push(tr)
+        this.arrMeta.push(tr)
       }
 
       // 把快捷key放进去
-      this.quickFindKey = this.meta.findMeta.quickFind
-      this.quickFindTable = []
-      for (var i in this.meta.findMeta.quickFind) {
-        var key1 = this.meta.findMeta.quickFind[i] // 数组里面的meta的key
-        this.quickFindTable.push(this.meta.findItem[key1])
-      }
+      this.clickQuickFind()
     },
     // 获取控件值，向上返回
     getvalue: function (value, colName) {
+      this.findValue[colName] = value
       this.returnValue[colName] = value
       this.$emit('update:modelValue', this.returnValue) // 返回给调用者
       this.$emit('getvalue', this.returnValue, colName) // 返回给中间组件
@@ -235,22 +204,23 @@ export default {
     },
     // 更换个性化查询方案
     changeQuickFind: function (e) {
+      this.returnValue = {}
       this.quickFindKey = this.meta.findMeta.customer[e.key].keys
-      this.quickFindTable = []
+      this.quickFindMeta = []
       for (var i in this.meta.findMeta.customer[e.key].keys) {
         var key1 = this.meta.findMeta.customer[e.key].keys[i] // 数组里面的meta的key
-        this.quickFindTable.push(this.meta.findItem[key1])
+        this.quickFindMeta.push(this.meta.findItem[key1])
       }
     },
     // 显示默认查询方案
     clickQuickFind: function (e) {
+      this.returnValue = {}
       this.quickFindKey = this.meta.findMeta.quickFind
-    },
-    // 判断控件是否循环完毕
-    isEnd: function (tr, td) {
-      var count = (tr - 1) * this.meta.findMeta.colCount + (td - 1)
-      // alert(tdCount.value)
-      return count >= this.meta.findMeta.allFind.length
+      this.quickFindMeta = []
+      for (var index in this.meta.findMeta.quickFind) {
+        var key = this.meta.findMeta.quickFind[index] // 数组里面的meta的key
+        this.quickFindMeta.push(this.meta.findItem[key])
+      }
     }
   }
 }

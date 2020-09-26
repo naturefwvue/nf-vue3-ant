@@ -1,17 +1,17 @@
 <template>
-  <div style="width:500px;float: left;">
-    <a-form
+  <div style="width:500px;float: left;line-height:50px;">
+    <a-form style="line-height:50px;"
       ref="ruleForm"
       :model="formValue"
       :label-col="labelCol"
       :wrapper-col="wrapperCol"
     >
-      <a-form-item v-for="(meta, index) in arrMeta"
+      <a-form-item v-for="(meta, index) in arrMeta" style="margin-bottom: 4px"
           :key="'form'+index"
           :ref="meta.colName"
           :label="meta.title"
           :name="meta.colName">
-        <nfInput v-model="formValue[meta.colName]" :meta="meta" @blur="myblur" />
+        <nfInput v-model="formValue[meta.colName]" :meta="meta" @blur="myblur"  @getvalue="getvalue"/>
       </a-form-item>
       <a-form-item :wrapper-col="{ span: 14, offset: 4 }">
         <a-button type="primary" @click="onSubmit">
@@ -23,7 +23,7 @@
       </a-form-item>
     </a-form>
 </div>
-<div align="left" style="line-height:30px;background-color:#343434;height:600px;width:400px;float:left;">
+<div v-show="false" align="left" style="line-height:30px;background-color:#343434;height:600px;width:300px;float:left;">
     实体类：{<br>
     <template style="line-height:20px;" v-for="(item, key, index) in formValue" :key="index">
       <template v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></template>
@@ -75,7 +75,6 @@ export default {
   },
   data () { // 内部属性
     return {
-      value1: '',
       formValue: {}, // 绑定控件的值
       returnValue: {}, // 返回给上层的实体类，和modelValue对应
       arrMeta: [], // 二维数组存放控件的meta，便于调整顺序
@@ -110,12 +109,10 @@ export default {
     },
     // 获取控件值，向上返回
     getvalue: function (value, colName) {
-      this.value[colName] = value
+      this.formValue[colName] = value
       // alert(this.value[colName])
-      this.value._flag = !this.value._flag
-      // this.returnValue[colName] = value
-      this.$emit('update:modelValue', this.value) // 返回给调用者
-      this.$emit('getvalue', this.value, colName) // 返回给中间组件
+      this.$emit('update:modelValue', this.formValue) // 返回给调用者
+      this.$emit('getvalue', this.formValue, colName) // 返回给中间组件
     }
   }
 }
