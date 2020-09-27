@@ -14,7 +14,6 @@
       :key="'ckey_'+meta.controlId"
       size="small"
       @input="myInput"
-      @blur="myBlur"
       >
     </a-input>
   </div>
@@ -88,10 +87,7 @@ export default {
       this.value = returnValue
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
-    },
-    myBlur: function () {
-      // alert('input 的 blur')
-      this.$emit('blur', event.target.value) // 触发自动验证
+      this.$emit('blur', returnValue) // 用于验证
     },
     // 通过属性，设置内部变量值，用于绑定控件
     resetVaule: function () {

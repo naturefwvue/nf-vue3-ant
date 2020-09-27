@@ -1,23 +1,29 @@
 <template>
-  <div id="components-layout-demo-basic">
+<a-layout id="components-layout-demo-responsive">
+    <a-layout-sider
+      breakpoint="lg"
+      collapsed-width="0"
+      @collapse="onCollapse"
+      @breakpoint="onBreakpoint"
+    >
+      <nfMenu @menuclick="myClick"/>
+    </a-layout-sider>
     <a-layout>
-      <a-layout-header>增删改查的演示</a-layout-header>
-      <a-layout>
-        <a-layout-sider>
-          <span @click="myClick('company')">公司信息</span> <br>
-          <span @click="myClick('person')">员工信息</span>
-        </a-layout-sider>
-        <a-layout-content>
+      <a-layout-header :style="{ background: '#fff', padding: 0 }" />
+      <a-layout-content :style="{ margin: '24px 16px 0' }">
+        <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
           <nfFind :meta="findMeta" :isReload='isReload' v-model="modelFindQuery" />
           <a-button type="primary" @click="isFormShow = true">
             添加
           </a-button>
           <nfGrid :meta="formMeta" :isReload='isReload' v-model="modelForm" />
-        </a-layout-content>
-      </a-layout>
-      <a-layout-footer>好像可以写版权</a-layout-footer>
+        </div>
+      </a-layout-content>
+      <a-layout-footer style="textAlign: center">
+        Ant Design ©2018 Created by Ant UED
+      </a-layout-footer>
     </a-layout>
-  </div>
+  </a-layout>
   <div id="components-modal-demo-position">
     <a-modal
       v-model:visible="isFormShow"
@@ -32,14 +38,17 @@
 
 <script>
 import { reactive, ref } from 'vue'
+import nfMenu from '@/components/nf-menu.vue'
 import nfForm from '@/components/nf-form.vue'
 import nfFind from '@/components/nf-find.vue'
 import nfGrid from '@/components/nf-gridView.vue'
 // import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
+import { UserOutlined, VideoCameraOutlined, UploadOutlined } from '@ant-design/icons-vue'
 
 export default {
   name: 'zsgcDemo',
   components: {
+    nfMenu,
     nfForm,
     nfFind,
     nfGrid
@@ -108,8 +117,16 @@ export default {
 </script>
 
 <style>
+#components-layout-demo-responsive .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+#components-layout-demo-responsive {
+  text-align: left;
+}
 #components-layout-demo-basic {
-  text-align: center;
+  text-align: left;
 }
 #components-layout-demo-basic .ant-layout-header,
 #components-layout-demo-basic .ant-layout-footer {

@@ -40,7 +40,7 @@ export default {
     nfSelect
   },
   props: {
-    modelValue: Object,
+    modelValue: [String, Number, Boolean, Array, Object, Date],
     meta: Object
   },
   methods: {
