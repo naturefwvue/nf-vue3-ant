@@ -9,12 +9,24 @@
         </a-layout-sider>
         <a-layout-content>
           <nfFind :meta="findMeta" :isReload='isReload' v-model="modelFindQuery" />
+          <a-button type="primary" @click="isFormShow = true">
+            添加
+          </a-button>
           <nfGrid :meta="formMeta" :isReload='isReload' v-model="modelForm" />
-          <nfForm :meta="formMeta" :isReload='isReload' v-model="modelForm" />
         </a-layout-content>
       </a-layout>
       <a-layout-footer>好像可以写版权</a-layout-footer>
     </a-layout>
+  </div>
+  <div id="components-modal-demo-position">
+    <a-modal
+      v-model:visible="isFormShow"
+      title="添加数据"
+      centered
+      @ok="isFormShow = false"
+    >
+      <p><nfForm :meta="formMeta" :isReload='isReload' v-model="modelForm" /></p>
+    </a-modal>
   </div>
 </template>
 
@@ -29,7 +41,8 @@ export default {
   name: 'zsgcDemo',
   components: {
     nfForm,
-    nfFind
+    nfFind,
+    nfGrid
   },
   setup () {
     const findWhere = {
@@ -71,6 +84,13 @@ export default {
       isReload.value = !isReload.value
     }
 
+    // 表单状态
+    const isFormShow = ref(false)
+    // 打开表单
+    const openForm = (isOpen) => {
+      isFormShow.value = isOpen
+    }
+
     // 返回
     return {
       isReload,
@@ -78,6 +98,8 @@ export default {
       findMeta,
       formMeta,
       myClick,
+      isFormShow,
+      openForm,
       modelForm,
       findWhere
     }

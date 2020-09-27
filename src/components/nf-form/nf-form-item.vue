@@ -50,7 +50,7 @@ export default {
     nfInputMore
   },
   props: {
-    modelValue: Object,
+    modelValue: [String, Number, Boolean, Array, Object, Date],
     meta: Object
   },
   methods: {
