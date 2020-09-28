@@ -1,6 +1,6 @@
 /** 多选组，返回选择的value */
 <template>
-  <a-radio-group name="radioGroup" v-model:value="value" :default-value="-2">
+  <a-radio-group name="radioGroup" v-model:value="value" :default-value="modelValue">
     <a-radio checked="true" value="-2" @change="myInput" >全部</a-radio>
     <a-radio v-for="item in meta.optionList" :key="item.value"
       @change="myInput"
@@ -39,14 +39,20 @@ export default {
   },
   watch: {
     modelValue: function (newValue, oldValue) {
-      alert(newValue)
-      // this.value = newValue[1]
+      // alert(newValue)
+      this.value = ''
+      if (typeof newValue === 'object') {
+        if (newValue.length === 2) {
+          this.value = newValue[1]
+        }
+      }
     }
   },
   methods: {
     myInput: function (e) {
       var value = event.target.value
       var colName = this.meta.colName
+      var id = this.meta.controlId
       var returnValue = []
       // 判断value是否为数字
       if (typeof value === 'number') {
@@ -62,7 +68,7 @@ export default {
         }
       }
       this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
     }
   }
 }

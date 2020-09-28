@@ -1,7 +1,7 @@
 {
   "company":{
     "findMeta":{
-      "quickFind":[1000,1003,1002],
+      "quickFind":[1009,1003,1002],
       "allFind":[1000,1001,1002,1003,1009,1004,1005,1010,1006,1007,1011,1008],
       "colCount":4,
       "customer":{
@@ -17,7 +17,7 @@
     },
     "findItem":{
       "1010":{
-        "controlId": "2012",
+        "controlId": "1010",
         "colName": "education",
         "controlType": 183,
         "placeholder": "学历",
@@ -171,7 +171,7 @@
         "tdCount":3
       },
       "1011":{
-        "controlId": 100,
+        "controlId": 1011,
         "colName": "hobby",
         "controlType": 182,
         "isClear": true,

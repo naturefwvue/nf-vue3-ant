@@ -1,13 +1,15 @@
 /** 下拉列表框，多选的那个再考虑考虑 */
 <template>
   <a-select :id="'c'+meta.controlId"  style="width:98%"
-    :default-value="modelValue"
+    v-model:value="value"
     :name="'c'+meta.controlId"
     :disabled="meta.disabled"
     size="small"
     @change="myInput">
-      <a-select-option v-for="(item,index) in meta.optionList" :key="index"
-        :value="item.value">
+      <a-select-option value="-2">全部</a-select-option>
+      <a-select-option v-for="(item,index) in meta.optionList"
+        :key="index"
+        :value="item.value" >
           {{item.title}}
       </a-select-option>
     </a-select>
@@ -54,6 +56,20 @@ export default {
   },
   data () {
     window.test = this
+    return {
+      value: ''
+    }
+  },
+  watch: {
+    modelValue: function (newValue, oldValue) {
+      // alert(newValue)
+      this.value = ''
+      if (typeof newValue === 'object') {
+        if (newValue.length === 2) {
+          this.value = newValue[1]
+        }
+      }
+    }
   },
   methods: {
     focus () {
@@ -62,6 +78,7 @@ export default {
     myInput: function (value) {
       var returnValue = []
       var colName = this.meta.colName
+      var id = this.meta.controlId
       // 判断value是否为数字
       if (typeof value === 'number') {
         returnValue.push(411)
@@ -71,7 +88,7 @@ export default {
         returnValue.push(value)
       }
       this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
       this.$emit('change', returnValue) // 返回给中间组件
     }
   }

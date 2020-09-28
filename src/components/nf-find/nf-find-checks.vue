@@ -7,6 +7,7 @@
       :name="'c'+meta.controlId"
       :class="meta.class"
       :value="item.value"
+      :checked="(','+value+',').indexOf(','+item.value+',') != -1"
       :disabled="meta.disabled"
       :autoFocus="meta.autofocus"
       :key="'chks'+item.value"
@@ -53,10 +54,22 @@ export default {
       optionsChecks: {}
     }
   },
+  watch: {
+    modelValue: function (newValue, oldValue) {
+      // alert(newValue)
+      this.value = ''
+      if (typeof newValue === 'object') {
+        if (newValue.length === 2) {
+          this.value = newValue[1]
+        }
+      }
+    }
+  },
   methods: {
     myCheck: function (e) {
       var value = e.target.value
       var colName = this.meta.colName
+      var id = this.meta.controlId
       if (e.target.checked) { // 选中，记录
         this.optionsChecks[value] = 1
       } else { // 没选，删除
@@ -73,7 +86,7 @@ export default {
       returnValue.push(433)
       returnValue.push(arr.join(','))
       this.$emit('update:modelValue', returnValue)
-      this.$emit('getvalue', returnValue, colName)
+      this.$emit('getvalue', returnValue, colName, id)
     }
   }
 }

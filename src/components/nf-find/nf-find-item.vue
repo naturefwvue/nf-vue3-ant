@@ -48,10 +48,10 @@ export default {
       this.$emit('change', value)
       this.$emit('update:modelValue', value)
     },
-    sendValue: function (value, colName) {
+    sendValue: function (value, colName, id) {
       // alert(colName)
       this.$emit('update:modelValue', value)
-      this.$emit('getvalue', value, colName) // 返回给中间组件
+      this.$emit('getvalue', value, colName, id) // 返回给中间组件
     }
   }
 }

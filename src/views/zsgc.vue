@@ -13,14 +13,12 @@
       <a-layout-content :style="{ margin: '24px 16px 0' }">
         <div :style="{ padding: '24px', background: '#fff', minHeight: '360px' }">
           <nfFind :meta="findMeta" :isReload='isReload' v-model="modelFindQuery" />
-          <a-button type="primary" @click="isFormShow = true">
-            添加
-          </a-button>
-          <nfGrid :meta="formMeta" :isReload='isReload' v-model="modelForm" />
+          <a-button type="primary" @click="openForm"> 添加 </a-button>
+          <nfGrid :meta="gridMeta" :isReload='isReload'/>
         </div>
       </a-layout-content>
       <a-layout-footer style="textAlign: center">
-        Ant Design ©2018 Created by Ant UED
+        自然框架 文档驱动 ©2020 Created by Vue + Ant + natureFramework
       </a-layout-footer>
     </a-layout>
   </a-layout>
@@ -80,9 +78,18 @@ export default {
     const findMeta = ref(jsonFind.company) // 查询表单的meta信息
 
     // 表单
+    const isFormShow = ref(false) // 表单状态
     const jsonForm = require('./FormDemo.json')
     const modelForm = ref({})
     const formMeta = ref(jsonForm.company)
+    const openForm = () => {
+      isFormShow.value = true
+      var arr = document.getElementsByClassName('ant-modal-mask')
+    }
+
+    // 数据列表
+    const jsonGrid = require('./GridDemo.json')
+    const gridMeta = ref(jsonGrid.company)
 
     // 菜单切换模块
     const myClick = (name) => {
@@ -90,25 +97,20 @@ export default {
       modelFindQuery.value = {}
       formMeta.value = jsonForm[name]
       findMeta.value = jsonFind[name]
+      gridMeta.value = jsonGrid[name]
       isReload.value = !isReload.value
-    }
-
-    // 表单状态
-    const isFormShow = ref(false)
-    // 打开表单
-    const openForm = (isOpen) => {
-      isFormShow.value = isOpen
     }
 
     // 返回
     return {
       isReload,
-      modelFindQuery,
+      isFormShow,
       findMeta,
       formMeta,
+      gridMeta,
       myClick,
-      isFormShow,
       openForm,
+      modelFindQuery,
       modelForm,
       findWhere
     }

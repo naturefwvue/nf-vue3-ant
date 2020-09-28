@@ -28,7 +28,8 @@
       :step="meta.step"
       @change="myInput"
       :key="'ckey_'+meta.controlId"/>
-    <a-input-number :id="'c2' + meta.controlId" v-show="kindkey === '431'"
+    <span  v-show="kindkey === '431'">&nbsp;~&nbsp;
+    <a-input-number :id="'c2' + meta.controlId"
         :name="'c2' + meta.controlId"
         :value="value2"
         size="small"
@@ -39,6 +40,7 @@
         :step="meta.step"
         @change="myInput2"
         :key="'ckey_'+meta.controlId"/>
+     </span>
   </span>
 </template>
 
@@ -143,8 +145,9 @@ export default {
         returnValue.push(this.value2)
       }
       var colName = this.meta.colName
+      var id = this.meta.controlId
       this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
     }
   }
 }

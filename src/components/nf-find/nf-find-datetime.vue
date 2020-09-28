@@ -1,7 +1,6 @@
 /** 日期、时间、年月、周的选择 */
 <template>
-<span>
-  <!--查询方式-->
+  <!--选择查询方法-->
   <span class1="ant-input-group-addon">
     <a-dropdown>
       <a class="ant-dropdown-link">{{kind}}</a>
@@ -20,12 +19,13 @@
   </span>
   <!--日期部分-->
   <span :title="meta.title">
+    <!--范围查询-->
     <template v-if="isRange">
       <a-range-picker
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :value="value"
-        :mode="['date', 'date']"
+        :mode="mode"
         format="YYYY-MM-DD"
         :disabled="meta.disabled"
         size="small"
@@ -33,27 +33,37 @@
         @change="myInput2"
       :key="'ckey_' + meta.controlId" />
     </template>
-    <template v-else>
-      <a-date-picker v-if="meta.controlType === 141"
-        show-time
+    <template v-else>{{ctlKind}}
+      <!--非范围查询-->
+      <a-date-picker v-if="ctlKind === '140'"
+        :value="value"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :disabled="meta.disabled"
         @change="myInput"
         :key="'ckey_' + meta.controlId" />
-      <a-time-picker v-else-if="meta.controlType === 142"
+      <a-date-picker v-else-if="ctlKind === '141'"
+        show-time
+        :value="value"
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        :disabled="meta.disabled"
+        @change="myInput"
+        :key="'ckey_' + meta.controlId" />
+      <a-time-picker v-else-if="ctlKind === '142'"
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        :mode="mode"
+        :disabled="meta.disabled"
+        @change="myInput"
+       :key="'ckey_' + meta.controlId" />
+      <a-month-picker v-else-if="ctlKind === '143'"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :disabled="meta.disabled"
         @change="myInput"
        :key="'ckey_' + meta.controlId" />
-      <a-month-picker v-else-if="meta.controlType === 143"
-        :id="'c' + meta.controlId"
-        :name="'c' + meta.controlId"
-        :disabled="meta.disabled"
-        @change="myInput"
-       :key="'ckey_' + meta.controlId" />
-      <a-week-picker v-else-if="meta.controlType === 144"
+      <a-week-picker v-else-if="ctlKind === '144'"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :disabled="meta.disabled"
@@ -61,7 +71,19 @@
         :key="'ckey_' + meta.controlId" />
     </template>
   </span>
-</span>
+  <!--选择日期类型-->
+  <a-dropdown>
+    <a class="ant-dropdown-link">{{kind2}}</a>
+    <template v-slot:overlay>
+      <a-menu @click="handleMenuClick2">
+        <a-menu-item key="140">日期</a-menu-item>
+        <a-menu-item key="143">年月</a-menu-item>
+        <a-menu-item key="144">年周</a-menu-item>
+        <a-menu-item key="142">时间</a-menu-item>
+        <a-menu-item key="141">日时</a-menu-item>
+      </a-menu>
+    </template>
+  </a-dropdown>
 </template>
 
 <script>
@@ -117,7 +139,9 @@ export default {
       value1: '',
       value2: '',
       kind: '=',
+      kind2: '日期',
       kindkey: '432',
+      mode: 'date',
       isRange: true,
       findKind: {
         421: '=', // 日期
@@ -128,12 +152,31 @@ export default {
         425: '<',
         426: '≤'
       },
+      dateKind: {
+        140: '日期', // 日期
+        141: '日时', // 日期时间
+        142: '时间', // 时间
+        143: '年月', // 年月
+        144: '年周' // 年周 time|date|month|year|decade
+      },
       type: {
         140: 'date', // 日期
         141: 'datetime-local', // 日期时间
         142: 'time', // 时间
         143: 'month', // 年月
         144: 'week' // 年周
+      },
+      ctlKind: 141
+    }
+  },
+  watch: {
+    modelValue: function (newValue, oldValue) {
+      // alert(newValue)
+      this.value = ''
+      if (typeof newValue === 'object') {
+        if (newValue.length === 2) {
+          this.value = newValue[1]
+        }
       }
     }
   },
@@ -155,9 +198,22 @@ export default {
       console.log('click', e)
       // this.send()
     },
+    handleMenuClick2 (e) {
+      this.ctlKind = e.key
+      // 切换日期、年周
+      this.kind2 = this.dateKind[e.key]
+      console.log('click', e)
+      this.mode = [
+        this.modeType[e.key],
+        this.modeType[e.key]
+      ]
+      // this.send()
+    },
     handlePanelChange2 (value, mode) {
       this.value = value
-      this.mode2 = [mode[0] === 'date' ? 'month' : mode[0], mode[1] === 'date' ? 'month' : mode[1]]
+      this.mode2 = [
+        mode[0] === 'date' ? 'month' : mode[0],
+        mode[1] === 'date' ? 'month' : mode[1]]
     },
     send: function () {
       // 向上级提交
@@ -170,8 +226,9 @@ export default {
         returnValue.push(this.value) // 非范围，压入一个
       }
       var colName = this.meta.colName
+      var id = this.meta.controlId
       this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
     }
   }
 }

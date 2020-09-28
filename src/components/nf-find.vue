@@ -32,7 +32,7 @@
                 </td>
                 <template v-for="(meta,index) in quickFindMeta" :key="'qf'+index">
                   <td align="left" style="padding:3px 3px;height:20px">
-                    <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" />
+                    <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" />{{findValue[meta.colName]}}
                   </td>
                 </template>
                 <td><a-button type="primary" @click="findAllisShow(true)">更多</a-button></td>
@@ -59,7 +59,7 @@
                       {{meta.title}}：
                     </td>
                     <td :colspan="meta.tdCount" align="left" style="padding:3px 3px;height:20px">
-                      <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue"/>
+                      <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" @click="getvalue2(meta.controlId)"/>
                     </td>
                   </template>
                 </tr><!--循环行-tr 结束 -->
@@ -191,16 +191,33 @@ export default {
       // 把快捷key放进去
       this.clickQuickFind()
     },
-    // 获取控件值，向上返回
-    getvalue: function (value, colName) {
+    // 快捷查询
+    getvalue: function (value, colName, id) {
       this.findValue[colName] = value
       this.returnValue[colName] = value
       this.$emit('update:modelValue', this.returnValue) // 返回给调用者
-      this.$emit('getvalue', this.returnValue, colName) // 返回给中间组件
+      this.$emit('getvalue', this.returnValue, colName, id) // 返回给中间组件
     },
-    // 控制是否显示相关函数
+    // 更多查询
+    getvalue2: function (id) {
+      // 查找是否已经有了
+      var have = false
+      for (var i = 0; i < this.quickFindMeta.length; i += 1) {
+        if (this.quickFindMeta[i].controlId === id) {
+          have = true
+        }
+      }
+      if (!have) {
+        this.quickFindMeta.push(this.meta.findItem[id])
+      }
+      // this.getvalue()
+    },
+    // 显示更多查询
     findAllisShow: function (isShow) { // 更多查询的切换
       this.findAllVisible = isShow
+      if (isShow) {
+        this.quickFindMeta = [] // 清空快捷查询条件
+      }
     },
     // 更换个性化查询方案
     changeQuickFind: function (e) {
@@ -214,7 +231,7 @@ export default {
     },
     // 显示默认查询方案
     clickQuickFind: function (e) {
-      this.returnValue = {}
+      this.returnValue = {} // 清空返回的查询关键字
       this.quickFindKey = this.meta.findMeta.quickFind
       this.quickFindMeta = []
       for (var index in this.meta.findMeta.quickFind) {

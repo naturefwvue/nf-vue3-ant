@@ -116,8 +116,9 @@ export default {
       returnValue.push(this.kindkey)
       returnValue.push(this.value)
       var colName = this.meta.colName
+      var id = this.meta.controlId
       this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName) // 返回给中间组件
+      this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
     }
   }
 }
