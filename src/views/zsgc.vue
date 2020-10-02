@@ -18,7 +18,7 @@
         </div>
       </a-layout-content>
       <a-layout-footer style="textAlign: center">
-        自然框架 文档驱动 ©2020 Created by Vue + Ant + natureFramework
+        {{modelFindQuery}}自然框架 文档驱动 ©2020 Created by Vue + Ant + natureFramework
       </a-layout-footer>
     </a-layout>
   </a-layout>
