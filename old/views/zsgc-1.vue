@@ -66,14 +66,14 @@ export default {
 
     const isReload = ref(false)
     // 加载查询控件的meta信息，json格式
-    const jsonFind = require('./FindDemo.json')
+    const jsonFind = require('./json/FindDemo.json')
     // 记录用户输入的查询条件
     const modelFindQuery = ref({})
     // 查询表单的meta信息
     const findMeta = ref(jsonFind.company)
 
     // 表单
-    const jsonForm = require('./FormDemo.json')
+    const jsonForm = require('./json/FormDemo.json')
     const modelForm = ref({})
     const formMeta = reactive(jsonForm.company)
 

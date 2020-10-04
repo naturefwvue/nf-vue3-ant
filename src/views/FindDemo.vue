@@ -204,7 +204,7 @@ export default {
     // 引入查询管理
     const { modelValue, findMeta, findItem, findWhere, quickFindKey, metaToTable, changeQuickFind, findTable, findVisible, moreFindShow } = findManage()
     // 加载查询用的meta
-    const json = require('./FindDemo.json')
+    const json = require('./json/FindDemo.json')
     // 切换其他查询模块 menu
     const naviClick = (key) => {
       // 清空查询条件

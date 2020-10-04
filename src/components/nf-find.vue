@@ -1,3 +1,4 @@
+<!--查询控件-->
 <template>
   <div class="home">
      <div style="background-color:#eee;height:60px;">

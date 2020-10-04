@@ -54,7 +54,7 @@ export default {
     nfInput
   },
   setup () {
-    const json = require('./FormDemo.json') // 加载meta信息，json格式
+    const json = require('./json/FormDemo.json') // 加载meta信息，json格式
     const modelValue = ref({}) // 放数据的model
     const metaInfo = ref(json.company.formItem) // 表单需要的meta信息
     const myClick = (key) => {
