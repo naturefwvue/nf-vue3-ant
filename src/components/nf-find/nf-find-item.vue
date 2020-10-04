@@ -16,18 +16,18 @@
 
 <script>
 // import nfArea from './nf-form-textarea.vue' // 100
-import nfInput from './nf-find-input.vue' // 100-107
 // import nfUrl from './nf-form-input-url.vue' // 105
-import nfNumber from './nf-find-number.vue' // 131
 // import nfSlider from './nf-form-numslider.vue' // 132
-import nfDatetime from './nf-find-datetime.vue' // 140-144
 // import nfUpload from './nf-form-upload.vue' // 150-151
 // import nfColor from './nf-form-color.vue' // 160
 // import nfCheck from './nf-form-check.vue' // 180
+// import nfInputMore from './nf-form-inputmore.vue' // 200
+import nfInput from './nf-find-input.vue' // 100-107
+import nfNumber from './nf-find-number.vue' // 131
+import nfDatetime from './nf-find-datetime.vue' // 140-144
 import nfChecks from './nf-find-checks.vue' // 182
 import nfRadios from './nf-find-radios.vue' // 183
 import nfSelect from './nf-find-select.vue' // 190
-// import nfInputMore from './nf-form-inputmore.vue' // 200
 
 export default {
   name: 'nf-find-item',
