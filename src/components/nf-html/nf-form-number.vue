@@ -1,6 +1,6 @@
 /** 数字和滑块 */
 <template>
-  <span>
+  <div class="ant-input-number-input-wrap">
     <input :id="'c' + meta.controlId"
     :type="type[meta.controlType]"
     :name="'c' + meta.controlId"
@@ -16,7 +16,7 @@
     :autocomplete="meta.autocomplete"
     @input="myInput"
     :key="'ckey_'+meta.controlId">
-  </span>
+  </div>
 </template>
 
 <script>

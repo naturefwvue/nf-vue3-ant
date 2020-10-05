@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import nfInput from '@/components/nf-form-input.vue' // 100-107
-import nfNumber from '@/components/nf-form-number.vue' // 131,132
+import nfInput from './nf-form-input.vue' // 100-107
+import nfNumber from './nf-form-number.vue' // 131,132
 // import nfCheck from '@/components/nf-form-check.vue' // 180
 // import nfChecks from '@/components/nf-form-checks.vue' // 182
 // import nfRadios from '@/components/nf-form-radios.vue' // 183

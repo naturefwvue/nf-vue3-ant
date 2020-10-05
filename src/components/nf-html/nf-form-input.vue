@@ -26,7 +26,7 @@
 <script>
 
 export default {
-  name: 'nf-form-input',
+  name: 'nf-form-input-html',
   model: {
     prop: 'modelValue',
     event: 'input'
@@ -65,7 +65,10 @@ export default {
             default: false
           },
           pattern: String, // 用正则做验证。
-          class: String, // 'cssTxt input_t1'
+          class: {
+            type: String,
+            default: 'ant-input ant-input-sm'
+          },
           placeholder: String,
           title: String, // 提示信息
           size: Number, // 字符宽度
@@ -115,7 +118,7 @@ export default {
   methods: {
     myInput: function (e) {
       var returnValue = event.target.value
-      var colName = this.meta.colName // event.target.getAttribute('colname')
+      var colName = this.meta.colName
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName) // 返回给中间组件
     }

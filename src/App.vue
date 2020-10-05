@@ -7,7 +7,8 @@
       <router-link to="/formDemo">表单demo</router-link>|
       <router-link to="/findDemo">查询组件</router-link>|
       <router-link to="/zsgc">增删改查</router-link>|
-      <router-link to="/antForm">ant表单</router-link>
+      <router-link to="/antForm">ant表单</router-link>|
+      <router-link to="/Plat">支撑平台</router-link>
     </div>
     <router-view/>
   </div>

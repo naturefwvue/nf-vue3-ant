@@ -57,7 +57,7 @@
 </template>
 
 <script>
-import nfInput from '@/components/nf-form/nf-form-item.vue'
+import nfInput from '@/components/nf-html/nf-form-item.vue'
 
 export default {
   name: 'nf-meta-help',

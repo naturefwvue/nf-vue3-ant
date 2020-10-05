@@ -1,8 +1,8 @@
 /** 表单元素的综合组件，根据类型自动加载相应的组件 */
 <template>
   <span class="hello">
-    <nfInput v-if="meta.controlType == 100" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfArea v-else-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfArea v-if="meta.controlType == 100" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfInput v-else-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfNumber v-else-if="meta.controlType <= 139" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfDatetime v-else-if="meta.controlType <= 149" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfUpload v-else-if="meta.controlType <= 159" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
@@ -16,8 +16,8 @@
 </template>
 
 <script>
-import nfInput from './nf-form-textarea.vue' // 100-107
-import nfArea from './nf-form-input.vue' // 100-107
+import nfArea from './nf-form-textarea.vue' // 100-107
+import nfInput from './nf-form-input.vue' // 100-107
 import nfNumber from './nf-form-number.vue' // 131,132
 import nfDatetime from './nf-form-datetime.vue' // 140-144
 import nfUpload from './nf-form-upload.vue' // 150-151
