@@ -2,7 +2,7 @@
   "platFindMeta": {
       "101": {  
         "controlId": 101,
-        "colName": "colCount",
+        "colName": "controlId",
         "controlType": 131,
         "isClear": false,
         "defaultValue": "",
@@ -12,8 +12,8 @@
         "readonly": false,
         "pattern": "",
         "class": "",
-        "placeholder": "查询列数",
-        "title": "查询列数",
+        "placeholder": "请输入组件编号",
+        "title": "组件编号",
         "autocomplete": "on",
         "min": "0",
         "max": "9999",

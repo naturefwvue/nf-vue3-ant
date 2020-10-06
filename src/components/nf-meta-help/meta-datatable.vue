@@ -37,7 +37,7 @@
         <th>说明</th>
       </tr>
       <tr v-for="(col,index) in columnMetaValue" :key="'col'+index">
-        <td>{{index}}</td>
+        <td>{{col.colID}}</td>
         <td style="padding:5px 5px" v-for="(meta,index) in columnMeta" :key="'cmeta'+index">
           <nfInput v-model="col[meta.colName]" :meta="meta" @getvalue="sendColumn"/>
         </td>
@@ -92,6 +92,7 @@ export default {
     this.columnMeta[103].optionList = json.dic.ColumnTypeList
     this.columnMeta[107].optionList = json.dic.ControlTypeList
     this.columnMetaValue[1] = {
+      colID: 1000001,
       colName: 'colName',
       cnName: '中文名',
       colType: 'narchar',
@@ -108,9 +109,11 @@ export default {
   watch: {
     trConut: function (newValue, oldVale) {
       // 增加一个字段
+      const colId = this.tableMetaValue.id * 1000 + newValue * 3
+
       if (newValue > oldVale) {
         this.columnMetaValue[newValue] = {
-          colID: 1,
+          colID: colId,
           colName: 'colName',
           cnName: '中文名',
           colType: 'narchar',

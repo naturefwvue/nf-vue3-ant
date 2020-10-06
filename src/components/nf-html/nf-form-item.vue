@@ -18,7 +18,7 @@
 <script>
 import nfArea from './nf-form-textarea.vue' // 100-107
 import nfInput from './nf-form-input.vue' // 100-107
-import nfNumber from './nf-form-number.vue' // 131,132
+import nfNumber from '@/components/nf-form/nf-form-number.vue' // 131,132
 import nfDatetime from './nf-form-datetime.vue' // 140-144
 import nfUpload from './nf-form-upload.vue' // 150-151
 import nfColor from './nf-form-color.vue' // 160

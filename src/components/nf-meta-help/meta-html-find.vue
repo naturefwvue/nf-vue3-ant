@@ -2,27 +2,17 @@
 <!--查询表单和查询子控件-->
 <!--输入字段，输出查询meta-->
 <template>
-  <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+  <div style="width:400px;" class="ant-table ant-table-body ant-table-default ant-table-bordered" >
     <table role="all">
     <tbody class="ant-table-tbody">
       <tr >
-        <td align="right">列数：</td>
-        <td><nfInput v-model="tableMetaValue.id" :meta="tableMeta[101]" @getvalue="sendTable"/></td>
-        <td align="right">表名：</td>
-        <td><nfInput v-model="tableMetaValue.name" :meta="tableMeta[102]" @getvalue="sendTable"/></td>
-        <td align="right">字段数量：</td>
-        <td><nfInput v-model="trConut" :meta="tableMeta[104]"/></td>
-      </tr>
-      <tr >
-        <td align="right">表说明：</td>
-        <td colspan="5">
-          <nfInput v-model="tableMetaValue.description" :meta="tableMeta[103]" @getvalue="sendTable"/>
-        </td>
+        <td align="right">列数：{{findMeta.colCount}}</td>
+        <td><nfInput v-model="findMeta.colCount" :meta="platFindMeta[101]"/></td>
       </tr>
     </tbody>
     </table>
   </div>
-  <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+  <div style="width:400px;" class="ant-table ant-table-body ant-table-default ant-table-bordered" >
     <table role="all">
     <tbody class="ant-table-tbody">
       <tr>
@@ -39,15 +29,20 @@
       </tr>
     </tbody>
     </table>
-</div>
+  </div>
+  <nfFind/>
 </template>
 
 <script>
+import nfInput from '@/components/nf-form/nf-form-item.vue'
+import nfFind from './meta-html-find-item.vue'
 
 export default {
   name: 'meta-html-find',
   components: {
     // 注册组件
+    nfInput,
+    nfFind
   },
   model: {
     prop: ['metaDataTable', 'metaColumn'],
@@ -55,11 +50,20 @@ export default {
   },
   props: {
     metaDataTable: Object,
-    metaColumn: Object
+    metaFind: Object, // 输出：查询的meta
+    metaColumn: Object // 输入：基础表的说明
   },
   data: function () {
     return {
       testValue: '测试',
+      findMeta: {
+        quickFind: [], // 快捷查询字段
+        allFind: [], // 全部查询字段
+        colCount: 4, // 列数
+        customer: {} // 个性化查询方案
+      },
+      platFindMeta: {}, // 平台的meta
+      findItem: {}, // 查询子项
       paramType: { // 数据库类型，转换成程序类型
         narchar: 'string',
         char: 'string',
@@ -80,6 +84,8 @@ export default {
   },
   created: function () {
     // 读取json
+    const json = require('./json/help-meta-find.json')
+    this.platFindMeta = json.platFindMeta
   },
   mounted: function () {
     var meta = this.modelValue
