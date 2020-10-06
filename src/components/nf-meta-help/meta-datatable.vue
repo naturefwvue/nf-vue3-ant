@@ -7,15 +7,17 @@
     <tbody class="ant-table-tbody">
       <tr >
         <td align="right">表编号：</td>
-        <td><nfInput v-model="tableMetaValue.id" :meta="tableMeta[101]"/></td>
+        <td><nfInput v-model="tableMetaValue.id" :meta="tableMeta[101]" @getvalue="sendTable"/></td>
         <td align="right">表名：</td>
-        <td><nfInput v-model="tableMetaValue.name" :meta="tableMeta[102]"/></td>
+        <td><nfInput v-model="tableMetaValue.name" :meta="tableMeta[102]" @getvalue="sendTable"/></td>
         <td align="right">字段数量：</td>
-        <td><nfInput v-model="tableMetaValue.columnCount" :meta="tableMeta[104]"/></td>
+        <td><nfInput v-model="trConut" :meta="tableMeta[104]"/></td>
       </tr>
       <tr >
         <td align="right">表说明：</td>
-        <td colspan="5"><nfInput v-model="tableMetaValue.description" :meta="tableMeta[103]"/> </td>
+        <td colspan="5">
+          <nfInput v-model="tableMetaValue.description" :meta="tableMeta[103]" @getvalue="sendTable"/>
+        </td>
       </tr>
     </tbody>
     </table>
@@ -36,31 +38,34 @@
       </tr>
       <tr v-for="(col,index) in columnMetaValue" :key="'col'+index">
         <td>{{index}}</td>
-        <td v-for="(meta,index) in columnMeta" :key="'cmeta'+index">
-          <nfInput v-model="col[meta.colName]" :meta="meta"/>
+        <td style="padding:5px 5px" v-for="(meta,index) in columnMeta" :key="'cmeta'+index">
+          <nfInput v-model="col[meta.colName]" :meta="meta" @getvalue="sendColumn"/>
         </td>
       </tr>
     </tbody>
     </table>
-    {{columnMetaValue}}
+    <formatMeta v-if="false" :model="columnMetaValue"/>
 </div>
 </template>
 
 <script>
 import nfInput from '@/components/nf-html/nf-form-item.vue'
+import formatMeta from '@/components/format/format-meta.vue'
 
 export default {
   name: 'nf-meta-datatable',
   components: {
     // 注册组件
-    nfInput
+    nfInput,
+    formatMeta
   },
   model: {
-    prop: 'modelValue',
+    prop: ['metaDataTable', 'metaColumn'],
     event: 'input'
   },
   props: {
-    modelValue: Object
+    metaDataTable: Object,
+    metaColumn: Object
   },
   data: function () {
     return {
@@ -68,7 +73,7 @@ export default {
       tableMeta: {}, // 表meta
       tableMetaValue: {
         id: 1000,
-        name: '',
+        name: 'tableName',
         description: '',
         columnCount: 1
       }, // 表meta
@@ -87,23 +92,46 @@ export default {
     this.columnMeta[103].optionList = json.dic.ColumnTypeList
     this.columnMeta[107].optionList = json.dic.ControlTypeList
     this.columnMetaValue[1] = {
-      colName: '',
-      cnName: '',
-      colType: '',
+      colName: 'colName',
+      cnName: '中文名',
+      colType: 'narchar',
       colSize: 4,
       defaultValue: '',
       isNull: false,
-      controlType: '',
+      controlType: '101',
       description: ''
     }
   },
   mounted: function () {
     var meta = this.modelValue
   },
+  watch: {
+    trConut: function (newValue, oldVale) {
+      // 增加一个字段
+      if (newValue > oldVale) {
+        this.columnMetaValue[newValue] = {
+          colID: 1,
+          colName: 'colName',
+          cnName: '中文名',
+          colType: 'narchar',
+          colSize: 4,
+          defaultValue: '',
+          isNull: false,
+          controlType: '101',
+          description: ''
+        }
+        this.tableMeta.columnCount = newValue
+      }
+    }
+  },
   methods: {
-    sendValue: function (value, colName) {
+    sendTable: function (value, colName) {
       // 提交给父级组件
-      this.$emit('update:modelValue', this.columnMetaValue)
+      this.$emit('update:metaDataTable', this.tableMetaValue)
+    },
+    sendColumn: function (value, colName) {
+      // 提交给父级组件
+      this.$emit('update:metaColumn', this.columnMetaValue)
     }
   }
 }

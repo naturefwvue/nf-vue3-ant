@@ -18,7 +18,7 @@
     :key="'ckey_'+meta.controlId">
     <!--文本框的备选项-->
     <datalist v-if="typeof(meta.optionKey)!=='undefined'" :id="meta.optionKey">
-      <option :key="item.value" v-for="item in meta.optionList" :label="item.value" :value="item.title" />
+      <option :key="item.value" v-for="item in meta.optionList" :label="item.title" :value="item.value" />
     </datalist>
   </span>
 </template>

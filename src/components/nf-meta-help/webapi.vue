@@ -1,33 +1,17 @@
-<!--查询控件的维护-->
-<!--查询表单和查询子控件-->
-<!--输入字段，输出查询meta-->
+<!--接口说明-->
+<!--后端接口名称，路径，参数，功能说明等
+-->
 <template>
-  <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
-    <table role="all">
-    <tbody class="ant-table-tbody">
-      <tr >
-        <td align="right">列数：</td>
-        <td><nfInput v-model="tableMetaValue.id" :meta="tableMeta[101]" @getvalue="sendTable"/></td>
-        <td align="right">表名：</td>
-        <td><nfInput v-model="tableMetaValue.name" :meta="tableMeta[102]" @getvalue="sendTable"/></td>
-        <td align="right">字段数量：</td>
-        <td><nfInput v-model="trConut" :meta="tableMeta[104]"/></td>
-      </tr>
-      <tr >
-        <td align="right">表说明：</td>
-        <td colspan="5">
-          <nfInput v-model="tableMetaValue.description" :meta="tableMeta[103]" @getvalue="sendTable"/>
-        </td>
-      </tr>
-    </tbody>
-    </table>
-  </div>
   <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
     <table role="all">
     <tbody class="ant-table-tbody">
       <tr>
         <th>序号</th>
-        <th>字段名</th>
+        <th>参数名</th>
+        <th>参数类型</th>
+        <th>参数大小</th>
+        <th>范围</th>
+        <th>说明</th>
       </tr>
       <tr v-for="(col,index) in metaColumn" :key="'col'+index">
         <td style="padding:5px 5px">
@@ -35,6 +19,15 @@
         </td>
         <td style="padding:5px 5px">
           {{col.colName}}
+        </td>
+        <td style="padding:5px 5px">
+          {{paramType[col.colType]}}
+        </td>
+        <td style="padding:5px 5px">
+          {{col.colSize}}
+        </td>
+        <td style="padding:5px 5px">
+          {{col.description}}
         </td>
       </tr>
     </tbody>
@@ -45,7 +38,7 @@
 <script>
 
 export default {
-  name: 'meta-html-find',
+  name: 'nf-meta-datatable',
   components: {
     // 注册组件
   },
