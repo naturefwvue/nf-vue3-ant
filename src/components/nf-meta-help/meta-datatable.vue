@@ -95,7 +95,7 @@ export default {
       colID: 1000001,
       colName: 'colName',
       cnName: '中文名',
-      colType: 'narchar',
+      colType: 'VARCHAR',
       colSize: 4,
       defaultValue: '',
       isNull: false,

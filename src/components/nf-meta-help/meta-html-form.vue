@@ -39,7 +39,6 @@
       </tr>
     </tbody>
     </table>
-    {{metaFormItem}}
   </div>
   <div style="float: left;">
     <nfForm v-model="metaInfo" @getvalue="sendValue"/>
@@ -148,7 +147,7 @@ export default {
     },
     sendColumn: function (value, colName) {
       // 提交给父级组件
-      this.$emit('update:metaColumn', this.columnMetaValue)
+      this.$emit('update:metaColumn', this.metaFormItem)
     }
   }
 }
