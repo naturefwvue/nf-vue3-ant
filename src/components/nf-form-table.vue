@@ -88,8 +88,8 @@ export default {
       this.formTable = []
       this.value = {}
       var td = []
-      for (var index in this.meta.formMeta.allForm) { // 遍历子控件的meta的key的数组，便于排序
-        var key = this.meta.formMeta.allForm[index] // 数组里面的meta的key
+      for (var index in this.meta.formMeta.allColumn) { // 遍历子控件的meta的key的数组，便于排序
+        var key = this.meta.formMeta.allColumn[index] // 数组里面的meta的key
         var meta = this.meta.formItem[key] // 子控件的meta
         td.push(key)
         this.value[meta.colName] = ''
@@ -123,7 +123,7 @@ export default {
     isEnd: function (tr, td) {
       var count = (tr - 1) * this.meta.formMeta.colCount + (td - 1)
       // alert(tdCount.value)
-      return count >= this.meta.formMeta.allForm.length
+      return count >= this.meta.formMeta.allColumn.length
     }
   }
 }

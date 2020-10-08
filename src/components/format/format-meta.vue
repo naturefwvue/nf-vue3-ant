@@ -1,6 +1,6 @@
 <!--格式化显示meta-->
 <template>
-  <div align="left" style="background-color:#EEEEFF;height:600px;width:300px;float:left;">
+  <div align="left" style="background-color:#EEEEFF;width:300px;float:left;">
       {<br>
         <span v-for="(item, key, index) in model" :key="index">
           <span v-if="typeof item === 'number' && !isNaN(item)">&nbsp;&nbsp;"{{key}}": {{item}}, <br></span>

@@ -27,6 +27,21 @@
     {"value": 191, "title": "列表框"},
     {"value": 192, "title": "联动下拉列表框"}
   ],
+  "FindControlTypeList": [
+    {"value": 101, "title": "单行文本框"},
+    {"value": 106, "title": "搜索"},
+    {"value": 131, "title": "数字"},
+    {"value": 140, "title": "日期"},
+    {"value": 141, "title": "日期时间"},
+    {"value": 142, "title": "时间"},
+    {"value": 143, "title": "年月"},
+    {"value": 144, "title": "年周"},
+    {"value": 182, "title": "多选组"},
+    {"value": 183, "title": "单选组"},
+    {"value": 190, "title": "下拉列表框"},
+    {"value": 191, "title": "列表框"},
+    {"value": 192, "title": "联动下拉列表框"}
+  ],
   "ColumnTypeList": [
     {"value": "INT", "title": "int"},
     {"value": "BIGINT", "title": "bigint"},

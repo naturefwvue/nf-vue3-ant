@@ -1,8 +1,12 @@
-/** 查询meta的辅助生成工具 */
+<!--查询子控件的meta的修改-->
+<!--
+输入：字段meta
+输出：查询子控件的meta
+-->
 <template>
-  <div class="home">{{trList}}
-    <div v-if="false" style="background-color:#dddddd;height:800px;width:400px;float:left;">
-      <!--表单-->
+  <div class="home">
+    <div style="width:400px;float:left;">
+      <!--查询表单-->
       <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
         <table>
           <colgroup><col style="width: 25%; min-width: 25%;"><col>
@@ -19,7 +23,7 @@
         </table>
       </div>
     </div>
-    <div v-if="false" align="left" style="padding:5px;background-color:#FFFFEE;height:600px;width:400px;float:left;">
+    <div align="left" style="padding:5px;background-color:#FFFFEE;height:600px;width:400px;float:left;">
       <!--效果和json-->
       效果：<nfInput v-model="testValue" :meta="baseMeta"  /> ——> {{testValue}}
       <div align="left" style="padding:15px;background-color:#FFEEEE;height:500px;width:400px;clear:both">
@@ -69,7 +73,8 @@ export default {
     event: 'input'
   },
   props: {
-    modelValue: Object
+    modelValue: Object,
+    isReload: Boolean // 需要重新加载
   },
   data: function () {
     return {
@@ -102,36 +107,37 @@ export default {
       },
       tmpMeta: {}, // 按需生成属性的
       trList: [103],
-      type: {}, // 各种组件类型需要的属性ID数组
+      type: [], // 各种组件类型需要的属性ID数组
       numberList: []
     }
   },
   created: function () {
     // 读取json
-    const json = require('@/components/help-meta-form.json')
+    const json = require('./json/help-meta-find-item.json')
+    const dic = require('./json/dic.json')
     // 给data赋值
-    this.helpMeta = json.helpMeta
-    this.helpMeta[103].optionList = json.dic.ControlTypeList
-    this.type = json.type
-    this.trList = this.type[103] // 默认使用文本框的属性
-    alert(this.helpMeta)
+    this.helpMeta = json.platFormMeta
+    this.helpMeta[103].optionList = dic.FindControlTypeList
+    this.type = json.type // 设置控件需要的属性
+    this.trList = this.type[this.modelValue.controlType] // 默认使用文本框的属性
   },
-  mounted: function () {
-    /*
-    var meta = this.modelValue
-    // 外部属性给内部固定模板赋值
-    for (var key in meta) {
-      this.baseMeta[key] = meta[key]
+  watch: {
+    isReload: function (newValue, oldVale) {
+      // 有更新，重新依据属性设置
+      var meta = this.modelValue
+      // 外部属性给内部固定模板赋值
+      for (var key in meta) {
+        this.baseMeta[key] = meta[key]
+      }
+      // 根据类型拼接临时meta
+      this.tmpMeta = {}
+      this.trList = this.type[meta.controlType] // 根据外部控件类型设置需要的属性
+      for (var i = 0; i < this.trList.length; i += 1) {
+        var item = this.trList[i]
+        var key1 = this.helpMeta[item].colName
+        this.tmpMeta[key1] = this.baseMeta[key1]
+      }
     }
-    // 根据类型拼接临时meta
-    this.tmpMeta = {}
-    this.trList = this.type[meta.controlType] // 根据外部控件类型设置需要的属性
-    for (var i = 0; i < this.trList.length; i += 1) {
-      var item = this.trList[i]
-      var key1 = this.helpMeta[item].colName
-      this.tmpMeta[key1] = this.baseMeta[key1]
-    }
-    */
   },
   methods: {
     onSubmit () {
@@ -154,6 +160,7 @@ export default {
       }
       // 提交给父级组件
       this.$emit('update:modelValue', this.tmpMeta)
+      this.$emit('getvalue', this.tmpMeta.controlId, this.tmpMeta)
     }
   }
 }

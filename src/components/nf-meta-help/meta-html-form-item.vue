@@ -1,7 +1,11 @@
-/** 查询meta的辅助生成工具 */
+<!--表单子控件的meta的修改-->
+<!--
+输入：字段meta
+输出：表单子控件的meta
+-->
 <template>
   <div class="home">
-    <div style="background-color:#dddddd;height:800px;width:400px;float:left;">
+    <div style="width:400px;float:left;">
       <!--表单-->
       <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
         <table>
@@ -69,7 +73,8 @@ export default {
     event: 'input'
   },
   props: {
-    modelValue: Object
+    modelValue: Object,
+    isReload: Boolean // 需要重新加载
   },
   data: function () {
     return {
@@ -108,28 +113,30 @@ export default {
   },
   created: function () {
     // 读取json
-    // const json = require('@/components/help-meta-form.json')
     const json = require('./json/help-meta-form-item.json')
     const dic = require('./json/dic.json')
     // 给data赋值
     this.helpMeta = json.platFormMeta
     this.helpMeta[103].optionList = dic.ControlTypeList
-    this.type = json.type
+    this.type = json.type // 设置控件需要的属性
     this.trList = this.type[this.modelValue.controlType] // 默认使用文本框的属性
   },
-  mounted: function () {
-    var meta = this.modelValue
-    // 外部属性给内部固定模板赋值
-    for (var key in meta) {
-      this.baseMeta[key] = meta[key]
-    }
-    // 根据类型拼接临时meta
-    this.tmpMeta = {}
-    this.trList = this.type[meta.controlType] // 根据外部控件类型设置需要的属性
-    for (var i = 0; i < this.trList.length; i += 1) {
-      var item = this.trList[i]
-      var key1 = this.helpMeta[item].colName
-      this.tmpMeta[key1] = this.baseMeta[key1]
+  watch: {
+    isReload: function (newValue, oldVale) {
+      // 有更新，重新依据属性设置
+      var meta = this.modelValue
+      // 外部属性给内部固定模板赋值
+      for (var key in meta) {
+        this.baseMeta[key] = meta[key]
+      }
+      // 根据类型拼接临时meta
+      this.tmpMeta = {}
+      this.trList = this.type[meta.controlType] // 根据外部控件类型设置需要的属性
+      for (var i = 0; i < this.trList.length; i += 1) {
+        var item = this.trList[i]
+        var key1 = this.helpMeta[item].colName
+        this.tmpMeta[key1] = this.baseMeta[key1]
+      }
     }
   },
   methods: {

@@ -1,4 +1,7 @@
-<!--生成建表的sql语句-->
+<!--生成建表的sql语句
+输入：表meta、字段meta
+输出：建立表的sql语句，这个是MySQL版本的
+-->
 <template>
   <div id="sql" >
     <pre>

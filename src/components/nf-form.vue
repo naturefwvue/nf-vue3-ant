@@ -52,7 +52,6 @@ export default {
   },
   model: {
     prop: 'modelValue', // 外部属性，返回表单实体类
-    isReload: false,
     event: 'input'
   },
   props: {
@@ -64,7 +63,7 @@ export default {
         return {
           formMeta: { // 控件自己的属性
             state: 'add', // 表单状态，add、update、show
-            allForm: [], // 需要的控件的ID
+            allColumn: [], // 需要的控件的ID
             colCount: Number, // 一行几列
             customer: Object // 个性化方案
           },
@@ -101,8 +100,8 @@ export default {
       var flag = this.meta.formMeta.name
       this.formValue = {}
       this.arrMeta = []
-      for (var index in this.meta.formMeta.allForm) { // 遍历子控件的meta的key的数组，便于排序
-        var key = this.meta.formMeta.allForm[index] // 数组里面的meta的key
+      for (var index in this.meta.formMeta.allColumn) { // 遍历子控件的meta的key的数组，便于排序
+        var key = this.meta.formMeta.allColumn[index] // 数组里面的meta的key
         var meta = this.meta.formItem[key] // 子控件的meta
         this.arrMeta.push(meta) // 把字段放入数组，便于循环
         this.formValue[meta.colName] = '' // 创建实体类

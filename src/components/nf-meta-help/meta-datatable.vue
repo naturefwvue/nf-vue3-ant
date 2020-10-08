@@ -1,5 +1,7 @@
 <!--数据库表-->
 <!--序号、字段名、中文名、字段类型、字段大小、默认值、是否为空、控件类型、说明、外键表、外键字段
+输入：暂时没有，以后可以从excel里输入
+输出：表meta、字段meta
 -->
 <template>
   <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
@@ -85,12 +87,13 @@ export default {
   created: function () {
     // 读取json
     const json = require('./json/help-meta-datetable.json')
+    const dic = require('./json/dic.json')
     // 表赋值
     this.tableMeta = json.tableMeta
     // 字段赋值
     this.columnMeta = json.columnMeta
-    this.columnMeta[103].optionList = json.dic.ColumnTypeList
-    this.columnMeta[107].optionList = json.dic.ControlTypeList
+    this.columnMeta[103].optionList = dic.ColumnTypeList
+    this.columnMeta[107].optionList = dic.ControlTypeList
     this.columnMetaValue[1] = {
       colID: 1000001,
       colName: 'colName',
@@ -102,9 +105,10 @@ export default {
       controlType: '101',
       description: ''
     }
-  },
-  mounted: function () {
-    var meta = this.modelValue
+    // 提交表的meta
+    this.$emit('update:metaDataTable', this.tableMetaValue)
+    // 提交字段的meta
+    this.$emit('update:metaColumn', this.columnMetaValue)
   },
   watch: {
     trConut: function (newValue, oldVale) {
@@ -114,26 +118,27 @@ export default {
       if (newValue > oldVale) {
         this.columnMetaValue[newValue] = {
           colID: colId,
-          colName: 'colName',
-          cnName: '中文名',
-          colType: 'narchar',
-          colSize: 4,
+          colName: 'colName' + newValue,
+          cnName: '中文名' + newValue,
+          colType: 'VARCHAR',
+          colSize: 50,
           defaultValue: '',
           isNull: false,
           controlType: '101',
           description: ''
         }
         this.tableMeta.columnCount = newValue
+        this.$emit('addcolumn', this.tableMetaValue, this.columnMetaValue)
       }
     }
   },
   methods: {
     sendTable: function (value, colName) {
-      // 提交给父级组件
+      // 提交表的meta
       this.$emit('update:metaDataTable', this.tableMetaValue)
     },
     sendColumn: function (value, colName) {
-      // 提交给父级组件
+      // 提交字段的meta
       this.$emit('update:metaColumn', this.columnMetaValue)
     }
   }
