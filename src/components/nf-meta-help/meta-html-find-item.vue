@@ -78,32 +78,23 @@ export default {
   },
   data: function () {
     return {
-      testValue: '测试',
+      testValue: '',
       helpMeta: {}, // 创建表单需要的meta
       baseMeta: { // 固定属性的
-        controlId: 101,
-        colName: 'abc',
-        controlType: 101,
-        isClear: true,
-        defaultValue: '',
-        autofocus: false,
-        disabled: false,
-        required: true,
-        readonly: false,
-        pattern: '',
-        class: '',
-        placeholder: '请输入',
-        title: '',
-        autocomplete: 'on',
-        size: 10,
-        maxlength: 10,
-        min: 0,
-        max: 9999,
-        step: 1,
-        rows: 5,
-        cols: 50,
-        optionKey: 'beixuan',
-        optionList: []
+        controlId: 101, //
+        colName: 'abc', //
+        controlType: 101, //
+        title: '', //
+        autocomplete: 'on', //
+        size: 10, //
+        maxlength: 10, //
+        min: 0, //
+        max: 9999, //
+        step: 1, //
+        findKind: 401,
+        tdCount: 50,
+        optionKey: '', //
+        optionList: [] //
       },
       tmpMeta: {}, // 按需生成属性的
       trList: [103],
@@ -116,7 +107,7 @@ export default {
     const json = require('./json/help-meta-find-item.json')
     const dic = require('./json/dic.json')
     // 给data赋值
-    this.helpMeta = json.platFormMeta
+    this.helpMeta = json.platFindMeta
     this.helpMeta[103].optionList = dic.FindControlTypeList
     this.type = json.type // 设置控件需要的属性
     this.trList = this.type[this.modelValue.controlType] // 默认使用文本框的属性
@@ -140,9 +131,6 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      console.log('submit!', this.form)
-    },
     sendValue: function (value, colName) {
       // 根据字段名判断，设置需要的属性
       if (colName === 'controlType') {

@@ -59,5 +59,23 @@
     {"value": "YEAR", "title": "year"},
     {"value": "TIMESTAMP", "title": "timestamp"},
     {"value": "BIT", "title": "bit"}
+  ],
+  "ColumnFindList": [
+    {"value": "INT", "title": [411,412,413,414,415,431,434]},
+    {"value": "BIGINT", "title":  [411,412,413,414,415,431,434]},
+    {"value": "FLOAT", "title":  [411,412,413,414,415,431,434]},
+    {"value": "DOUBLE", "title":  [411,412,413,414,415,431,434]},
+    {"value": "DECIMAL", "title":  [411,412,413,414,415,431,434]},
+    {"value": "VARCHAR", "title": [401,402,403,404,405,406]}, 
+    {"value": "CHAR", "title": [401,402,403,404,405,406]},
+    {"value": "BLOB", "title": [401,402,403,404,405,406]},
+    {"value": "TEXT", "title": [401,402,403,404,405,406]},
+    {"value": "LONGTEXT", "title": [401,402,403,404,405,406]},
+    {"value": "DATE", "title": [421,422,423,432]},
+    {"value": "DATETIME", "title": [421,422,423,432]},
+    {"value": "TIME", "title": [421,422,423,432]},
+    {"value": "YEAR", "title": [421,422,423,432]},
+    {"value": "TIMESTAMP", "title": [421,422,423,432]},
+    {"value": "BIT", "title": [411]}
   ]
 }

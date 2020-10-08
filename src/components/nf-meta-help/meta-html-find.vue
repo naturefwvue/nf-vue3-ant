@@ -5,35 +5,51 @@
 输出：查询meta
 -->
 <template>
-  <div style="width:400px;" class="ant-table ant-table-body ant-table-default ant-table-bordered" >
+  <div style="width:400px;float: left;" class="ant-table ant-table-body ant-table-default ant-table-bordered" >
     <table role="all">
-    <tbody class="ant-table-tbody">
-      <tr >
-        <td align="right">列数1：{{findMeta.colCount}}</td>
-        <td><nfInput v-model="findMeta.colCount" :meta="platFindMeta[101]"/></td>
-      </tr>
-    </tbody>
+      <tbody class="ant-table-tbody">
+        <tr >
+          <td align="right">列数：{{findMeta.colCount}}</td>
+          <td><nfInput v-model="findMeta.colCount" :meta="platFindMeta[101]"/></td>
+        </tr>
+        <tr >
+          <td align="right">快捷：</td>
+          <td>{{findMeta.quickFind}}</td>
+        </tr>
+        <tr >
+          <td align="center" colspan="2">个性化方案：</td>
+        </tr>
+        <tr >
+          <td align="right">方案一：</td>
+          <td>{{findMeta.quickFind}}</td>
+        </tr>
+      </tbody>
     </table>
-  </div>
-  <div style="width:400px;" class="ant-table ant-table-body ant-table-default ant-table-bordered" >
     <table role="all">
-    <tbody class="ant-table-tbody">
-      <tr>
-        <th>序号</th>
-        <th>字段名</th>
-      </tr>
-      <tr v-for="(col,index) in metaColumn" :key="'col'+index">
-        <td style="padding:5px 5px">
-          {{col.colID}}
-        </td>
-        <td style="padding:5px 5px">
-          {{col.colName}}
-        </td>
-      </tr>
-    </tbody>
+      <tbody class="ant-table-tbody">
+        <tr>
+          <th>快捷</th>
+          <th>序号</th>
+          <th>字段名</th>
+        </tr>
+        <tr v-for="(col,index) in metaColumn"
+          :key="'col'+index"
+          @click="colClick(col.colID)">
+          <td style="padding:5px 5px">
+            <input type="checkbox" value="col.colID">
+          </td>
+          <td style="padding:5px 5px">
+            {{col.colID}}
+          </td>
+          <td style="padding:5px 5px">
+            {{col.colName}}
+          </td>
+        </tr>
+      </tbody>
     </table>
+    {{findItemMeta}}
   </div>
-  <div style="float: left;"  v-if="true">isShowFindItem
+  <div style="float: left;"  v-if="isShowFindItem">
     <nfFind v-model="metaInfo" :isReload="isReloadItem" @getvalue="sendValue"/>
   </div>
 </template>
@@ -72,35 +88,41 @@ export default {
         colCount: 4, // 列数
         customer: {} // 个性化查询方案
       },
-      findItemMeta: {} // 查询子项
+      findItemMeta: {}, // 查询子项
+      metaInfo: { // 选择的表单子控件的meta
+        controlId: 100,
+        controlType: 101,
+        colName: 'controlId'
+      }
     }
   },
   created: function () {
     // 读取json
     const json = require('./json/help-meta-find.json')
     this.platFindMeta = json.platFindMeta
+    this.createFindMeta()
   },
   watch: {
     isReload: function (newValue, oldVale) {
       // 有更新，增加新字段的控件meta
-      this.createFormMeta()
+      this.createFindMeta()
     }
   },
   methods: {
-    createFormMeta: function () {
+    createFindMeta: function () {
       // 依据外部的字段meta，生成表单子控件的meta
       // 判断有没有，如果没有按照控件类型生成
-      const json = require('./json/help-meta-form-item.json')
+      const json = require('./json/help-meta-find-item.json')
       // 遍历字段meta
       for (var key in this.metaColumn) {
         var col = this.metaColumn[key] // 每个字段meta
-        if (typeof this.formItemMeta[col.colID] === 'undefined') {
+        if (typeof this.findItemMeta[col.colID] === 'undefined') {
           // 循环配置
           var newItem = {} // 新的控件meta
           var arrAttribute = json.type[col.controlType] // 根据控件类型，加载需要的属性
           for (var i = 0; i < arrAttribute.length; i += 1) {
             var id = arrAttribute[i] // 控件ID
-            var ctl = json.platFormMeta[id] // 控件meta
+            var ctl = json.platFindMeta[id] // 控件meta
             switch (ctl.controlId) {
               case 101:
                 newItem[ctl.colName] = col.colID
@@ -132,10 +154,10 @@ export default {
             }
           }
           // 新控件，加入表单子控件集合
-          this.formItemMeta[col.colID] = newItem
+          this.findItemMeta[col.colID] = newItem
           // 加入allFind
-          this.formMeta.allColumn.push(col.colID)
-          this.sendFormMeta()
+          this.findMeta.allFind.push(col.colID)
+          this.sendFindMeta()
         }
       }
     },
@@ -143,14 +165,14 @@ export default {
       // 单击字段，切换meta
       this.isReloadItem = !this.isReloadItem
       this.isShowFindItem = true
-      this.metaInfo = this.formItemMeta[key]
+      this.metaInfo = this.findItemMeta[key]
     },
     // 子控件返回子控件的meta
     sendValue: function (value, meta) {
-      this.formItemMeta[value] = meta
-      this.sendFormMeta()
+      this.findItemMeta[value] = meta
+      this.sendFindMeta()
     },
-    sendFormMeta: function () {
+    sendFindMeta: function () {
       // 提交给父级组件
       var reMeta = {
         findMeta: this.findMeta,

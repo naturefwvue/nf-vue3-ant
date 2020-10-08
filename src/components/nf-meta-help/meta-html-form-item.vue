@@ -140,9 +140,6 @@ export default {
     }
   },
   methods: {
-    onSubmit () {
-      console.log('submit!', this.form)
-    },
     sendValue: function (value, colName) {
       // 根据字段名判断，设置需要的属性
       if (colName === 'controlType') {
