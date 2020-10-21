@@ -1,14 +1,14 @@
 <!--查询控件-->
 <template>
   <div class="home">
-    <div style="background-color:#eee;height:50px;">
+     <div style="background-color:#eee;height:60px;">
       <!--快捷查询，一行-->
       <div id="components-affix-demo-target"
         ref="container"
         class="scrollable-container"
         :style="{
-          height: '50px',
-          overflow: 'hidden',
+          height: '180px',
+          overflow: 'auto',
           position: 'relative',
           border: '1px solid #ebedf0',
           borderRadius: '2px',
@@ -18,32 +18,32 @@
         }"
       >
         <!--个性化查询方案-->
-        <a-row type="flex">
-          <a-col flex="80px">
-            <div class="customer">
-              <a-dropdown size="small">
-                <template v-slot:overlay>
-                  <a-menu @click="changeQuickFind">
-                    <a-menu-item v-for="(item,key) in meta.findMeta.customer" :key="key">
-                      <UserOutlined />{{item.name}}
-                    </a-menu-item>
-                  </a-menu>
+        <div class="customer">
+          <a-dropdown size="small">
+            <template v-slot:overlay>
+              <a-menu @click="changeQuickFind">
+                <a-menu-item v-for="(item,key) in meta.findMeta.customer" :key="key">
+                  <UserOutlined />{{item.name}}
+                </a-menu-item>
+              </a-menu>
+            </template>
+            <a-button style="margin-left: 2px" @click="clickQuickFind">快捷<DownOutlined /> </a-button>
+          </a-dropdown>
+        </div>
+        <!--查询字段-->
+        <div class="ant-table ant-table-body ant-table-default ant-table-bordered" style="padding-left:80px;">
+          <table role="all">
+            <tbody class="ant-table-tbody">
+              <tr>
+                <template v-for="(meta,index) in quickFindMeta" :key="'qf'+index">
+                  <td align="left" style="padding:3px 3px;height:20px">
+                    <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" />
+                  </td>
                 </template>
-                <a-button style="margin-left: 2px" @click="clickQuickFind">快捷<DownOutlined /> </a-button>
-              </a-dropdown>
-            </div>
-          </a-col>
-          <!--查询字段-->
-          <template v-for="(meta,index) in quickFindMeta" :key="'qf'+index">
-            <a-col flex="auto">
-              <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" />
-            </a-col>
-          </template>
-          <a-col flex="80px">
-            <!--更多按钮固定-->
-            &nbsp;
-          </a-col>
-        </a-row>
+              </tr>
+            </tbody>
+          </table>
+        </div>
         <!--更多按钮固定-->
         <div class="background">
           <a-affix :target="() => this.$refs.container">
@@ -253,7 +253,6 @@ export default {
   }
 }
 </script>
-
 <style>
 #components-affix-demo-target.scrollable-container {
   padding-right: 60px;

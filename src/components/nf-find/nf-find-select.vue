@@ -31,23 +31,13 @@ export default {
         return {
           controlId: Number, // 编号，区别同一个表单里的其他控件
           controlType: Number, // 用类型编号表示type
-          colName: String, // 字段名称
-          isClear: { // isClear  连续添加时是否恢复默认值
-            type: Boolean,
-            default: false
-          },
-          disabled: { // 是否禁用
-            type: Boolean,
-            default: false
-          },
-          required: { // 必填
-            type: Boolean,
-            default: true
-          },
+          colName: [String, Object], // 字段名称
+          placeholder: String,
           max: { // 最多选择数量，0表示不限制
             type: Number,
             default: 0
           },
+          optionList: Object,
           class: String,
           title: String // 中文名称
         }

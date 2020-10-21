@@ -1,7 +1,7 @@
 {
   "company":{
     "findMeta":{
-      "quickFind":[1009,1003,1002],
+      "quickFind":[1009,1010,1002],
       "allFind":[1000,1001,1002,1003,1009,1004,1005,1010,1006,1007,1011,1008],
       "colCount":4,
       "customer":{
@@ -19,7 +19,7 @@
       "1010":{
         "controlId": "1010",
         "colName": "education",
-        "controlType": 183,
+        "controlType": 200,
         "placeholder": "学历",
         "title": "学历",
         "optionList": [

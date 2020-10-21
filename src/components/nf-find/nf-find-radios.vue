@@ -27,6 +27,7 @@ export default {
           controlId: Number, // 编号，区别同一个表单里的其他控件
           controlType: Number, // 用类型编号表示type
           colName: String, // 字段名称
+          optionList: Object,
           title: String // 中文名称
         }
       }

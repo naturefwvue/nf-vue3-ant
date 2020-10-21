@@ -10,7 +10,7 @@
     <nfChecks v-else-if="meta.controlType === 182" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfRadios v-else-if="meta.controlType === 183" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfSelect v-else-if="meta.controlType <= 191" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfInput v-else-if="meta.controlType === 200" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfCascader v-else-if="meta.controlType === 200" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
   </span>
 </template>
 
@@ -28,6 +28,7 @@ import nfDatetime from './nf-find-datetime.vue' // 140-144
 import nfChecks from './nf-find-checks.vue' // 182
 import nfRadios from './nf-find-radios.vue' // 183
 import nfSelect from './nf-find-select.vue' // 190
+import nfCascader from './nf-find-cascaders.vue' // 200
 
 export default {
   name: 'nf-find-item',
@@ -37,7 +38,8 @@ export default {
     nfDatetime,
     nfChecks,
     nfRadios,
-    nfSelect
+    nfSelect,
+    nfCascader
   },
   props: {
     modelValue: [String, Number, Boolean, Array, Object, Date],

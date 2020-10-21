@@ -1,5 +1,5 @@
 <template>
-<a-layout id="components-layout-demo-responsive">
+  <a-layout id="components-layout-demo-responsive">
     <a-layout-sider
       breakpoint="lg"
       collapsed-width="0"

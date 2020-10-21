@@ -3,6 +3,7 @@
   <a-select :id="'c'+meta.controlId"  style="width:98%"
     :name="'c'+meta.controlId"
     :disabled="meta.disabled"
+    :placeholder="meta.placeholder"
     size="small"
     @change="myInput">
       <a-select-option v-for="(item,index) in meta.optionList" :key="index"
@@ -31,6 +32,13 @@ export default {
           controlId: Number, // 编号，区别同一个表单里的其他控件
           controlType: Number, // 用类型编号表示type
           colName: String, // 字段名称
+          optionList: {
+            type: Object,
+            default: () => [{
+              value: [String, Number],
+              title: String
+            }]
+          },
           isClear: { // isClear  连续添加时是否恢复默认值
             type: Boolean,
             default: false
@@ -47,6 +55,7 @@ export default {
             type: Number,
             default: 0
           },
+          placeholder: String,
           class: String,
           title: String // 中文名称
         }

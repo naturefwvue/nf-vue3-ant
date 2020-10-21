@@ -33,6 +33,9 @@ $ npm i --save ant-design-vue@next
 
 $ npm i --save ant-design-vue
 
+$ npm install --save axios vue-axios
+
+
 # 环境
 
 vue 3.0
