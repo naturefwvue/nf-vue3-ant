@@ -6,13 +6,7 @@
       <a class="ant-dropdown-link">{{findName}}</a>
       <template v-slot:overlay>
         <a-menu @click="changeFindKind">
-          <a-menu-item key="421">=</a-menu-item>
-          <a-menu-item key="422">≠</a-menu-item>
-          <a-menu-item key="432">从</a-menu-item>
-          <a-menu-item key="423">></a-menu-item>
-          <a-menu-item key="424">≥</a-menu-item>
-          <a-menu-item key="425">&lt;</a-menu-item>
-          <a-menu-item key="426">≤</a-menu-item>
+          <a-menu-item v-for="item in meta.findKindList" :key="item" >{{findKind[item]}}</a-menu-item>
         </a-menu>
       </template>
     </a-dropdown>
@@ -26,14 +20,14 @@
         <a-week-picker
           :id="'cRangeweek1' + meta.controlId"
           :name="'cRangeweek1' + meta.controlId"
-          placeholder="开始周"
+          :placeholder="meta.placeholder+'开始周'"
           :disabled="meta.disabled"
           @change="myInput21"
           :key="'cRangeweek1' + meta.controlId" /> ~&nbsp;
         <a-week-picker
           :id="'cRangeweek2' + meta.controlId"
           :name="'cRangeweek2' + meta.controlId"
-          placeholder="结束周"
+          :placeholder="meta.placeholder+'结束周'"
           :disabled="meta.disabled"
           @change="myInput22"
           :key="'cRangeweek2_' + meta.controlId" />
@@ -43,14 +37,14 @@
         <a-month-picker
           :id="'cRangemonth1' + meta.controlId"
           :name="'cRangemonth1' + meta.controlId"
-          placeholder="开始月份"
+          :placeholder="meta.placeholder+'开始月'"
           :disabled="meta.disabled"
           @change="myInput21"
         :key="'cRangemonth1_' + meta.controlId" /> ~&nbsp;
         <a-month-picker
           :id="'cRangemonth2' + meta.controlId"
           :name="'cRangemonth2' + meta.controlId"
-          placeholder="结束月份"
+          :placeholder=" meta.placeholder+'结束月'"
           :disabled="meta.disabled"
           @change="myInput22"
         :key="'cRangemonth2_' + meta.controlId" />
@@ -60,14 +54,14 @@
         <a-time-picker
         :id="'cRangetime1' + meta.controlId"
         :name="'cRangetime1' + meta.controlId"
-        placeholder="开始时间"
+        :placeholder="meta.placeholder+'开始时间'"
         :disabled="meta.disabled"
         @change="myInput21"
        :key="'cRangetime1_' + meta.controlId" /> ~&nbsp;
        <a-time-picker
         :id="'cRangetime2' + meta.controlId"
         :name="'cRangetime2' + meta.controlId"
-        placeholder="结束时间"
+        :placeholder="meta.placeholder+'结束时间'"
         :disabled="meta.disabled"
         @change="myInput22"
        :key="'cRangetime2_' + meta.controlId" />
@@ -76,7 +70,7 @@
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :mode="mode"
-        :placeholder="mode"
+        :placeholder="[meta.placeholder+'开始日期',meta.placeholder+'结束日期']"
         :show-time = "controlModeKey === '141'"
         :disabled="meta.disabled"
         size="small"
@@ -87,7 +81,7 @@
       <!--非范围查询-->
       <a-date-picker v-if="controlModeKey === '140'"
         :value="value"
-        placeholder="选择日期"
+        :placeholder="meta.placeholder+'的日期'"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :disabled="meta.disabled"
@@ -96,7 +90,7 @@
       <a-date-picker v-else-if="controlModeKey === '141'"
         show-time
         :value="value"
-        placeholder="选择日期时间"
+        :placeholder="meta.placeholder+'的日期时间'"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
         :disabled="meta.disabled"
@@ -105,21 +99,21 @@
       <a-time-picker v-else-if="controlModeKey === '142'"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
-        placeholder="选择时间"
+        :placeholder="meta.placeholder+'的时间'"
         :disabled="meta.disabled"
         @change="myInput"
        :key="'ckey3_' + meta.controlId" />
       <a-month-picker v-else-if="controlModeKey === '143'"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
-        placeholder="选择月份"
+        :placeholder="meta.placeholder+'的月份'"
         :disabled="meta.disabled"
         @change="myInput"
        :key="'ckey4_' + meta.controlId" />
       <a-week-picker v-else-if="controlModeKey === '144'"
         :id="'c' + meta.controlId"
         :name="'c' + meta.controlId"
-        placeholder="选择周"
+        :placeholder="meta.placeholder+'的周'"
         :disabled="meta.disabled"
         @change="myInput"
         :key="'ckey5_' + meta.controlId" />
@@ -173,7 +167,7 @@ export default {
       value0: '', // 返回的日期
       value1: '', // 范围查询第一个值
       value2: '', // 范围查询第二个值
-      findkey: '432', // 当前查询方法的key
+      findkey: 432, // 当前查询方法的key
       findName: '从', // 当前查询方法的名称
       isRange: true, // 范围查询
       controlModeKey: '140', // 控件类型的mode的key
@@ -245,7 +239,7 @@ export default {
     changeFindKind (e) { // 切换查询方式
       this.findkey = e.key
       this.findName = this.findKind[e.key]
-      this.isRange = e.key === '432' // 设置是否是范围查询
+      this.isRange = e.key === 432 // 设置是否是范围查询
       this.send()
     },
     // 更改范围查询的控件类型
@@ -269,7 +263,7 @@ export default {
       // 向上级提交
       var returnValue = []
       returnValue.push(this.findkey) // 压入查询方式
-      if (this.findkey === '432') {
+      if (this.findkey === 432) {
         returnValue.push(this.value1) // 范围查询，依次压入两个值
         returnValue.push(this.value2)
       } else {

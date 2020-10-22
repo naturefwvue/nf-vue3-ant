@@ -42,6 +42,7 @@
           "maxlength": 100,
           "optionList": [],
           "findKind":"402",
+          "findKindList": [401,403,402,404,405,406],
           "tdCount":1
       },
       "1001":{
@@ -57,6 +58,7 @@
           "maxlength": 6,
           "optionList": [] ,
           "findKind":"401",
+          "findKindList": [411,412,431,413,414,415,416],
           "tdCount":1
       },
       "1002":{
@@ -71,6 +73,7 @@
           "maxlength": 50,
           "optionList": [] ,
           "findKind":"403",
+          "findKindList": [401,403,402,404,405,406],
           "tdCount":1
       },
       "1003":{
@@ -84,6 +87,7 @@
           "maxlength": 50,
           "optionList": [],
           "findKind":"404",
+          "findKindList": [401,403,402,404,405,406],
           "tdCount":1
       },
       "1004": {
@@ -98,6 +102,7 @@
         "optionKey": "",
         "optionList": [],
         "findKind":"405",
+        "findKindList": [401,403,402,404,405,406],
         "tdCount":1
       },
       "1005": {
@@ -111,6 +116,7 @@
         "optionKey": "",
         "optionList": [],
         "findKind":"401,402",
+        "findKindList": [401,403,402,404,405,406],
         "tdCount":1
       },
       "1006": {
@@ -126,6 +132,7 @@
         "optionKey": "",
         "optionList": [],
         "findKind":"401,402",
+        "findKindList": [401,403,402,404,405,406],
         "tdCount":1
       },
       "1007": {
@@ -140,6 +147,7 @@
         "optionKey": "",
         "optionList": [],
         "findKind":"402",
+        "findKindList": [401,403,402,404,405,406],
         "tdCount":1
       },
       "1008": {
@@ -147,6 +155,7 @@
         "colName": "type",
         "title": "公司类型",
         "controlType": 190,
+        "placeholder": "公司类型",
         "class": "",
         "optionList": [
           { "value": 1, "title": "有限责任公司" },
@@ -156,6 +165,7 @@
           { "value": 5, "title": "个体工商户" }
         ],
         "findKind":"401",
+        "findKindList": ["401","402"],
         "tdCount":1
       },
       "1009": {
@@ -164,10 +174,12 @@
         "controlType": 141,
         "class": "",
         "title": "成立日期",
+        "placeholder": "成立日期",
         "min": "1950-01-01",
         "max": "2999-12-31",
         "step": 1,
         "findKind":"423",
+        "findKindList": [421,432,422,423,424,425,426],
         "tdCount":3
       },
       "1011":{

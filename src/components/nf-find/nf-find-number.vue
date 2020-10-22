@@ -6,13 +6,7 @@
       <a class="ant-dropdown-link">{{kind}}</a>
       <template v-slot:overlay>
         <a-menu @click="handleMenuClick">
-          <a-menu-item key="411">=</a-menu-item>
-          <a-menu-item key="431">在</a-menu-item>
-          <a-menu-item key="412">≠</a-menu-item>
-          <a-menu-item key="413">></a-menu-item>
-          <a-menu-item key="414">≥</a-menu-item>
-          <a-menu-item key="415">&lt;</a-menu-item>
-          <a-menu-item key="416">≤</a-menu-item>
+          <a-menu-item v-for="item in meta.findKindList" :key="item" >{{findKind[item]}}</a-menu-item>
         </a-menu>
       </template>
     </a-dropdown>
@@ -28,7 +22,7 @@
       :step="meta.step"
       @change="myInput"
       :key="'ckey_'+meta.controlId"/>
-    <span  v-show="kindkey === '431'">&nbsp;~&nbsp;
+    <span  v-show="kindkey === 431">&nbsp;~&nbsp;
     <a-input-number :id="'c2' + meta.controlId"
         :name="'c2' + meta.controlId"
         :value="value2"
@@ -105,7 +99,7 @@ export default {
       value: '',
       value2: '',
       kind: '=',
-      kindkey: '411',
+      kindkey: 411,
       findKind: {
         411: '=', // 数字
         412: '≠',
@@ -113,7 +107,7 @@ export default {
         414: '≥',
         415: '<',
         416: '≤',
-        431: '在'
+        431: '从'
       }
     }
   },
@@ -141,7 +135,7 @@ export default {
       var returnValue = []
       returnValue.push(this.kindkey)
       returnValue.push(this.value)
-      if (this.kindkey === '431') {
+      if (this.kindkey === 431) {
         returnValue.push(this.value2)
       }
       var colName = this.meta.colName

@@ -3,7 +3,7 @@
   <a-cascader
     v-model:value="value"
     :options="options"
-    placeholder="Please select"
+    :placeholder="meta.placeholder"
     @change="onChange"
   />
 </template>

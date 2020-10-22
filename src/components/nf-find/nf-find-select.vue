@@ -4,6 +4,7 @@
     v-model:value="value"
     :name="'c'+meta.controlId"
     :disabled="meta.disabled"
+    :placeholder="meta.placeholder"
     size="small"
     @change="myInput">
       <a-select-option value="-2">全部</a-select-option>

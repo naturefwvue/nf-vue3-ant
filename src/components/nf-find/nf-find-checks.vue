@@ -5,11 +5,8 @@
     <a-checkbox :id="'c'+meta.controlId"
       type="checkbox"
       :name="'c'+meta.controlId"
-      :class="meta.class"
       :value="item.value"
       :checked="(','+value+',').indexOf(','+item.value+',') != -1"
-      :disabled="meta.disabled"
-      :autoFocus="meta.autofocus"
       :key="'chks'+item.value"
       @change="myCheck"
     >

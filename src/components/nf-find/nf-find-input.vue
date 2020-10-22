@@ -10,16 +10,14 @@
       :autocomplete="meta.autocomplete"
       :key="'ckey_'+meta.controlId"
       size="small"
-      @input="myInput"
+      @change="myInput"
       >
         <template v-slot:addonBefore>
           <a-dropdown>
             <a class="ant-dropdown-link">{{kind}}</a>
             <template v-slot:overlay>
-              <a-menu @click="handleMenuClick">
-                <a-menu-item key="401">=</a-menu-item>
-                <a-menu-item key="402">≠</a-menu-item>
-                <a-menu-item key="403">含</a-menu-item>
+              <a-menu @click="changeFindType">
+                <a-menu-item v-for="item in meta.findKindList" :key="item" >{{findKind[item]}}</a-menu-item>
               </a-menu>
             </template>
           </a-dropdown>
@@ -67,32 +65,20 @@ export default {
         403: '含',
         404: '不含',
         405: '起始',
-        406: '结束',
-        411: '=', // 数字
-        412: '≠',
-        413: '>',
-        414: '≥',
-        415: '<',
-        416: '≤',
-        421: '=', // 日期
-        422: '≠',
-        423: '>',
-        424: '≥',
-        425: '<',
-        426: '≤',
-        431: '在',
-        432: '在',
-        433: '在'
+        406: '结束'
       }
     }
   },
   watch: {
+    // 监控属性变化，重新赋值
     modelValue: function (newValue, oldValue) {
       // alert(newValue)
       this.value = ''
       if (typeof newValue === 'object') {
         if (newValue.length === 2) {
-          this.value = newValue[1]
+          this.kindkey = newValue[0]
+          this.kind = this.findKind[this.kindkey] // 设置查询方式
+          this.value = newValue[1] // 设置查询关键字
         }
       }
     }
@@ -100,24 +86,23 @@ export default {
   methods: {
     myInput: function (e) {
       this.value = e.target.value
-      this.send()
+      this.sendQuery()
     },
-    handleButtonClick (e) {
-      console.log('click left button', e)
-    },
-    handleMenuClick (e) {
+    // 更改查询方式
+    changeFindType (e) {
       this.kindkey = e.key
       this.kind = this.findKind[e.key]
       console.log('click', e)
-      this.send()
+      this.sendQuery()
     },
-    send: function () {
-      var returnValue = []
+    // 向上提交查询字段、查询方式和查询关键字。
+    sendQuery: function () {
+      var returnValue = [] // 格式：[findType,query]
       returnValue.push(this.kindkey)
       returnValue.push(this.value)
       var colName = this.meta.colName
       var id = this.meta.controlId
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
+      this.$emit('update:modelValue', returnValue) // 返回给调用者，修改v-model属性
       this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
     }
   }
