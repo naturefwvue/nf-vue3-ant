@@ -36,7 +36,7 @@
           <!--查询字段-->
           <template v-for="(meta,index) in quickFindMeta" :key="'qf'+index">
             <a-col flex="auto">
-              <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" />
+              <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" @selectchange="selectChange" />
             </a-col>
           </template>
           <a-col flex="80px">
@@ -169,6 +169,7 @@ export default {
   created: function () { // 初始化
     // 把表单子控件转换为多行多列的形式
     this.getFindTable()
+    // 判断是否需要联动的事件
   },
   watch: {
     isReload: function (newValue, oldVale) {
@@ -249,6 +250,12 @@ export default {
         var key = this.meta.findMeta.quickFind[index] // 数组里面的meta的key
         this.quickFindMeta.push(this.meta.findItem[key])
       }
+    },
+    selectChange: function (value, level) {
+      alert(value)
+      alert(level)
+      // callback1('2222')
+      return '111'
     }
   }
 }

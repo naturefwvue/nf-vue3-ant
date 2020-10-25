@@ -10,11 +10,16 @@
         <a-pagination v-model:current="acticleCurrent" :total="50" show-less-items />
       </div>
   </div>
-  <div>
+  <div style="width:400px">
       发个帖子{{manageArticleForm}}
-      标题：<a-input value="manageArticleForm.articleForm.title"></a-input>
-      内容：<a-input value="manageArticleFormarticleForm.content"></a-input>
-      <a-button type="dashed" @click="title" >发表帖子</a-button>
+      标题：<a-input v-model:value="articleForm.title"/>
+      内容：<a-input v-model:value="articleForm.content"/>
+      <a-button type="dashed" @click="sendArticle" >发表帖子</a-button>
+      {{articleForm}}
+  </div>
+  <div @click="changeState">
+    {{valReactive}}
+    {{valReactive.c}}
   </div>
 </template>
 
@@ -62,28 +67,34 @@ const manageActiclePage = () => {
 export default {
   setup () {
     const value = ref(0)
-
+    const valReactive = reactive({})
+    const changeState = () => {
+      // alert('state')
+      console.log(valReactive)
+      valReactive.a += '2'
+      valReactive.c = '3'
+    }
     // 引入查询管理
     const { articleList, loagActicleListByPage } = manageArticleList()
     const { acticleCurrent } = manageActiclePage()
 
     // 表单
-    // const articleForms = articleForm
-    // const sendArticles = sendArticle
-    const title = () => {
-      manageArticleForm()
-    }
+    const { articleForm, sendArticle } = manageArticleForm()
+
     // 监听页号变化，加载数据
     watch(acticleCurrent, (newValue, oldValue) => {
       // alert(newValue)
       loagActicleListByPage(newValue)
     })
+
     // 返回给view
     return {
       articleList,
       acticleCurrent,
-      // articleForms,
-      // sendArticles,
+      valReactive,
+      changeState,
+      articleForm,
+      sendArticle,
       value
     }
   }

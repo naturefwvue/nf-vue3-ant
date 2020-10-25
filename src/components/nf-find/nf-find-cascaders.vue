@@ -2,9 +2,11 @@
 <template>
   <a-cascader
     v-model:value="value"
+    size="small"
     :options="options"
     :placeholder="meta.placeholder"
     @change="onChange"
+    :load-data="loadData"
   />
 </template>
 
@@ -40,32 +42,36 @@ export default {
       value: [],
       options: [
         {
-          value: 'zhejiang',
-          label: 'Zhejiang',
+          value: '浙江',
+          label: '浙江',
+          isLeaf: false,
           children: [
             {
-              value: 'hangzhou',
-              label: 'Hangzhou',
+              value: '杭州',
+              label: '杭州',
               children: [
                 {
-                  value: 'xihu',
-                  label: 'West Lake'
+                  value: '西湖',
+                  label: '西湖',
+                  isLeaf: false
                 }
               ]
             }
           ]
         },
         {
-          value: 'jiangsu',
-          label: 'Jiangsu',
+          value: '江苏',
+          label: '江苏',
+          isLeaf: false,
           children: [
             {
-              value: 'nanjing',
-              label: 'Nanjing',
+              value: '南京',
+              label: '南京',
               children: [
                 {
-                  value: 'zhonghuamen',
-                  label: 'Zhong Hua Men'
+                  value: '中华门',
+                  label: '中华门',
+                  isLeaf: false
                 }
               ]
             }
@@ -88,6 +94,12 @@ export default {
   methods: {
     onChange (value) {
       console.log(value)
+      if (typeof this.meta.cascaderChager === 'function') {
+        this.meta.cascaderChager(value, (data) => {
+          alert('得到——' + data)
+        })
+      }
+      // this.$emit('selectchange', value, 1)
       /*
       this.axios.get('user?ID=12345')
         .then(function (response) {
@@ -133,6 +145,38 @@ export default {
       this.$emit('update:modelValue', returnValue) // 返回给调用者
       this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
       this.$emit('change', returnValue) // 返回给中间组件
+    },
+    loadData: function (selectedOptions) {
+      const targetOption = selectedOptions[selectedOptions.length - 1]
+      targetOption.loading = true
+      const value = targetOption.label
+      if (typeof this.meta.cascaderChager === 'function') {
+        this.meta.cascaderChager(value, selectedOptions.length, (data) => {
+          alert('得到——' + data)
+          targetOption.loading = false
+          targetOption.children = data
+          this.options = [...this.options]
+        })
+      }
+      // load options lazily
+      /*
+      setTimeout(() => {
+        targetOption.loading = false
+        targetOption.children = [
+          {
+            label: `${targetOption.label} Dynamic 1`,
+            value: 'dynamic1',
+            isLeaf: false
+          },
+          {
+            label: `${targetOption.label} Dynamic 2`,
+            value: 'dynamic2',
+            isLeaf: false
+          }
+        ]
+        this.options = [...this.options]
+      }, 500)
+      */
     }
   }
 }
