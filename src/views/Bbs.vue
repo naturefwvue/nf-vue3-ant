@@ -11,7 +11,7 @@
       </div>
   </div>
   <div style="width:400px">
-      发个帖子{{manageArticleForm}}
+      发个帖子
       标题：<a-input v-model:value="articleForm.title"/>
       内容：<a-input v-model:value="articleForm.content"/>
       <a-button type="dashed" @click="sendArticle" >发表帖子</a-button>
