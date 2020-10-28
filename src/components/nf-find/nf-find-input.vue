@@ -9,14 +9,14 @@
       :maxlength="meta.maxlength"
       :autocomplete="meta.autocomplete"
       :key="'ckey_'+meta.controlId"
-      size="small"
+      :size="findInfo.antSize"
     >
         <template v-slot:addonBefore>
           <a-dropdown>
             <a class="ant-dropdown-link">{{findInfo.kind}}</a>
             <template v-slot:overlay>
               <a-menu @click="findFun.changeFindType">
-                <a-menu-item v-for="item in meta.findKindList" :key="item" >{{findKindDic[item]}}</a-menu-item>
+                <a-menu-item v-for="item in meta.findKindList" :key="item" >{{dicFindKind[item]}}</a-menu-item>
               </a-menu>
             </template>
           </a-dropdown>
@@ -56,14 +56,15 @@ export default {
     }
   },
   setup (props, conext) {
-    const { ctx } = getCurrentInstance()
-    const { findKindDic, findInfo, findFun } = manageFind(props)
+    // 加载基础的查询管理类
+    const { dicFindKind, findInfo, findFun } = manageFind(props)
 
+    // 默认查询方式
     findInfo.kind = '含'
     findInfo.kindkey = 403
 
     return {
-      findKindDic,
+      dicFindKind,
       findInfo,
       findFun
     }

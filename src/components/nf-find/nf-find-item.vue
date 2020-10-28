@@ -3,7 +3,8 @@
   <span class="hello">
     <nfInput v-if="meta.controlType <= 119" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfNumber v-else-if="meta.controlType <= 139" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
-    <nfDatetime v-else-if="meta.controlType <= 149" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfDatetime v-else-if="meta.controlType <= 148" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
+    <nfTime v-else-if="meta.controlType === 149" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfInput v-else-if="meta.controlType <= 159" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfInput v-else-if="meta.controlType === 160" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
     <nfSelect v-else-if="meta.controlType === 180" :modelValue="modelValue" @getvalue="sendValue" :meta="meta"/>
@@ -25,6 +26,7 @@
 import nfInput from './nf-find-input.vue' // 100-107
 import nfNumber from './nf-find-number.vue' // 131
 import nfDatetime from './nf-find-datetime.vue' // 140-144
+import nfTime from './nf-find-time.vue' // 140-144
 import nfChecks from './nf-find-checks.vue' // 182
 import nfRadios from './nf-find-radios.vue' // 183
 import nfSelect from './nf-find-select.vue' // 190
@@ -36,6 +38,7 @@ export default {
     nfInput,
     nfNumber,
     nfDatetime,
+    nfTime,
     nfChecks,
     nfRadios,
     nfSelect,

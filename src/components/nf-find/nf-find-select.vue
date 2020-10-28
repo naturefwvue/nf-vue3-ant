@@ -1,13 +1,13 @@
 /** 下拉列表框，多选的那个再考虑考虑 */
 <template>
-  <a-select :id="'c'+meta.controlId"  style="width:98%"
-    v-model:value="value"
+  <a-select :id="'c'+meta.controlId"
+    style="width:98%"
+    v-model:value="findInfo.value"
     :name="'c'+meta.controlId"
-    :disabled="meta.disabled"
     :placeholder="meta.placeholder"
-    size="small"
+    :size="findInfo.antSize"
     @change="myInput">
-      <a-select-option value="-2">全部</a-select-option>
+      <a-select-option value="-2">全部{{meta.placeholder}}</a-select-option>
       <a-select-option v-for="(item,index) in meta.optionList"
         :key="index"
         :value="item.value" >
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import { ref, watch, watchEffect, getCurrentInstance } from 'vue'
+import { manageFind } from './nf-find.js'
 
 export default {
   name: 'nf-find-select',
@@ -39,33 +41,26 @@ export default {
             default: 0
           },
           optionList: Object,
-          class: String,
           title: String // 中文名称
         }
       }
     }
   },
-  data () {
-    window.test = this
+  setup (props, conext) {
+    // 加载基础的查询管理类
+    const { dicFindKind, findInfo, findFun } = manageFind(props)
+
+    // 默认查询方式
+    findInfo.kind = '含'
+    findInfo.kindkey = 403
+
     return {
-      value: ''
-    }
-  },
-  watch: {
-    modelValue: function (newValue, oldValue) {
-      // alert(newValue)
-      this.value = ''
-      if (typeof newValue === 'object') {
-        if (newValue.length === 2) {
-          this.value = newValue[1]
-        }
-      }
+      dicFindKind,
+      findInfo,
+      findFun
     }
   },
   methods: {
-    focus () {
-      console.log('focus')
-    },
     myInput: function (value) {
       var returnValue = []
       var colName = this.meta.colName

@@ -1,44 +1,59 @@
 /** 数字 */
 <template>
-  <span>
+  <span class="ant-input-group-addon" style="vertical-align: top;">
     <!--查询方式-->
     <a-dropdown>
-      <a class="ant-dropdown-link">{{kind}}</a>
+      <a class="ant-dropdown-link">{{findInfo.kind}}</a>
       <template v-slot:overlay>
-        <a-menu @click="handleMenuClick">
-          <a-menu-item v-for="item in meta.findKindList" :key="item" >{{findKind[item]}}</a-menu-item>
+        <a-menu @click="findFun.changeFindType">
+          <a-menu-item v-for="item in meta.findKindList" :key="item" >{{dicFindKind[item]}}</a-menu-item>
         </a-menu>
       </template>
     </a-dropdown>
+  </span>
+  <span :title="meta.title" style="vertical-align: top;">
     <!--查询条件-->
-    <a-input-number :id="'c' + meta.controlId"
-      :name="'c' + meta.controlId"
-      :value="value"
-      size="small"
-      :placeholder="meta.placeholder"
-      :title="meta.title"
-      :min="meta.min"
-      :max="meta.max"
-      :step="meta.step"
-      @change="myInput"
-      :key="'ckey_'+meta.controlId"/>
-    <span  v-show="kindkey === 431">&nbsp;~&nbsp;
-    <a-input-number :id="'c2' + meta.controlId"
-        :name="'c2' + meta.controlId"
-        :value="value2"
-        size="small"
+    <span v-if="findInfo.isRange">
+      <a-input-number
+        :id="'c' + meta.controlId"
+        :name="'c' + meta.controlId"
+        v-model:value="findInfo.valueRange[0]"
+        :size="findInfo.antSize"
         :placeholder="meta.placeholder"
         :title="meta.title"
         :min="meta.min"
         :max="meta.max"
         :step="meta.step"
-        @change="myInput2"
+        :key="'ckey_'+meta.controlId"/>&nbsp;~&nbsp;
+      <a-input-number
+        :id="'c2' + meta.controlId"
+        :name="'c2' + meta.controlId"
+        v-model:value="findInfo.valueRange[1]"
+        :size="findInfo.antSize"
+        :placeholder="meta.placeholder"
+        :title="meta.title"
+        :min="meta.min"
+        :max="meta.max"
+        :step="meta.step"
         :key="'ckey_'+meta.controlId"/>
      </span>
+     <a-input-number v-else
+      :id="'c' + meta.controlId"
+      :name="'c' + meta.controlId"
+      v-model:value="findInfo.value"
+      :size="findInfo.antSize"
+      :placeholder="meta.placeholder"
+      :title="meta.title"
+      :min="meta.min"
+      :max="meta.max"
+      :step="meta.step"
+      :key="'ckey_'+meta.controlId"/>
   </span>
 </template>
 
 <script>
+import { ref, watch, watchEffect, getCurrentInstance } from 'vue'
+import { manageFind } from './nf-find.js'
 
 export default {
   name: 'nf-find-number',
@@ -94,21 +109,26 @@ export default {
       }
     }
   },
-  data: () => {
+  setup (props, conext) {
+    // 加载基础的查询管理类
+    const { dicFindKind, findInfo, findFun } = manageFind(props)
+
+    // 默认查询方式
+    findInfo.kind = '='
+    findInfo.kindkey = 411
+
+    // 监听两个查询关键字
+    watch([() => findInfo.valueRange[0], () => findInfo.valueRange[1]],
+      ([newVal1, newVal2], [oldVal1, oldVal2]) => {
+        if (newVal1 !== '' && newVal2 !== '') {
+          findInfo.value = [newVal1, newVal2]
+        }
+      })
+
     return {
-      value: '',
-      value2: '',
-      kind: '=',
-      kindkey: 411,
-      findKind: {
-        411: '=', // 数字
-        412: '≠',
-        413: '>',
-        414: '≥',
-        415: '<',
-        416: '≤',
-        431: '从'
-      }
+      dicFindKind,
+      findInfo,
+      findFun
     }
   },
   methods: {
@@ -124,11 +144,6 @@ export default {
       if (this.value2.length > 0) {
         this.value2 = parseFloat(this.value2)
       }
-      this.send()
-    },
-    handleMenuClick (e) {
-      this.kindkey = e.key
-      this.kind = this.findKind[e.key]
       this.send()
     },
     send: function () {
