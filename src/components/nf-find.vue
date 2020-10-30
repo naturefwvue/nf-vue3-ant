@@ -6,16 +6,6 @@
       <div id="components-affix-demo-target"
         ref="container"
         class="scrollable-container"
-        :style="{
-          height: '50px',
-          overflow: 'hidden',
-          position: 'relative',
-          border: '1px solid #ebedf0',
-          borderRadius: '2px',
-          padding: '2px',
-          textAlign: 'left',
-          background: '#fafafa',
-        }"
       >
         <!--个性化查询方案-->
         <a-row type="flex">
@@ -33,14 +23,14 @@
               </a-dropdown>
             </div>
           </a-col>
-          <!--查询字段-->
+          <!--快捷查询字段-->
           <template v-for="(meta,index) in quickFindMeta" :key="'qf'+index">
             <a-col flex="auto">
               <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" @selectchange="selectChange" />
             </a-col>
           </template>
           <a-col flex="80px">
-            <!--更多按钮固定-->
+            <!--更多按钮固定预留位置-->
             &nbsp;
           </a-col>
         </a-row>
@@ -205,8 +195,19 @@ export default {
     },
     // 快捷查询
     getvalue: function (value, colName, id) {
-      this.findValue[colName] = value
-      this.returnValue[colName] = value
+      // 判断是不是级联控件
+      if (this.meta.findItem[id].controlType === 200) {
+        const arr = this.meta.findItem[id].colName.split(',')
+        for (let i = 0; i < arr.length; i += 1) {
+          if (i < value[1].length) {
+            this.findValue[arr[i]] = [value[0], value[1][i]]
+            this.returnValue[arr[i]] = [value[0], value[1][i]]
+          }
+        }
+      } else {
+        this.findValue[colName] = value
+        this.returnValue[colName] = value
+      }
       this.$emit('update:modelValue', this.returnValue) // 返回给调用者
       this.$emit('getvalue', this.returnValue, colName, id) // 返回给中间组件
     },
@@ -266,6 +267,12 @@ export default {
   padding-right: 60px;
   height: 180px;
   overflow-x: scroll;
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #ebedf0;
+  padding: 2px;
+  background: #fafafa;
 }
 #components-affix-demo-target .background {
   width:60px;

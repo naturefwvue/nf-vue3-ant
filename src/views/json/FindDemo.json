@@ -1,7 +1,7 @@
 {
   "company":{
     "findMeta":{
-      "quickFind":[1009,1013,1005,1008],
+      "quickFind":[1010,1013,1005,1008],
       "allFind":[1000,1001,1002,1003,1009,1004,1005,1010,1006,1007,1012,1011,1008],
       "colCount":4,
       "customer":{
@@ -18,16 +18,25 @@
     "findItem":{
       "1010":{
         "controlId": "1010",
-        "colName": "city",
+        "colName": "private,city,area,c1,c2,c3,c4,c5",
         "controlType": 200,
         "placeholder": "省市区",
         "title": "省市区",
+        "level": 2,
+        "optionKind": 2,
         "optionList": [
-          { "value": 1, "label": "高中" },
-          { "value": 2, "label": "大专" },
-          { "value": 3, "label": "本科" },
-          { "value": 4, "label": "硕士" },
-          { "value": 5, "label": "博士" }
+          { "value": 1, "label": "浙江", "isLeaf": false },
+          { "value": 2, "label": "江苏", "isLeaf": false },
+          { "value": 3, "label": "辽宁", "isLeaf": false }
+        ],
+        "optionList2": [
+          { "parent": 1, "value": 11, "label": "杭州" },
+          { "parent": 1, "value": 12, "label": "宁波" },
+          { "parent": 1, "value": 13, "label": "温州" },
+          { "parent": 2, "value": 21, "label": "南京" },
+          { "parent": 2, "value": 22, "label": "无锡" },
+          { "parent": 3, "value": 31, "label": "沈阳" },
+          { "parent": 3, "value": 32, "label": "大连" }
         ],
         "tdCount":3
       },

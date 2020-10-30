@@ -1,6 +1,7 @@
 /**多选组，返回逗号连接的value值 */
 <template>
-  <a-checkbox-group
+  <a-checkbox-group :id="'c'+meta.controlId"
+    :name="'c'+meta.controlId"
     v-model:value="findInfo.value"
     :options="meta.optionList"
   >

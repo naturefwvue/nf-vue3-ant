@@ -1,4 +1,4 @@
-import { reactive, watch, watchEffect, computed, getCurrentInstance } from 'vue'
+import { reactive, watch, getCurrentInstance } from 'vue'
 
 export function manageFind (props) {
   // props 组件参数

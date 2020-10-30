@@ -78,18 +78,18 @@ export default {
     const findMeta = ref(jsonFind.company) // 查询表单的meta信息
     // 加级联的事件
     findMeta.value.findItem['1010'].cascaderChager = (value, level, callback1) => {
-      alert('zsgc获得数据:' + value + 'level:' + level)
+      // alert('zsgc获得数据:' + value + 'level:' + level)
       // 根据层数和选定值，获取下级选项的数据，然后通过回调函数设置值。
       callback1([
         {
           label: `${value}1 _ ${level}`,
           value: 'dynamic1' + level,
-          isLeaf: level > 6
+          isLeaf: level > 2
         },
         {
           label: `${value}2 _ ${level}`,
           value: 'dynamic2' + level,
-          isLeaf: level > 6
+          isLeaf: level > 2
         }
       ])
     }

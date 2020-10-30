@@ -52,29 +52,6 @@ export default {
     return {
       findInfo
     }
-  },
-  methods: {
-    myInput: function (e) {
-      var value = event.target.value
-      var colName = this.meta.colName
-      var id = this.meta.controlId
-      var returnValue = []
-      // 判断value是否为数字
-      if (typeof value === 'number') {
-        returnValue.push(411)
-        returnValue.push(parseInt(value))
-      } else {
-        if (!isNaN(value)) {
-          returnValue.push(411)
-          returnValue.push(parseInt(value))
-        } else {
-          returnValue.push(401)
-          returnValue.push(value)
-        }
-      }
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
-    }
   }
 }
 </script>

@@ -130,34 +130,6 @@ export default {
       findInfo,
       findFun
     }
-  },
-  methods: {
-    myInput: function (value) {
-      this.value = value
-      if (this.value.length > 0) {
-        this.value = parseFloat(this.value)
-      }
-      this.send()
-    },
-    myInput2: function (value) {
-      this.value2 = value
-      if (this.value2.length > 0) {
-        this.value2 = parseFloat(this.value2)
-      }
-      this.send()
-    },
-    send: function () {
-      var returnValue = []
-      returnValue.push(this.kindkey)
-      returnValue.push(this.value)
-      if (this.kindkey === 431) {
-        returnValue.push(this.value2)
-      }
-      var colName = this.meta.colName
-      var id = this.meta.controlId
-      this.$emit('update:modelValue', returnValue) // 返回给调用者
-      this.$emit('getvalue', returnValue, colName, id) // 返回给中间组件
-    }
   }
 }
 </script>
