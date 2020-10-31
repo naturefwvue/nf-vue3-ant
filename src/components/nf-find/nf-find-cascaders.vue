@@ -96,7 +96,7 @@ export default {
 
     // change
     const onChange = function (value, selectedOptions) {
-      alert('onChange')
+      // alert('onChange')
       // 当前level的控件
       const targetOption = selectedOptions[selectedOptions.length - 1]
       // 加载状态
@@ -107,7 +107,7 @@ export default {
     }
     // 动态加载
     const loadData = function (selectedOptions) {
-      alert('loadData')
+      // alert('loadData')
       // 当前level的控件
       const targetOption = selectedOptions[selectedOptions.length - 1]
       // 加载状态

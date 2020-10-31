@@ -42,7 +42,7 @@
         :placeholder="meta.placeholder+'的时间'"
         @change="myInput"
        :key="'ckey3_' + meta.controlId" />
-    </template>{{findTime.value1}}
+    </template>
   </span>
 </template>
 

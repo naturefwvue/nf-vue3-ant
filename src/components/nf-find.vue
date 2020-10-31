@@ -13,20 +13,20 @@
             <div class="customer">
               <a-dropdown size="small">
                 <template v-slot:overlay>
-                  <a-menu @click="changeQuickFind">
+                  <a-menu @click="findControlFun.changeQuickFind">
                     <a-menu-item v-for="(item,key) in meta.findMeta.customer" :key="key">
                       <UserOutlined />{{item.name}}
                     </a-menu-item>
                   </a-menu>
                 </template>
-                <a-button style="margin-left: 2px" @click="clickQuickFind">快捷<DownOutlined /> </a-button>
+                <a-button style="margin-left: 2px" @click="findControlFun.clickQuickFind">快捷<DownOutlined /> </a-button>
               </a-dropdown>
             </div>
           </a-col>
           <!--快捷查询字段-->
-          <template v-for="(meta,index) in quickFindMeta" :key="'qf'+index">
+          <template v-for="(meta,index) in findDataInfo.quickFindMeta" :key="'qf'+index">
             <a-col flex="auto">
-              <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" @selectchange="selectChange" />
+              <nfInput v-model="findDataInfo.findValue[meta.colName]" :meta="meta" @getvalue="findDataFun.getvalue" />
             </a-col>
           </template>
           <a-col flex="80px">
@@ -37,7 +37,7 @@
         <!--更多按钮固定-->
         <div class="background">
           <a-affix :target="() => this.$refs.container">
-            <a-button type="primary" @click="findAllisShow(true)">更多</a-button>
+            <a-button type="primary" @click="findControlFun.findAllisShow(true)">更多</a-button>
           </a-affix>
         </div>
       </div>
@@ -46,20 +46,20 @@
         title="更多查询条件"
         placement="top"
         :closable="false"
-        :visible="findAllVisible"
-        @close="findAllisShow(false)"
+        :visible="findControlInfo.findAllVisible"
+        @close="findControlFun.findAllisShow(false)"
       >
         <div class="ant-table ant-table-body ant-table-default ant-table-bordered" >
           <table role="all">
             <tbody class="ant-table-tbody">
-              <template v-for="(tr, index) in arrMeta" :key="index"><!--循环行-tr-->
+              <template v-for="(tr, index) in findDataInfo.arrMeta" :key="index"><!--循环行-tr-->
                 <tr>
                   <template v-for="(meta, index2) in tr" :key="index+'-'+index2"><!--循环列-td-->
                     <td align="right" style="padding:3px 3px;height:20px">
                       {{meta.title}}：
                     </td>
                     <td :colspan="meta.tdCount" align="left" style="padding:3px 3px;height:20px">
-                      <nfInput v-model="findValue[meta.colName]" :meta="meta" @getvalue="getvalue" @click="getvalue2(meta.controlId)"/>
+                      <nfInput v-model="findDataInfo.findValue[meta.colName]" :meta="meta" @getvalue="findDataFun.getvalue" @click="findDataFun.getvalue2(meta.controlId)"/>
                     </td>
                   </template>
                 </tr><!--循环行-tr 结束 -->
@@ -76,6 +76,8 @@
 <script>
 import nfInput from './nf-find/nf-find-item.vue'
 import { UserOutlined, DownOutlined } from '@ant-design/icons-vue'
+import { manageFindControl } from './nf-find-control.js'
+import { manageFindData } from './nf-find-data.js'
 
 export default {
   name: 'nf-find',
@@ -105,158 +107,22 @@ export default {
       }
     }
   },
-  data () {
-    return {
-      findAllVisible: false, // 更多查询条件开关相关
-      quickFindKey: [], // 快速查询需要的key
-      findValue: {}, // 绑定控件的值，创立全部的字段，用于绑定控件
-      returnValue: {}, // 返回给上层的实体类，只返回有查询条件的字段
-      arrMeta: [], // 二维数组存放meta，遍历全部查询
-      quickFindMeta: [], // 二维数组存放meta，遍历快捷查询
-      findWhere: { // 查询方式，其实前端不需要的
-        401: ' = "{k}"',
-        402: ' <> "{k}"',
-        403: ' like "%{k}%"',
-        404: ' not like "%{k}%"',
-        405: ' like "{k}%"',
-        406: ' like "%{k}"',
-        411: ' ={k}',
-        412: ' <>{k}',
-        413: ' >{k}',
-        414: ' >={k}',
-        415: ' <{k}',
-        416: ' <={k}',
-        421: ' ="{k}"',
-        431: ' between {k1} and {k2}',
-        432: ' between "{k1}" and "{k2}" ',
-        433: ' in ({k})'
-      },
-      findKind: { // 备选的查询方式
-        401: '=', // 字符串
-        402: '≠',
-        403: '含',
-        404: '不含',
-        405: '起始',
-        406: '结束',
-        411: '=', // 数字
-        412: '≠',
-        413: '>',
-        414: '≥',
-        415: '<',
-        416: '≤',
-        421: '=', // 日期
-        422: '≠',
-        423: '>',
-        424: '≥',
-        425: '<',
-        426: '≤',
-        431: '在',
-        432: '在',
-        433: '在'
-      }
-    }
-  },
-  created: function () { // 初始化
-    // 把表单子控件转换为多行多列的形式
-    this.getFindTable()
-    // 判断是否需要联动的事件
-  },
-  watch: {
-    isReload: function (newValue, oldVale) {
-      this.getFindTable()
-    }
-  },
-  methods: {
-    // 把表单子控件转换为多行多列的形式
-    getFindTable: function () {
-      var tdCount = 0
-      var tr = []
-      this.arrMeta = []
-      this.findValue = {}
-      this.returnValue = {}
-      for (var index in this.meta.findMeta.allFind) { // 遍历子控件的meta的key的数组，便于排序
-        var key = this.meta.findMeta.allFind[index] // 数组里面的meta的key
-        var meta = this.meta.findItem[key] // 子控件的meta
-        this.findValue[meta.colName] = '' // 创建实体类
-        tr.push(meta) // 往一行里面放
-        tdCount += 1 + meta.tdCount // 计算一行是否放满
-        if (tdCount >= this.meta.findMeta.colCount * 2) { // 一行放满了，存入table
-          this.arrMeta.push(tr)
-          tr = []
-          tdCount = 0
-        }
-      }
-      if (tr.length > 0) { // 把不满行的tr放入table
-        this.arrMeta.push(tr)
-      }
+  setup (props) {
+    const { dicFindKind, dicFindWhere, findDataInfo, findDataFun } = manageFindData(props)
+    const { findControlInfo, findControlFun } = manageFindControl(props, findDataInfo)
 
-      // 把快捷key放进去
-      this.clickQuickFind()
-    },
-    // 快捷查询
-    getvalue: function (value, colName, id) {
-      // 判断是不是级联控件
-      if (this.meta.findItem[id].controlType === 200) {
-        const arr = this.meta.findItem[id].colName.split(',')
-        for (let i = 0; i < arr.length; i += 1) {
-          if (i < value[1].length) {
-            this.findValue[arr[i]] = [value[0], value[1][i]]
-            this.returnValue[arr[i]] = [value[0], value[1][i]]
-          }
-        }
-      } else {
-        this.findValue[colName] = value
-        this.returnValue[colName] = value
-      }
-      this.$emit('update:modelValue', this.returnValue) // 返回给调用者
-      this.$emit('getvalue', this.returnValue, colName, id) // 返回给中间组件
-    },
-    // 更多查询
-    getvalue2: function (id) {
-      // 查找是否已经有了
-      var have = false
-      for (var i = 0; i < this.quickFindMeta.length; i += 1) {
-        if (this.quickFindMeta[i].controlId === id) {
-          have = true
-        }
-      }
-      if (!have) {
-        this.quickFindMeta.push(this.meta.findItem[id])
-      }
-      // this.getvalue()
-    },
-    // 显示更多查询
-    findAllisShow: function (isShow) { // 更多查询的切换
-      this.findAllVisible = isShow
-      if (isShow) {
-        this.quickFindMeta = [] // 清空快捷查询条件
-      }
-    },
-    // 更换个性化查询方案
-    changeQuickFind: function (e) {
-      this.returnValue = {}
-      this.quickFindKey = this.meta.findMeta.customer[e.key].keys
-      this.quickFindMeta = []
-      for (var i in this.meta.findMeta.customer[e.key].keys) {
-        var key1 = this.meta.findMeta.customer[e.key].keys[i] // 数组里面的meta的key
-        this.quickFindMeta.push(this.meta.findItem[key1])
-      }
-    },
-    // 显示默认查询方案
-    clickQuickFind: function (e) {
-      this.returnValue = {} // 清空返回的查询关键字
-      this.quickFindKey = this.meta.findMeta.quickFind
-      this.quickFindMeta = []
-      for (var index in this.meta.findMeta.quickFind) {
-        var key = this.meta.findMeta.quickFind[index] // 数组里面的meta的key
-        this.quickFindMeta.push(this.meta.findItem[key])
-      }
-    },
-    selectChange: function (value, level) {
-      alert(value)
-      alert(level)
-      // callback1('2222')
-      return '111'
+    // 把meta变成多行多列形式
+    findDataFun.getFindTable()
+    // 显示快捷查询
+    findControlFun.clickQuickFind()
+
+    return {
+      dicFindKind,
+      dicFindWhere,
+      findDataInfo,
+      findDataFun,
+      findControlInfo,
+      findControlFun
     }
   }
 }
