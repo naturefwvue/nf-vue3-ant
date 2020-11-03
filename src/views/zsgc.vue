@@ -76,6 +76,24 @@ export default {
     const jsonFind = require('./json/FindDemo.json')
     const modelFindQuery = ref({}) // 记录用户输入的查询条件
     const findMeta = ref(jsonFind.company) // 查询表单的meta信息
+    // 加级联的事件
+    findMeta.value.findItem['1010'].cascaderChager = (value, level, callback1) => {
+      // alert('zsgc获得数据:' + value + 'level:' + level)
+      // 根据层数和选定值，获取下级选项的数据，然后通过回调函数设置值。
+      callback1([
+        {
+          label: `${value}1 _ ${level}`,
+          value: 'dynamic1' + level,
+          isLeaf: level > 2
+        },
+        {
+          label: `${value}2 _ ${level}`,
+          value: 'dynamic2' + level,
+          isLeaf: level > 2
+        }
+      ])
+    }
+    // alert(findMeta.value.findItem['1010'])
 
     // 表单
     const isFormShow = ref(false) // 表单状态
@@ -99,6 +117,12 @@ export default {
       findMeta.value = jsonFind[name]
       gridMeta.value = jsonGrid[name]
       isReload.value = !isReload.value
+
+      // 加级联的事件
+      findMeta.value['1010'].cascaderChager = (value) => {
+        alert('级联事件')
+      }
+      alert(findMeta.value['1010'].cascaderChager)
     }
 
     // 返回

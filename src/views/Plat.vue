@@ -49,7 +49,7 @@
 
 <script>
 // @ is an alias to /src
-import { ref } from 'vue'
+import { ref, computed, watch, getCurrentInstance } from 'vue'
 import formatMeta from '@/components/format/format-meta.vue'
 import nfDataTable from '@/components/nf-meta-help/meta-datatable.vue'
 import dataBaseSQL from '@/components/nf-meta-help/meta-db-mysql.vue'
@@ -112,6 +112,16 @@ export default {
     // 查询控件
     const modelFindQuery = ref({}) // 记录用户输入的查询条件
     const findMeta = ref({}) // 查询表单的meta信息
+
+    // vuex
+    const { ctx } = getCurrentInstance()
+    console.log(ctx.$router.currentRoute.value)
+    const a = computed(() => ctx.$store.state.test.a)
+    // 设置
+    const count = ref(0)
+    const update = () => {
+      ctx.$store.commit('setTestA', count)
+    }
 
     return {
       isReload,
